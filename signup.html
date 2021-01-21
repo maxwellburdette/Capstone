@@ -1,0 +1,38 @@
+<!--Signup home page-->
+<!DOCTYPE html>
+<HTML lang="en">
+<head>
+    <title>Sign Up Here</title>
+    <link rel="stylesheet" href="homepage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+</head>
+<body>
+<ul>
+    <li>
+        
+        <a href="index.html">Home</a>
+    </li>
+    <li>
+        <a href="messages.html">Messages</a>
+    </li>
+    <li class="right">
+        <a class="active" href="signup.html">Sign Up</a>
+    </li>
+    <li class="right">
+        <a href="login.html">Log in</a>
+    </li>
+</ul>
+<div class="main">
+    <p class="sign" align="center">Sign up</p>
+    <input class="un " type="text" align="center" placeholder="Email" id="email">
+    <input class="pass" type="password" align="center" placeholder="Password" id="password">
+    <input class="un " type="text" align="center" placeholder="First Name" id="firstName">
+    <input class="un " type="text" align="center" placeholder="Last Name" id="lastName">
+    <button onclick="addUser()" class="submit" align="center">Sign up</button>
+    <p class="sign" align="center" id="err"></p>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="test.js"></script>
+</HTML>
