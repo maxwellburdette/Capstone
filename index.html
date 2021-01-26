@@ -1,32 +1,24 @@
-<!--Project home page-->
+<!--login home page-->
 <!DOCTYPE html>
 <HTML lang="en">
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" href="homepage.css">
+    <title>Log In Here</title>
+    <link rel="stylesheet" href="login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
 </head>
 <body>
-<ul>
-    <li>
-        <a class="active" href="index.html">Home</a>
-    </li>
-    <li>
-        <a href="messages.html">Messages</a>
-    </li>
-    
-    
-    <li class="right">
-        <a href="signup.html">Sign Up</a>
-    </li>
-    <li class="right">
-        <a href="login.html">Log in</a>
-    </li>
-</ul>
-
-<h1 id="myHeader">
-    Home
-</h1>
+<div class="main">
+    <p class="sign" align="center">Sign in</p>
+    <input class="un " type="text" align="center" placeholder="Email" id="email">
+    <input class="pass" type="password" align="center" placeholder="Password" id="password">
+    <button onclick="getUser()" class="submit" align="center">Sign in</button>
+    <p class="forgot" align="center"><a href="signup.html">Sign Up</a></p>
+    <br/>
+    <br/>
+    <p class="sign" align="center" id="err"></p>
+</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="test.js"></script>
 </HTML>

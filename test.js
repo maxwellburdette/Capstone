@@ -4,7 +4,7 @@ function getUser()
 const Http = new XMLHttpRequest();
 var email = document.getElementById("email").value;
 var password = document.getElementById("password").value;
-const url='http://localhost:8090/api/users/' + email;
+const url='https://kam.azurewebsites.net/api/users/' + email;
 Http.open("GET", url);
 Http.send();
 
@@ -17,6 +17,11 @@ Http.onreadystatechange = () => {
  {
   var response = json.firstName + " " + json.lastName +" has been signed in"; 
   err.innerText = response;
+  if(typeof(Storage) !== "undefined")
+  {
+    localStorage.setItem("userLogin", email);
+  }
+  window.location.replace("home.html");
  }
  else
  {
@@ -30,21 +35,27 @@ err.innerText = "You do not have an account yet";
 function addUser()
 {
   var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-  var firstName = document.getElementById('firstName').value;
-  var lastName = document.getElementById('lastName').value;
-
-  
-  const emailUrl='http://localhost:8090/api/users/' + email;
-  var check = checkUser(emailUrl, email);
-  const url = 'http://localhost:8090/api/users/';
-
-  if(check == true)
+  if(validEmail(email))
   {
-    err.innerText = "User already exists. Try a different email."
-  }
-  else
-  {
+    var password = document.getElementById("password").value;
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    if(password == "" || firstName == "" || lastName == "")
+    {
+      err.innerText = "One or more fields are blank";
+    }
+    else
+    {
+    const emailUrl='https://kam.azurewebsites.net/api/users/' + email;
+    var check = checkUser(emailUrl, email);
+    const url = 'https://kam.azurewebsites.net/api/users';
+
+    if(check == true)
+    {
+      err.innerText = "User already exists. Try a different email."
+    }
+    else
+    {
       var data = 
       {
       firstName: firstName,
@@ -52,15 +63,33 @@ function addUser()
       email: email,
       password: password
       }
-    $.post(url, data, function(data, status){
-      console.log(`${data} and status is ${status}`);
-    });
-    err.innerText = email + " Was added";
+      $.post(url, data, function(data, status){
+        console.log(`${data} and status is ${status}`);
+      });
+      err.innerText = email + " Was added";
+    }
+    }
+  }
+  else
+  {
+    err.innerText = "You have entered an email in the wrong format";
   }
     
     
     
   
+}
+
+function validEmail(email)
+{
+  
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+  if(email.match(pattern))
+  {
+    return true;
+  }
+
+  return false;
 }
 
 function checkUser(Url, email)
@@ -94,6 +123,13 @@ function checkUser(Url, email)
        }
      }
 }
+
+
+
+
+
+
+
 
 
 
