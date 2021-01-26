@@ -3,7 +3,7 @@
 // just thought you'd like to see how it is done in php
 
 // note: within php -> is the same as . in most other languages
-// so $conn->query($sql) on line 35 would just be conn.query(sql) in many other languages
+// so $conn->query($sql) on line 36 would just be conn.query(sql) in many other languages
 // the $ before a variable name just says that it's a variable name
 
 // set up the variables for the login
@@ -30,6 +30,7 @@ if ($conn->connect_error) {
 }
 
 // we're going to get the entire Room table
+// Room has 5 rows: roomNum (int(3)), bedType (boolean), bedCount (tinyInt), couchBed (boolean), and maxOccupancy (tinyInt)
 $sql = "SELECT * FROM Room";
 // save the output of the SQL as an object
 $result = $conn->query($sql);
