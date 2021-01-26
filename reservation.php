@@ -15,7 +15,7 @@
         <a href="messages.html">Messages</a>
     </li>
     <li>
-        <a href="reservation.html">Make a Reservation</a>
+        <a href="reservation.php">Make a Reservation</a>
     </li>
 
     <li class="right">
@@ -25,6 +25,7 @@
         <a href="login.html">Log in</a>
     </li>
 </ul>
+<h1>Make a Reservation</h1>
 <form>
     <div id="resFilterDates">
         <!-- 
@@ -32,17 +33,17 @@
             I just wanted to get an idea of what it would look like
         -->
         <label for="resCheckIn">Check In: </label>
-        <input type="date" id="resCheckIn" name="resCheckIn"><br />
+        <input type="date" id="resCheckIn" name="resCheckIn"><br>
         <label for="resCheckIn">Check Out: </label>
-        <input type="date" id="resCheckOut" name="resCheckOut"><br />
+        <input type="date" id="resCheckOut" name="resCheckOut"><br>
     </div>
     <div id="resFilterType">
         <label for="resNumRooms">Number of Rooms: </label>
-        <input type="number" id="resNumRooms" name="resNumRooms"><br />
+        <input type="number" id="resNumRooms" name="resNumRooms"><br>
         <label for="resNumAdults">Number of Adults: </label>
-        <input type="number" id="resNumAdults" name="resNumAdults"><br />
+        <input type="number" id="resNumAdults" name="resNumAdults"><br>
         <label for="resNumChildren">Number of Children: </label>
-        <input type="number" id="resNumChildren" name="resNumChildren"><br />
+        <input type="number" id="resNumChildren" name="resNumChildren"><br>
     </div>
     <div id="resFilterSearch">
         <input type="submit" id="resFilterSumbit" name="resFilterSubmit" value="Show Rooms">
@@ -51,6 +52,9 @@
         <span id="resFilterErrorMsg"></span>
     </div>
 </form>
+<br>
+
+<?php include 'DBhelper.php'; ?>
 
 </body>
 </html>
