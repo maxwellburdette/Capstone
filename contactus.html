@@ -34,14 +34,18 @@
     <form action="//submit.form" id="ContactUs" method="post" onsubmit="return ValidateForm(this);">
         <script type="text/javascript">
         function ValidateForm(frm) {
-        if (frm.Name.value == "") { alert('Name is required.'); frm.Name.focus(); 
+        if (frm.Name.value == "") { alert('Name is required.'); 
+            frm.Name.focus(); 
             return false; }
-        if (frm.FromEmailAddress.value == "") { alert('Email address is required.'); frm.FromEmailAddress.focus(); 
+        if (frm.FromEmailAddress.value == "") { alert('Email address is required.'); 
+            frm.FromEmailAddress.focus(); 
             return false; }
         if (frm.FromEmailAddress.value.indexOf("@") < 1 || frm.FromEmailAddress.value.indexOf(".") < 1) 
-            { alert('Please enter a valid email address.'); frm.FromEmailAddress.focus(); 
+            { alert('Please enter a valid email address.'); 
+            frm.FromEmailAddress.focus(); 
             return false; }
-        if (frm.Comments.value == "") { alert('Please enter message.'); frm.Comments.focus(); 
+        if (frm.Comments.value == "") { alert('Please enter message.'); 
+            frm.Comments.focus(); 
             return false; }
             return true; }
         </script>
