@@ -1,59 +1,73 @@
-
-function getUser()
+function login()
 {
-const Http = new XMLHttpRequest();
-var email = document.getElementById("email").value;
-var password = document.getElementById("password").value;
-const url='https://kam.azurewebsites.net/api/users/' + email;
-Http.open("GET", url);
-Http.send();
-
-Http.onreadystatechange = () => {
- var user = Http.responseText;
- var jsonText = user.substring(1,user.length-1);
- var json = JSON.parse(jsonText);
- if(json.email.localeCompare("maxbdevelops@gmail.com") == 0 ||
- json.email.localeCompare("schlegek@csp.edu") == 0 ||
- json.email.localeCompare("perrinea@csp.edu") == 0)
- {
-  if(password.localeCompare(json.password) == 0)
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  if(email.localeCompare("") == 0)
   {
-   var response = json.firstName + " " + json.lastName +" has been signed in"; 
-   err.innerText = response;
-   if(typeof(Storage) !== "undefined")
-   {
-     localStorage.setItem("userLogin", email);
-   }
-   window.location.replace("adminhome.html");
+    email = "FAIL";
   }
-  else
-  {
-    err.innerText = "Invalid email or password";
-  }
- }
- else
- {
-  if(password.localeCompare(json.password) == 0)
-  {
-   var response = json.firstName + " " + json.lastName +" has been signed in"; 
-   err.innerText = response;
-   if(typeof(Storage) !== "undefined")
-   {
-     localStorage.setItem("userLogin", email);
-   }
-   window.location.replace("index.html");
-  }
-  else
-  {
-    err.innerText = "Invalid email or password";
-  }
- }
+  Url='https://kam.azurewebsites.net/api/users/' + email;
+  var result = null;
+  $.ajax({
+    url: Url,
+    type: 'get',
+    dataType: 'html',
+    async: false,
+    success: function(data) {
+      result = data;
+      } 
+    });
+    var user;
+    var dbEmail;
+    var dbPassword;
+    if(result == "[]")
+    {
+      err.innerText = "You do not have an account! Sign Up!"
+    }
+    else
+    {
+      user = JSON.parse(result);
+      dbEmail = user[0].email;
+      dbPassword = user[0].password;
+    }
+    if(dbEmail.localeCompare("maxbdevelops@gmail.com") == 0 ||
+    dbEmail.localeCompare("schlegek@csp.edu") == 0 ||
+    dbEmail.localeCompare("perrinea@csp.edu") == 0)
+    {
+      if(password.localeCompare(dbPassword) == 0)
+      {
+        var response = user[0].firstName + " " + user[0].lastName +" has been signed in"; 
+        err.innerText = response;
+        if(typeof(Storage) !== "undefined")
+        {
+          localStorage.setItem("userLogin", email);
+        }
+        window.location.replace("adminhome.html");
+      }
+      else
+      {
+        err.innerText = "Invalid email or password";
+      }
+    }
+    else
+    {
+      if(password.localeCompare(dbPassword) == 0)
+      {
+        var response = user[0].firstName + " " + user[0].lastName +" has been signed in"; 
+        err.innerText = response;
+        if(typeof(Storage) !== "undefined")
+        {
+          localStorage.setItem("userLogin", email);
+        }
+        window.location.replace("index.html");
+      }
+      else
+      {
+        err.innerText = "Invalid email or password";
+      }
+    }
  
 }
-err.innerText = "You do not have an account yet";
-
-}
-
 function addUser()
 {
   var email = document.getElementById("email").value;
@@ -145,6 +159,8 @@ function checkUser(Url, email)
        }
      }
 }
+
+
 
 
 
