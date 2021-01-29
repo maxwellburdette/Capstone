@@ -133,9 +133,11 @@ h2 small {
   flex-basis: 30%;
 }
 .responsive-table .col-2 {
-  flex-basis: 70%;
+  flex-basis: 60%;
 }
-
+.responsive-table .col-3 {
+  flex-basis: 10%;
+}
 @media all and (max-width: 767px) {
   .responsive-table .table-header {
     display: none;
@@ -163,7 +165,7 @@ h2 small {
   }
 }
     </style>
-    <title>Messages</title>
+    <title>Manage Reviews</title>
 </head>
 <body>
     <nav>
@@ -184,11 +186,12 @@ h2 small {
         </div>
     </nav>
     <div id="box" class="container">
-        <h2>Messages from our guests</h2>
+        <h2>Reviews</h2>
         <ul id="list" class="responsive-table">
           <li id="tableHead" class="table-header">
             <div class="col col-1">User</div>
-            <div class="col col-2">Message</div>
+            <div class="col col-2">Description</div>
+            <div class="col col-3">Rating</div>
           </li>
         </ul>
         <button class="big-button" onclick="displayMessages()">Refresh</button>
@@ -196,6 +199,6 @@ h2 small {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="adminapp.js"></script>
     <script src="test.js"></script>
-    <script src="messages.js"></script>
+    <script src="allReviews.js"></script>
 </body>
 </html>

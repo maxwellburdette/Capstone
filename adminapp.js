@@ -41,13 +41,9 @@ window.onload = function () {
             window.location.href = "login.html";
         return false;
     }
-
-    //If admin goes to index and is still signed in it redirects them to admin page
-    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
-    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
-    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+    if(localStorage.getItem("userLogin") == null)
     {
-        window.location.href = "adminhome.html";
+        window.location.href = "index.html";
     }
 }
 
@@ -58,7 +54,6 @@ window.onload = function () {
 navSlide();
 getSignout();
 
-
 //Displays firstName + lastName | sign out, if clicked it signs user out
 function getSignout()
 {
@@ -66,9 +61,8 @@ function getSignout()
     var text = user.firstName + " " + user.lastName + " | Sign Out";
     $('#userName').text(text); 
     $('#account').text("Account");
-    $('#manageReservation').text("Manage Reservations");
-    $('#makeReservation').text("Make Reservation");
-    $('#leaveReview').text("Leave us a review");
+    $('#messages').text("Messages");
+    $('#manageReviews').text("Manage Reviews");
 
     
 }
@@ -92,4 +86,3 @@ function getJson()
     var json = JSON.parse(jsonText);
     return json;
 }
-

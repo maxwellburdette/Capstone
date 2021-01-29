@@ -12,21 +12,43 @@ Http.onreadystatechange = () => {
  var user = Http.responseText;
  var jsonText = user.substring(1,user.length-1);
  var json = JSON.parse(jsonText);
- 
- if(password.localeCompare(json.password) == 0)
+ if(json.email.localeCompare("maxbdevelops@gmail.com") == 0 ||
+ json.email.localeCompare("schlegek@csp.edu") == 0 ||
+ json.email.localeCompare("perrinea@csp.edu") == 0)
  {
-  var response = json.firstName + " " + json.lastName +" has been signed in"; 
-  err.innerText = response;
-  if(typeof(Storage) !== "undefined")
+  if(password.localeCompare(json.password) == 0)
   {
-    localStorage.setItem("userLogin", email);
+   var response = json.firstName + " " + json.lastName +" has been signed in"; 
+   err.innerText = response;
+   if(typeof(Storage) !== "undefined")
+   {
+     localStorage.setItem("userLogin", email);
+   }
+   window.location.replace("adminhome.html");
   }
-  window.location.replace("home.html");
+  else
+  {
+    err.innerText = "Invalid email or password";
+  }
  }
  else
  {
-   err.innerText = "Invalid email or password";
+  if(password.localeCompare(json.password) == 0)
+  {
+   var response = json.firstName + " " + json.lastName +" has been signed in"; 
+   err.innerText = response;
+   if(typeof(Storage) !== "undefined")
+   {
+     localStorage.setItem("userLogin", email);
+   }
+   window.location.replace("index.html");
+  }
+  else
+  {
+    err.innerText = "Invalid email or password";
+  }
  }
+ 
 }
 err.innerText = "You do not have an account yet";
 
@@ -123,6 +145,7 @@ function checkUser(Url, email)
        }
      }
 }
+
 
 
 
