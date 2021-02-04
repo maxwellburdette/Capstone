@@ -195,7 +195,7 @@ button
       
   }
   input[type=submit] {
-    background-color: #4CAF50;
+    background-color: #5d4954;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -204,7 +204,7 @@ button
   }
   
   input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: gray;
   }
 
   table {
