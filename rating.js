@@ -58,50 +58,50 @@ function addRating()
     var halfStar = document.getElementById('starhalf');
     if(email == null)
     {
-        console.log("Login idiot");
+        
     }
     else
     {
         if(fiveStar.checked)
-    {
-        starValue = fiveStar.value;
-    }
-    else if(fourHalfStar.checked)
-    {
-        starValue = fourHalfStar.value
-    }
-    else if(fourStar.checked)
-    {
-        starValue = fourStar.value;
-    }
-    else if(threehalfStar.checked)
-    {
-        starValue = threehalfStar.value;
-    }
-    else if(threeStar.checked)
-    {
-        starValue = threeStar.value;
-    }
-    else if(twoStarHalf.checked)
-    {
-        starValue = twoStarHalf.value;
-    }
-    else if(twoStar.checked)
-    {
-        starValue = twoStar.value;
-    }
-    else if(oneStarHalf.checked)
-    {
-        starValue = oneStarHalf.value;
-    }
-    else if(oneStar.checked)
-    {
-        starValue = oneStar.value;
-    }
-    else if(halfStar.checked)
-    {
-        starValue = halfStar.value;
-    }
+        {
+            starValue = fiveStar.value;
+        }
+        else if(fourHalfStar.checked)
+        {
+            starValue = fourHalfStar.value
+        }
+        else if(fourStar.checked)
+        {
+            starValue = fourStar.value;
+        }
+        else if(threehalfStar.checked)
+        {
+            starValue = threehalfStar.value;
+        }
+        else if(threeStar.checked)
+        {
+            starValue = threeStar.value;
+        }
+        else if(twoStarHalf.checked)
+        {
+            starValue = twoStarHalf.value;
+        }
+        else if(twoStar.checked)
+        {
+            starValue = twoStar.value;
+        }
+        else if(oneStarHalf.checked)
+        {
+            starValue = oneStarHalf.value;
+        }
+        else if(oneStar.checked)
+        {
+            starValue = oneStar.value;
+        }
+        else if(halfStar.checked)
+        {
+            starValue = halfStar.value;
+        }
     var data = 
       {
       email: email,
