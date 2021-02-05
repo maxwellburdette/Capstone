@@ -346,28 +346,37 @@ function viewMessage(id)
             body.appendChild(message);
         }
     }
+    //Create text area for user entry
     var textArea = document.createElement('textarea');
+    //Sets attributes to style it to the page and allow us to use input to send it to the database
     textArea.setAttribute('name', 'subject' );
     textArea.setAttribute('placeholder', 'Write something...');
     textArea.setAttribute('id','subject');
     textArea.style.height = '40px';
+    
+    //Create button to send message
     var button = document.createElement('input');
+    //Set attributes to style button and get information to send to database
     button.type = 'submit';
     button.setAttribute('value', 'Submit');
     button.setAttribute('id', 'submit');
+    //Add children to our body of text after messages come in
     body.appendChild(textArea);
     body.appendChild(button);
-    //      <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-          //<input id="submit" type="submit" value="Submit"></input>
+
+
     span.onclick = function() {
         modal.style.display = "none";
         clearList();
+        //displayMessages();
     }
     
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target == modal) 
+        {
           modal.style.display = "none";
           clearList();
+          //displayMessages();
         }
     }
 
@@ -377,13 +386,15 @@ function viewMessage(id)
         document.getElementById('subject').value = "";
         sendMessge(user, from, subject);
         modal.style.display = "none";
+        id.childNodes.item(1).innerText = subject;
+        console.log(id.childNodes.item(1).innerText);
         clearList();
-        displayMessages();
         }
-    displayMessages();
+    
 }
 displayMessages();
 
+//Clears message body so that it updates the message threads without having repeated values
 function clearList()
 {
     var body = document.getElementById('messageBody');
@@ -393,6 +404,7 @@ function clearList()
     }
 }
 
+//Clears table of the messages you have sent to different users, so that you can refresh new messages
 function clear()
 {
     idCount = 0;
@@ -403,6 +415,7 @@ function clear()
     }
 }
 
+//Adds message to message database
 function sendMessge(to, from, contents)
 {
     const url = "https://kam.azurewebsites.net/api/messages";
@@ -417,6 +430,7 @@ function sendMessge(to, from, contents)
       });
 }
 
+//Gets time stamp for messages
 function getStamp(date)
 {
     var year = '';
@@ -441,6 +455,7 @@ function getStamp(date)
         hour -= 12;
         hour = hour + minute+ "PM";
     }
+    //If hour is 12 then leave it as is and set it to PM
     else if(hour == 12)
     {
         hour = hour + minute + "PM";
@@ -459,7 +474,7 @@ function getStamp(date)
 
     return "Date: " + month + " " + day + ", " + year + ", Time: " + hour;
 }
-
+//Converts integer to month name
 function getMonth(number)
 {
     if(number == 1)
