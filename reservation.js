@@ -36,6 +36,7 @@ function addRoom() {
     var data = 
       {
       roomNumber: roomNumber,
+
       bedType: bedType,
       bedCount: bedCount,
       cost: cost,
