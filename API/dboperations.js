@@ -194,7 +194,7 @@ async function addRoom(room)
     {
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
-            .input('roomNum', sql.Int, room.roomNum)
+            .input('roomNumber', sql.Int, room.roomNum)
             .input('bedType', sql.Int, room.bedType)
             .input('bedCount', sql.Int, room.bedCount)
             .input('cost', sql.Int, room.cost)
