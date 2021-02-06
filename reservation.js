@@ -26,17 +26,16 @@ function getJSON()
 //       the table with the same room number
 function addRoom() {
     const url = "http://localhost:8090/api/rooms";
-    var roomNumber = document.getElementById("roomNumber").value;
-    var bedType = document.querySelector('input[name="bedType"]:checked').value;
-    var bedCount = document.querySelector('input[name="bedCount"]:checked').value;
-    var cost = document.getElementById("cost").value;
+    var roomNumber = parseInt(document.getElementById("roomNumber").value);
+    var bedType = parseInt(document.querySelector('input[name="bedType"]:checked').value);
+    var bedCount = parseInt(document.querySelector('input[name="bedCount"]:checked').value);
+    var cost = parseInt(document.getElementById("cost").value);
     // two people per bed for now -- can adjust this to include children
     var maxOccupancy = bedCount * 2;
     // save the parameters in an array
     var data = 
       {
       roomNumber: roomNumber,
-
       bedType: bedType,
       bedCount: bedCount,
       cost: cost,
