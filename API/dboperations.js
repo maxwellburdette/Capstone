@@ -190,8 +190,18 @@ async function getRooms()
 //add room
 async function addRoom(room)
 {
+    // testing
+    console.log("inside dbops addroom funct");
+    console.log(room);
     try
     {
+        // testing
+        console.log(room.roomNumber);
+        console.log(room.bedType);
+        console.log(room.bedCount);
+        console.log(room.cost);
+        console.log(room.maxOccupancy);
+
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
             .input('roomNumber', sql.Int, room.roomNumber)

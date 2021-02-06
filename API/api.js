@@ -131,4 +131,4 @@ console.log("User API is running at " + 'http://localhost:' +  port);
 dboperations.getUsers().then(result  => 
 {
     console.log(result[0]);
-})
+});

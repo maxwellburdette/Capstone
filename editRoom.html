@@ -6,44 +6,35 @@
     <meta charset="UTF-8">
     <title>Edit Rooms</title>
 </head>
+
 <body>
 <form id = "addRoomForm">
-    <label for="roomNumber" class="roomCol1">Room Number: </label>
-    <input type="text" id="roomNumber" name="roomNumber"><br>
+    <label for="roomNumber">Room Number: </label>
+    <input type="text" id="roomNumber"><br>
 
-    <label for="bedType" class="roomCol1">Bed Type: </label>
-    <input type="radio" id="kingBed" name="bedType" value="King">
+    <label for="bedType">Bed Type: </label>
+    <input type="radio" id="kingBed" name="bedType" value="0">
     <label for="kingBed">King Bed</label>
-    <input type="radio" id="queenBed" name="bedType" value="Queen">
+    <input type="radio" id="queenBed" name="bedType" value="1">
     <label for="queenBed">Queen Bed</label><br>
 
-    <label for="bedCount" class="roomCol1">Bed Count: </label>
+    <label for="bedCount">Bed Count: </label>
     <input type="radio" id="1bed" name="bedCount" value="1">
     <label for="1bed">1 Bed</label>
     <input type="radio" id="2bed" name="bedCount" value="2">
     <label for="2bed">2 Beds</label><br>
     
     <label for="cost" class="roomCol1">Cost Per Night: </label>
-    <input type="number" id="cost" name="cost"><br><br>
-    <input type="submit" id=submitRoom onclick="addRoom()" value="Add Room">
-</form>
-<!-- below script from user "screamin" on stack overflow
-     https://stackoverflow.com/questions/38374549/xhr-failed-loading-post 
-     This script stops the page from reloading afer the button is clicked 
-     I did this because I thought that the page might be reloading before
-     the API was done sending the post request to the database -->
-<script>
-    window.addEventListener("load", function () {
-        // get the form
-        var form = document.getElementById("addRoomForm");
-            // ...and take over its submit event
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // prevent form submission and reloading the page.
+    <input type="number" id="cost"><br><br>
 
-                // to-do: add something here to clear all of the fields in the form
-            });
-});
-</script>
+    <!-- When this button is clicked, that room will be added to the database.-->
+    <input type="submit" id=addRoom onclick="addRoom()" value="Add">
+    <!-- When this button is clicked, that room will be removed from the database.-->
+    <input type="submit" id=deleteRoom onclick="deleteRoom()" value="Delete">
+    <!-- When this button is clicked, that room will be updated with the values in the form's fields-->
+    <input type="submit" id=updateRoom onclick="updateRoom()" value="Update"> 
+</form>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="reservation.js"></script>
 </body>

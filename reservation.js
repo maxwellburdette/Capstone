@@ -25,6 +25,7 @@ function getJSON()
 // NOTE: we might want to add functionality to make sure that we can't have two rooms in
 //       the table with the same room number
 function addRoom() {
+
     const url = "http://localhost:8090/api/rooms";
     var roomNumber = parseInt(document.getElementById("roomNumber").value);
     var bedType = parseInt(document.querySelector('input[name="bedType"]:checked').value);
@@ -32,7 +33,8 @@ function addRoom() {
     var cost = parseInt(document.getElementById("cost").value);
     // two people per bed for now -- can adjust this to include children
     var maxOccupancy = bedCount * 2;
-    // save the parameters in an array
+
+    // save the parameters in an object
     var data = 
       {
       roomNumber: roomNumber,
@@ -41,8 +43,18 @@ function addRoom() {
       cost: cost,
       maxOccupancy: maxOccupancy
       };
-      // send the array to the database to add the room with this information
-      $.post(url, data, function(data, status){
-        console.log(`${data} and status is ${status}`);
-      });
+
+    /* testing
+    console.log("after data declaration");
+    console.log("roomNumber is " + data.roomNumber + " and the type is " + typeof data.roomNumber);
+    console.log("bedType is " + data.bedType + " and the type is " + typeof data.bedType);
+    console.log("bedCount is " + data.bedCount + " and the type is " + typeof data.bedCount);
+    console.log("cost is " + data.cost + " and the type is " + typeof data.cost);
+    console.log("maxOccupancy is " + data.maxOccupancy + " and the type is " + typeof data.maxOccupancy);
+    */
+
+    // send the object to the database to add the room with this information
+    $.post(url, data, function(data, status){
+      console.log(`${data} and status is ${status}`);
+    });
 }
