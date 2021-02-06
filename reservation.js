@@ -35,11 +35,11 @@ function addRoom() {
     // save the parameters in an array
     var data = 
       {
-      roomNum: roomNum,
+      roomNumber: roomNum,
       bedType: bedType,
       bedCount: bedCount,
-      maxOccupancy: maxOccupancy,
-      cost: cost
+      cost: cost,
+      maxOccupancy: maxOccupancy
       }
       // send the array to the database to add the room with this information
       $.post(url, data, function(data, status){
