@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Edit Rooms</title>
+</head>
+<body>
+<form id = "addRoomForm">
+    <label for="roomNum" class="roomCol1">Room Number: </label>
+    <input type="text" id="roomNum" name="roomNum"><br>
+
+    <label for="bedType" class="roomCol1">Bed Type: </label>
+    <input type="radio" id="kingBed" name="bedType" value="King">
+    <label for="kingBed">King Bed</label>
+    <input type="radio" id="queenBed" name="bedType" value="Queen">
+    <label for="queenBed">Queen Bed</label><br>
+
+    <label for="bedCount" class="roomCol1">Bed Count: </label>
+    <input type="radio" id="1bed" name="bedCount" value="1">
+    <label for="1bed">1 Bed</label>
+    <input type="radio" id="2bed" name="bedCount" value="2">
+    <label for="2bed">2 Beds</label><br>
+    
+    <label for="cost" class="roomCol1">Cost Per Night: </label>
+    <input type="number" id="cost" name="cost"><br><br>
+    <input type="submit" id=submitRoom onclick="addRoom()" value="Add Room">
+</form>
+<!-- below script from user "screamin" on stack overflow
+     https://stackoverflow.com/questions/38374549/xhr-failed-loading-post 
+     This script stops the page from reloading afer the button is clicked -->
+<script>
+    window.addEventListener("load", function () {
+        // get the form
+        var form = document.getElementById("addRoomForm");
+            // ...and take over its submit event
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // prevent form submission and reloading the page.
+            });
+});
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="reservation.js"></script>
+</body>
+</html>
