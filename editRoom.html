@@ -8,8 +8,8 @@
 </head>
 <body>
 <form id = "addRoomForm">
-    <label for="roomNum" class="roomCol1">Room Number: </label>
-    <input type="text" id="roomNum" name="roomNum"><br>
+    <label for="roomNumber" class="roomCol1">Room Number: </label>
+    <input type="text" id="roomNumber" name="roomNumber"><br>
 
     <label for="bedType" class="roomCol1">Bed Type: </label>
     <input type="radio" id="kingBed" name="bedType" value="King">
@@ -37,6 +37,8 @@
             // ...and take over its submit event
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // prevent form submission and reloading the page.
+
+                // to-do: add something here to clear all of the fields in the form
             });
 });
 </script>

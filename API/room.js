@@ -1,7 +1,7 @@
 class Room {
-    constructor(roomNum, bedType, bedCount, maxOccupancy, cost)
+    constructor(roomNumber, bedType, bedCount, maxOccupancy, cost)
     {
-        this.roomNum = roomNum;
+        this.roomNumber = roomNumber;
         this.bedType = bedType;
         this.bedCount = bedCount;
         this.maxOccupancy = maxOccupancy;

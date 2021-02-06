@@ -26,7 +26,7 @@ function getJSON()
 //       the table with the same room number
 function addRoom() {
     const url = "http://localhost:8090/api/rooms";
-    var roomNum = document.getElementById("roomNum").value;
+    var roomNumber = document.getElementById("roomNumber").value;
     var bedType = document.querySelector('input[name="bedType"]:checked').value;
     var bedCount = document.querySelector('input[name="bedCount"]:checked').value;
     var cost = document.getElementById("cost").value;
@@ -35,16 +35,14 @@ function addRoom() {
     // save the parameters in an array
     var data = 
       {
-      roomNum: roomNum,
+      roomNumber: roomNumber,
       bedType: bedType,
       bedCount: bedCount,
-      maxOccupancy: maxOccupancy,
-      cost: cost
+      cost: cost,
+      maxOccupancy: maxOccupancy
       }
       // send the array to the database to add the room with this information
       $.post(url, data, function(data, status){
-        // testing
-        console.log('inside of post');
         console.log(`${data} and status is ${status}`);
       });
 }
