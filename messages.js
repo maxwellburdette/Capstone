@@ -45,7 +45,7 @@ function displayMessages()
     var container = document.getElementById('box');
     container.style.height = "125px"
     clearList();
-    Url = 'https://kam.azurewebsites.net/api/users/'
+    Url = 'http://localhost:8090/api/users/'
     var result = null;
      
      $.ajax({

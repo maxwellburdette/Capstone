@@ -214,3 +214,14 @@ input[type=submit] {
     padding-bottom: 20px;
     padding-top: 20px;
   }
+
+
+
+/**************************************************************
+*       Styles for:
+*               editRoom.html
+*               reservations.html
+**************************************************************/
+#addRoomForm {
+    padding: 20px 7%;
+}

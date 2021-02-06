@@ -104,7 +104,7 @@ async function getReviews()
     try
     {
         let pool = await sql.connect(config);
-        let ratings = await pool.request().query("SELECT * FROM reviews");
+        let ratings = await pool.request().query('SELECT * FROM reviews');
         return ratings.recordsets;
     }
     catch(error)
@@ -148,6 +148,66 @@ async function addReview(review)
     }
 }
 
+//Add review
+async function addReview(review)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let insertReview = await pool.request()
+            .input('email', sql.NVarChar, review.email)
+            .input('rating', sql.NVarChar, review.rating)
+            .input('description', sql.NVarChar, review.description)
+            .execute('InsertReview');
+        return insertReview.recordsets;
+
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+
+/**
+ * SQL functions for rooms
+ */
+//Get rooms from table
+async function getRooms()
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let rooms = await pool.request().query('SELECT * FROM ROOMS');
+        return rooms.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+//add room
+async function addRoom(room)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let insertRoom = await pool.request()
+            .input('roomNum', sql.Int, room.roomNum)
+            .input('bedType', sql.Int, room.bedType)
+            .input('bedCount', sql.Int, room.bedCount)
+            .input('cost', sql.Int, room.cost)
+            .input('maxOccupancy', sql.Int, room.maxOccupancy)
+            .execute('InsertRoom');
+        return insertRoom.recordsets;
+
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
 
 module.exports = {
     getUsers : getUsers,
@@ -157,5 +217,7 @@ module.exports = {
     deleteUser : deleteUser,
     getReviews : getReviews,
     getUserReview : getUserReview,
-    addReview : addReview
+    addReview : addReview,
+    getRooms : getRooms,
+    addRoom : addRoom
 }

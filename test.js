@@ -6,7 +6,7 @@ function login()
   {
     email = "FAIL";
   }
-  Url='https://kam.azurewebsites.net/api/users/' + email;
+  Url='http://localhost:8090/api/users/' + email;
   var result = null;
   $.ajax({
     url: Url,
@@ -82,9 +82,9 @@ function addUser()
     }
     else
     {
-    const emailUrl='https://kam.azurewebsites.net/api/users/' + email;
+    const emailUrl='http://localhost:8090/api/users/' + email;
     var check = checkUser(emailUrl, email);
-    const url = 'https://kam.azurewebsites.net/api/users';
+    const url = 'http://localhost:8090/api/users';
 
     if(check == true)
     {

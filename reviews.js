@@ -1,6 +1,6 @@
 function getJSON()
 {
-    Url = "https://kam.azurewebsites.net/api/reviews"
+    Url = "http://localhost:8090/api/reviews"
     var result = null;
      
      $.ajax({
@@ -78,7 +78,7 @@ function displayReviews()
 
 function calculateRating()
 {
-    Url = 'https://kam.azurewebsites.net/api/reviews';
+    Url = 'http://localhost:8090/api/reviews';
     var result = null;
      
      $.ajax({

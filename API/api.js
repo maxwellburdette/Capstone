@@ -1,6 +1,7 @@
 var Db = require('./dboperations');
 var User = require('./user');
 var Review = require('./review');
+var Room = require('./room');
 const dboperations = require('./dboperations');
 
 
@@ -30,7 +31,7 @@ router.use((request, response, next) => {
 router.route("/users").get((request, response) =>
 {
     dboperations.getUsers().then(result => {
-        //console.log(result);
+        console.log(result);
         response.json(result[0]);
     })
 });
@@ -75,6 +76,7 @@ router.route("/users/:email").delete((request, response) =>
 router.route("/reviews").get((request, response) =>
 {
     dboperations.getReviews().then(result => {
+        console.log(result);
         response.json(result[0]);
     })
 });
@@ -94,22 +96,31 @@ router.route("/reviews").post((request, response) =>
     })
 });
 
+
 /**
- * SQL commands for reservations table
+ * SQL commands for accessing from rooms table
  */
-router.route("/reservations").get((request, response) =>
+//Gets list of all room data
+router.route("/rooms").get((request, response) =>
 {
-    dboperations.getReviews().then(result => {
+    dboperations.getRooms().then(result => {
+        console.log(result);
         response.json(result[0]);
     })
 });
-//Gets reviews from a specific user
-router.route("/reviews/:email").get((request, response) =>
+
+//Posts request: Adds room to table
+router.route("/rooms").post((request, response) =>
 {
-    dboperations.getUserReview(request.params.email).then(result => {
-        response.json(result[0]);
+    let room = {...request.body}
+    dboperations.addRoom(room).then(result => {
+        response.status(201).json(result);
     })
 });
+
+
+
+
 
 var port = process.env.PORT || 8090;
 app.listen(port);
