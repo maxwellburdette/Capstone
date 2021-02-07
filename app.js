@@ -17,7 +17,6 @@ const navSlide = () => {
             {
                 link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + .4}s`;
             }
-            console.log(index/7);
         });
         //Burger animation
         burger.classList.toggle('toggle');
@@ -49,6 +48,7 @@ window.onload = function () {
     {
         window.location.href = "adminhome.html";
     }
+    
 }
 
 
@@ -66,6 +66,7 @@ function getSignout()
     var text = user.firstName + " " + user.lastName + " | Sign Out";
     $('#userName').text(text); 
     $('#account').text("Account");
+    $('#userMessages').text("Messages");
     $('#manageReservation').text("Manage Reservations");
     $('#makeReservation').text("Make Reservation");
     $('#leaveReview').text("Leave us a review");

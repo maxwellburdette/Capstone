@@ -17,7 +17,7 @@ const navSlide = () => {
             {
                 link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + .4}s`;
             }
-            console.log(index/7);
+            
         });
         //Burger animation
         burger.classList.toggle('toggle');
@@ -45,6 +45,17 @@ window.onload = function () {
     {
         window.location.href = "index.html";
     }
+    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+    {
+        
+    }
+    else
+    {
+        window.location.href = "index.html";
+    }
+  
 }
 
 

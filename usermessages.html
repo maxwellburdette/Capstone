@@ -188,7 +188,7 @@ input[type=text], select, textarea {
   resize: none;
 }
     </style>
-    <title>Messages</title>
+    <title>User Messages</title>
 </head>
 <body>
     <nav>
@@ -196,11 +196,14 @@ input[type=text], select, textarea {
             <h4>KAM Hotels</h4>
         </div>
         <ul class="navlinks">
-          <li><a href="adminhome.html">Home</a></li>
-          <li><a id="userName" class="id" href="#"></a></li>
-          <li><a id="messages"href="messages.html"></a></li>
-          <li><a id ="account" href="adminaccount.html"></a></li>
-          <li><a id="manageReviews" href="managereviews.html"></a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a id="userName" class="id" href="#">Sign in</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+          <li><a id ="account" href="account.html"></a></li>
+          <li><a id="userMessages" href="usermessages.html"></a></li>
+          <li><a id="makeReservation" href="reservations.html"></a></li>
+          <li><a id="manageReservation" href="#"></a></li>
+          <li><a id="leaveReview"href="rating.html"></a></li>
         </ul>
         <div class="burger">
             <div class="line1"></div>
@@ -209,7 +212,7 @@ input[type=text], select, textarea {
         </div>
     </nav>
     <div id="box" class="container">
-        <h2>Messages from our guests</h2>
+        <h2>Messages</h2>
         <ul id="list" class="responsive-table">
           <li id="tableHead" class="table-header">
             <div class="col col-1">User</div>
@@ -235,7 +238,7 @@ input[type=text], select, textarea {
           </div>
         </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="adminapp.js"></script>
+    <script src="app.js"></script>
     <script src="test.js"></script>
     <script src="messages.js"></script>
 </body>
