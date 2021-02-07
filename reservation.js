@@ -22,8 +22,10 @@ function getJSON()
  * 
 ****************************************************************/
 // add a room to the table based on the information entered on the editRoom page
-// NOTE: we might want to add functionality to make sure that we can't have two rooms in
-//       the table with the same room number
+/*
+  TO-DO: we might want to add functionality to make sure that we can't have two rooms in
+         the table with the same room number
+*/
 function addRoom() {
 
     const url = "http://localhost:8090/api/rooms";
@@ -31,8 +33,11 @@ function addRoom() {
     var bedType = parseInt(document.querySelector('input[name="bedType"]:checked').value);
     var bedCount = parseInt(document.querySelector('input[name="bedCount"]:checked').value);
     var cost = parseInt(document.getElementById("cost").value);
-    // two people per bed for now -- can adjust this to include children
+    /*
+    TO-DO: two people per bed for now -- can adjust this to include children
+    */
     var maxOccupancy = bedCount * 2;
+    var viewRoom = document.getElementById('viewRoom').value;
 
     // save the parameters in an object
     var data = 
@@ -41,20 +46,25 @@ function addRoom() {
       bedType: bedType,
       bedCount: bedCount,
       cost: cost,
-      maxOccupancy: maxOccupancy
-      };
+      maxOccupancy: maxOccupancy,
+      viewRoom: viewRoom
+      }
 
-    /* testing
-    console.log("after data declaration");
-    console.log("roomNumber is " + data.roomNumber + " and the type is " + typeof data.roomNumber);
-    console.log("bedType is " + data.bedType + " and the type is " + typeof data.bedType);
-    console.log("bedCount is " + data.bedCount + " and the type is " + typeof data.bedCount);
-    console.log("cost is " + data.cost + " and the type is " + typeof data.cost);
-    console.log("maxOccupancy is " + data.maxOccupancy + " and the type is " + typeof data.maxOccupancy);
-    */
-
+    console.log("right after data declaration " + data.viewRoom);
     // send the object to the database to add the room with this information
     $.post(url, data, function(data, status){
       console.log(`${data} and status is ${status}`);
     });
+
+    console.log("right after post in reservation.js " + data.viewRoom);
+}
+
+// update a specific room's information with the information entered on the editRoom page
+function updateRoom() {
+  // do stuff here
+}
+
+// delete a room from the table based on the roomNumber
+function deleteRoom() {
+  // do stuff here
 }

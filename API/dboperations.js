@@ -169,10 +169,10 @@ async function addReview(review)
 }
 
 
-/**
- * SQL functions for rooms
- */
-//Get rooms from table
+/*************************************************************
+*                       ROOMS TABLE
+**************************************************************/
+// Get rooms from table
 async function getRooms()
 {
     try
@@ -187,21 +187,11 @@ async function getRooms()
     }
 }
 
-//add room
+// Add a room to the table
 async function addRoom(room)
 {
-    // testing
-    console.log("inside dbops addroom funct");
-    console.log(room);
     try
     {
-        // testing
-        console.log(room.roomNumber);
-        console.log(room.bedType);
-        console.log(room.bedCount);
-        console.log(room.cost);
-        console.log(room.maxOccupancy);
-
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
             .input('roomNumber', sql.Int, room.roomNumber)
@@ -209,6 +199,7 @@ async function addRoom(room)
             .input('bedCount', sql.Int, room.bedCount)
             .input('cost', sql.Int, room.cost)
             .input('maxOccupancy', sql.Int, room.maxOccupancy)
+            .input('viewRoom', sql.NVarChar, room.viewRoom)
             .execute('InsertRoom');
         return insertRoom.recordsets;
 
@@ -229,5 +220,5 @@ module.exports = {
     getUserReview : getUserReview,
     addReview : addReview,
     getRooms : getRooms,
-    addRoom : addRoom
+    addRoom : addRoom,
 }

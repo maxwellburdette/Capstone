@@ -97,10 +97,11 @@ router.route("/reviews").post((request, response) =>
 });
 
 
-/**
- * SQL commands for accessing from rooms table
- */
-//Gets list of all room data
+
+/*************************************************************
+*                       ROOMS TABLE
+**************************************************************/
+// Get request: retrieves a list of all rooms and their data
 router.route("/rooms").get((request, response) =>
 {
     dboperations.getRooms().then(result => {
@@ -109,7 +110,7 @@ router.route("/rooms").get((request, response) =>
     })
 });
 
-//Posts request: Adds room to table
+// Post request: Adds room to table
 router.route("/rooms").post((request, response) =>
 {
     let room = {...request.body}
@@ -118,15 +119,28 @@ router.route("/rooms").post((request, response) =>
     })
 });
 
+// Put request: Updates the room in the table with the new info
+router.route("/rooms/:roomNumber").put((request, response) =>
+{
+    let user = {...request.body}
+    dboperations.updateRoom(room, request.params.roomNumber).then(result => {
+        response.status(201).json(result);
+    })
+});
 
+// Delete request: Deletes the room from the table
+router.route("/rooms/:roomNumber").delete((request, response) =>
+{
+    dboperations.deleteRoom(request.params.roomNumber).then(result => {
+        response.status(200).json(result);
+    })
+});
 
 
 
 var port = process.env.PORT || 8090;
 app.listen(port);
 console.log("User API is running at " + 'http://localhost:' +  port);
-
-
 
 dboperations.getUsers().then(result  => 
 {

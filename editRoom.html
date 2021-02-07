@@ -24,17 +24,25 @@
     <input type="radio" id="2bed" name="bedCount" value="2">
     <label for="2bed">2 Beds</label><br>
     
-    <label for="cost" class="roomCol1">Cost Per Night: </label>
-    <input type="number" id="cost"><br><br>
+    <label for="cost">Cost Per Night: </label>
+    <input type="number" id="cost"><br>
+
+    <!--
+    TO-DO: 
+    make this spot allow us to upload a photo instead of provide the image path
+    -->
+    <label for="viewRoom">Image Name: </label>
+    <input type="text" id="viewRoom">
+
+    <br><br>
 
     <!-- When this button is clicked, that room will be added to the database.-->
-    <input type="submit" id=addRoom onclick="addRoom()" value="Add">
+    <input type="submit" id="addRoomBtn" onclick="addRoom()" value="Add">
     <!-- When this button is clicked, that room will be removed from the database.-->
-    <input type="submit" id=deleteRoom onclick="deleteRoom()" value="Delete">
+    <input type="submit" id="deleteRoomBtn" onclick="deleteRoom()" value="Delete">
     <!-- When this button is clicked, that room will be updated with the values in the form's fields-->
-    <input type="submit" id=updateRoom onclick="updateRoom()" value="Update"> 
+    <input type="submit" id="updateRoomBtn" onclick="updateRoom()" value="Update">
 </form>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="reservation.js"></script>
 </body>
