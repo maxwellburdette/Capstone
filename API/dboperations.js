@@ -148,26 +148,6 @@ async function addReview(review)
     }
 }
 
-//Add review
-async function addReview(review)
-{
-    try
-    {
-        let pool = await sql.connect(config);
-        let insertReview = await pool.request()
-            .input('email', sql.NVarChar, review.email)
-            .input('rating', sql.NVarChar, review.rating)
-            .input('description', sql.NVarChar, review.description)
-            .execute('InsertReview');
-        return insertReview.recordsets;
-
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-
 
 /*************************************************************
 *                       ROOMS TABLE
@@ -210,6 +190,24 @@ async function addRoom(room)
     }
 }
 
+// Delete a room from the table
+async function deleteRoom(roomNumber)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let deleteRoom = await pool.request()
+            .input('input_parameter', sql.Int, roomNumber)
+            .query("BEGIN DELETE FROM rooms  WHERE  roomNumber = @input_parameter END ");
+        return deleteRoom.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+
 module.exports = {
     getUsers : getUsers,
     getUser : getUser,
@@ -221,4 +219,5 @@ module.exports = {
     addReview : addReview,
     getRooms : getRooms,
     addRoom : addRoom,
+    deleteRoom : deleteRoom,
 }

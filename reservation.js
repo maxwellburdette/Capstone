@@ -1,21 +1,3 @@
-function getJSON()
-{
-    Url = "http://localhost:8090/api/rooms"
-    var result = null;
-     
-     $.ajax({
-        url: Url,
-        type: 'get',
-        dataType: 'html',
-        async: false,
-        success: function(data) {
-            result = data;
-        } 
-     });
-     var json = JSON.parse(result);
-     return json;
-}
-
 /****************************************************************
  * 
  *   Functions to Add, Update, and Delete Rooms from the table
@@ -50,13 +32,10 @@ function addRoom() {
       viewRoom: viewRoom
       }
 
-    console.log("right after data declaration " + data.viewRoom);
     // send the object to the database to add the room with this information
     $.post(url, data, function(data, status){
       console.log(`${data} and status is ${status}`);
     });
-
-    console.log("right after post in reservation.js " + data.viewRoom);
 }
 
 // update a specific room's information with the information entered on the editRoom page
@@ -66,5 +45,26 @@ function updateRoom() {
 
 // delete a room from the table based on the roomNumber
 function deleteRoom() {
-  // do stuff here
+  const Url = "http://localhost:8090/api/rooms/" + document.getElementById("roomNumber").value;
+
+  $.ajax({
+    url: Url,
+    type: 'delete',
+    dataType: 'html',
+    async: false,
+    success: function(data) {
+        result = data;
+    } 
+  });
+
+  // testing
+  console.log(result);
+
+  /*
+  TO-DO: put some kind of check to make sure we're not trying to delete a room that doesn't exist
+  */
 }
+
+
+
+
