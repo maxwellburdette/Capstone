@@ -122,7 +122,7 @@ router.route("/rooms").post((request, response) =>
 // Put request: Updates the room in the table with the new info
 router.route("/rooms/:roomNumber").put((request, response) =>
 {
-    let user = {...request.body}
+    let room = {...request.body}
     dboperations.updateRoom(room, request.params.roomNumber).then(result => {
         response.status(201).json(result);
     })

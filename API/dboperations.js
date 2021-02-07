@@ -167,6 +167,23 @@ async function getRooms()
     }
 }
 
+//Get specific room from table
+async function getRoom(roomNumber)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let room = await pool.request()
+            .input('input_parameter', sql.Int, roomNumber)
+            .query("SELECT * from rooms where roomNumber = @input_parameter");
+        return room.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
 // Add a room to the table
 async function addRoom(room)
 {
@@ -207,6 +224,30 @@ async function deleteRoom(roomNumber)
     }
 }
 
+// Update a room in the table
+async function updateRoom(room, roomNumber)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let updateRoom = await pool.request()
+            .input('bedType', sql.Int, room.bedType)
+            .input('bedCount', sql.Int, room.bedCount)
+            .input('cost', sql.Int, room.cost)
+            .input('maxOccupancy', sql.Int, room.maxOccupancy)
+            .input('viewRoom', sql.NVarChar, room.viewRoom)
+            .input('input_parameter', sql.Int, roomNumber)
+            .query('BEGIN  UPDATE rooms  SET bedType = @bedType,  bedCount = @bedCount,  cost = @cost, ' +
+                   'maxOccupancy = @maxOccupancy, viewRoom = @viewRoom  WHERE  roomNumber = @input_parameter END');
+        return updateRoom.recordsets;
+
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
     getUsers : getUsers,
@@ -220,4 +261,5 @@ module.exports = {
     getRooms : getRooms,
     addRoom : addRoom,
     deleteRoom : deleteRoom,
+    updateRoom : updateRoom,
 }
