@@ -38,12 +38,12 @@ window.onload = function () {
               sessionStorage.clear();
               
             }
-            window.location.href = "login.html";
+            window.location.href = "../loginPages/login.html";
         return false;
     }
     if(localStorage.getItem("userLogin") == null)
     {
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     }
     if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
@@ -53,7 +53,7 @@ window.onload = function () {
     }
     else
     {
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     }
   
 }

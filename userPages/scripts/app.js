@@ -37,7 +37,7 @@ window.onload = function () {
               sessionStorage.clear();
               
             }
-            window.location.href = "login.html";
+            window.location.href = "../loginPages/login.html";
         return false;
     }
 
