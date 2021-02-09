@@ -1,0 +1,7 @@
+#addRoomForm {
+    padding: 20px;
+  }
+  
+  #addRoomForm input[type="submit"] {
+    border:  2px solid #FFF;
+  }

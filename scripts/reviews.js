@@ -16,6 +16,24 @@ function getJSON()
      return json;
 }
 
+function getUsersName(email)
+{
+    Url = "https://kam.azurewebsites.net/api/users/" + email;
+    var result = null;
+     
+     $.ajax({
+        url: Url,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+     });
+     var json = JSON.parse(result);
+     var firstName = json[0].firstName;
+     return firstName;
+}
 
 function getRandomsArray()
 {
@@ -69,7 +87,9 @@ function displayReviews()
     for(let i = 0; i < json.length; i++)
     {
         var row = document.getElementById('row' + (i+1));
-        row.querySelector('.col-1').innerText = json[randoms[i]].email;
+        var name = getUsersName(json[randoms[i]].email);
+        //row.querySelector('.col-1').innerText = json[randoms[i]].email;
+        row.querySelector('.col-1').innerText = name;
         row.querySelector('.col-2').innerText = json[randoms[i]].description;
         row.querySelector('.col-3').innerText = json[randoms[i]].rating;
     }

@@ -17,7 +17,6 @@ const navSlide = () => {
             {
                 link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + .4}s`;
             }
-            
         });
         //Burger animation
         burger.classList.toggle('toggle');
@@ -38,24 +37,18 @@ window.onload = function () {
               sessionStorage.clear();
               
             }
-            window.location.href = "login.html";
+            window.location.href = "loginPages/login.html";
         return false;
     }
-    if(localStorage.getItem("userLogin") == null)
-    {
-        window.location.href = "index.html";
-    }
+
+    //If admin goes to index and is still signed in it redirects them to admin page
     if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
     localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
     {
-        
+        window.location.href = "adminPages/adminhome.html";
     }
-    else
-    {
-        window.location.href = "index.html";
-    }
-  
+    
 }
 
 
@@ -65,6 +58,7 @@ window.onload = function () {
 navSlide();
 getSignout();
 
+
 //Displays firstName + lastName | sign out, if clicked it signs user out
 function getSignout()
 {
@@ -72,8 +66,10 @@ function getSignout()
     var text = user.firstName + " " + user.lastName + " | Sign Out";
     $('#userName').text(text); 
     $('#account').text("Account");
-    $('#messages').text("Messages");
-    $('#manageReviews').text("Manage Reviews");
+    $('#userMessages').text("Messages");
+    $('#manageReservation').text("Manage Reservations");
+    $('#makeReservation').text("Make Reservation");
+    $('#leaveReview').text("Leave us a review");
 
     
 }
@@ -81,7 +77,7 @@ function getSignout()
 //Gets json file from api server
 function getJson()
 {
-    Url = 'http://localhost:8090/api/users/' + localStorage.getItem("userLogin");
+    Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
   var result = null;
      
      $.ajax({
@@ -97,3 +93,4 @@ function getJson()
     var json = JSON.parse(jsonText);
     return json;
 }
+

@@ -6,94 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">   
-    <link rel="stylesheet" href="style.css">
-    <style type="text/css">
-        body {
-  font-family: "lato", sans-serif;
-}
-
-.container {
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 425px;
-  background-color: #5d4954;
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  opacity: .9;
-  z-index: -1;
-}
-
-h2 {
-  font-size: 26px;
-  margin: 20px 0;
-  text-align: center;
-}
-h2 small {
-  font-size: 0.5em;
-}
-
-.responsive-table li {
-  border-radius: 3px;
-  padding: 25px 30px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  z-index: -1;
-}
-.responsive-table .table-header {
-  background-color: #021618;
-  color: #ffffff;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  z-index: -1;
-}
-.responsive-table .table-row {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
-  z-index: -1;
-}
-.responsive-table .col-1 {
-  flex-basis: 30%;
-}
-.responsive-table .col-2 {
-  flex-basis: 60%;
-}
-.responsive-table .col-3 {
-  flex-basis: 10%;
-}
-@media all and (max-width: 767px) {
-  .responsive-table .table-header {
-    display: none;
-  }
-  .responsive-table li {
-    display: block;
-  }
-  .responsive-table .col {
-    flex-basis: 100%;
-  }
-  .responsive-table .col {
-    display: flex;
-    padding: 10px 0;
-  }
-  .responsive-table .col:before {
-    color: #6c7a89;
-    padding-right: 10px;
-    content: attr(data-label);
-    flex-basis: 50%;
-    text-align: left;
-  }
-  .container
-  {
-      height: 675px;
-  }
-}
-    </style>
+    <link rel="stylesheet" href="styling/home.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Home</title>
 </head>
 <body>
@@ -141,8 +55,7 @@ h2 small {
       </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="adminapp.js"></script>
-    <script src="test.js"></script>
-    <script src="reviews.js"></script>
+    <script src="scripts/adminapp.js"></script>
+    <script src="../scripts/reviews.js"></script>
 </body>
 </html>

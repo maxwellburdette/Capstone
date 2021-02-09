@@ -42,7 +42,7 @@ function login()
         {
           localStorage.setItem("userLogin", email);
         }
-        window.location.replace("adminhome.html");
+        window.location.replace("../adminPages/adminhome.html");
       }
       else
       {
@@ -59,7 +59,7 @@ function login()
         {
           localStorage.setItem("userLogin", email);
         }
-        window.location.replace("index.html");
+        window.location.replace("../index.html");
       }
       else
       {
@@ -160,9 +160,44 @@ function checkUser(Url, email)
      }
 }
 
+//Enter key listener for login page
+$("#password").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#login").click();
+  }
+});
+
+$("#email").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#login").click();
+  }
+});
 
 
+//Enter key listener for signup page
+$("#password").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#signup").click();
+  }
+});
 
+$("#email").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#signup").click();
+  }
+});
+
+$("#firstName").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#signup").click();
+  }
+});
+
+$("#lastName").keyup(function(event) {
+  if (event.keyCode === 13) {
+      $("#signup").click();
+  }
+});
 
 
 
