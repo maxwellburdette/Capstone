@@ -36,6 +36,8 @@ body {
     background: var(--colorShadeE);
   transform-style: preserve-3d;
      transition: all 175ms cubic-bezier(0, 0, 1, 1);
+     top: 90%;
+    left: 10%;
   }
   button.big-button::before {
     position: absolute;
@@ -79,7 +81,7 @@ body {
     margin-right: auto;
     padding-left: 10px;
     padding-right: 10px;
-    height: 125px;
+    height: 500px;
     background-color: #5d4954;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
@@ -87,6 +89,7 @@ body {
     border-bottom-right-radius: 10px;
     opacity: .9;
     z-index: -1;
+    overflow-y: scroll;
   }
   
   h2 {
@@ -176,4 +179,23 @@ body {
     margin-top: 6px; /* Add a top margin */
     margin-bottom: 16px; /* Bottom margin */
     resize: none;
+  }
+  ::-webkit-scrollbar-track
+  {
+    
+    border-radius: 5px;
+    background-color: #555;
+  }
+  
+  ::-webkit-scrollbar
+  {
+    width: 12px;
+    background-color: #555;
+  }
+  
+  ::-webkit-scrollbar-thumb
+  {
+    border-radius: 5px;
+    
+    background-color: gray;
   }
