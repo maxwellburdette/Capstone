@@ -41,8 +41,12 @@ window.onload = function () {
         return false;
     }
 
-    //If admin goes to index and is still signed in it redirects them to admin page
-    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    //If no one is logged in then it console logs, so no errors occur from if statement
+    if(localStorage.getItem('userLogin') == null)
+    {
+        console.log("No one is signed in");
+    }
+    else if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
     localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
     {
@@ -62,6 +66,10 @@ getSignout();
 //Displays firstName + lastName | sign out, if clicked it signs user out
 function getSignout()
 {
+    if(localStorage.getItem('userLogin') == null)
+    {
+        return false;
+    }
     var user = getJson();
     var text = user.firstName + " " + user.lastName + " | Sign Out";
     $('#userName').text(text); 
