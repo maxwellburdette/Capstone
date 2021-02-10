@@ -109,7 +109,6 @@ function displayTickets()
         } 
     });
     var json = JSON.parse(result);
-    console.log(json);
     clearTickets();
     if(json.length == 0)
     {
@@ -150,6 +149,10 @@ function displayMessages()
     //Check for all messages sent to user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/to/' + localStorage.getItem("userLogin");
     userArray = getFrom(Url, userArray);
+    if(userArray[0] == undefined)
+    {
+        return false;
+    }
     clear();
     for(let i = 0; i < userArray.length; i++)
     {
