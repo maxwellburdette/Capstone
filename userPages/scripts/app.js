@@ -44,9 +44,17 @@ window.onload = function () {
     //If no one is logged in then it console logs, so no errors occur from if statement
     if(localStorage.getItem('userLogin') == null)
     {
-        console.log("No one is signed in");
+        console.log(window.location.href);
+        if(document.URL.includes('contactus.html'))
+        {
+
+        }
+        else
+        {
+            window.location.href = '../index.html';
+        }
     }
-    else if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
     localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
     {
