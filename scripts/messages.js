@@ -126,9 +126,9 @@ function displayTickets()
     else
     {
         for(let i = 0; i < json.length; i++)
-    {
-        addTicket(json[i].fromMessage, json[i].contents, json[i].messageId);
-    }
+        {
+            addTicket(json[i].fromMessage, json[i].contents, json[i].messageId);
+        }
     }
 
 }
@@ -151,6 +151,16 @@ function displayMessages()
     userArray = getFrom(Url, userArray);
     if(userArray[0] == undefined)
     {
+        clear();
+        var ul = document.getElementById('list');
+        var li = document.createElement('LI');
+        li.className = 'table-row';
+        //Create column 1
+        var col1 = document.createElement('div');
+        col1.className = 'col col-2';
+        col1.innerText = "No Messages";
+        li.appendChild(col1);
+        ul.appendChild(li);
         return false;
     }
     clear();
@@ -539,7 +549,12 @@ function viewMessage(id)
     
 }
 displayMessages();
-displayTickets();
+if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+{
+        displayTickets();   
+}
 
 //Clears message body so that it updates the message threads without having repeated values
 function clearList()
