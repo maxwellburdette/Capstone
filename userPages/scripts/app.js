@@ -58,7 +58,7 @@ window.onload = function () {
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
     localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
     {
-        window.location.href = "adminhome.html";
+        window.location.href = "../adminPages/adminhome.html";
     }
     
 }

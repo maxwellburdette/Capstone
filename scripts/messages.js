@@ -1,4 +1,10 @@
 let idCount = 0;
+let ticketCount = 0;
+function refresh()
+{
+    displayTickets();
+    displayMessages();
+}
 function addMessage(toMessage, contents)
 {
     //Get table
@@ -15,7 +21,7 @@ function addMessage(toMessage, contents)
     var col1 = document.createElement('div');
     col1.className = 'col col-1';
     col1.innerText = toMessage;
-    col1.setAttribute('data-label', "From");
+    col1.setAttribute('data-label', "User");
     
     //Create column 2
     var col2 = document.createElement('div');
@@ -31,13 +37,102 @@ function addMessage(toMessage, contents)
     ul.appendChild(li);
 
     //Change height of container when new row is added to page
-    var container = document.getElementById('box');
-    var getHeight = container.offsetHeight + 95;
-    container.style.height = getHeight + "px";
+    //var container = document.getElementById('box');
+    //var getHeight = container.offsetHeight + 95;
+    //container.style.height = getHeight + "px";
     //Change count of id so the next row has a unique id
     idCount++;
 }
 
+function addTicket(from, message, messageId)
+{
+    //Get table
+    var ul = document.getElementById('tickets');
+
+    //Create row
+    var li = document.createElement('LI');
+    li.className = 'table-row';
+    //Assign id for element
+    li.setAttribute('id', 'ticket'+ticketCount);
+    var id = 'ticket'+ticketCount;
+    li.setAttribute('onclick', 'viewTicket('+id + ')');
+
+    //Create column 1
+    var col1 = document.createElement('div');
+    col1.className = 'col col-1';
+    col1.innerText = from;
+    col1.setAttribute('data-label', "User");
+
+    //Create column 2
+    var col2 = document.createElement('div');
+    col2.className = 'col col-2';
+    col2.innerText = message;
+    col2.setAttribute('data-label', 'Message');
+
+    //Create column 3
+    var col3 = document.createElement('div');
+    col3.className = "col col-3";
+    col3.innerText = messageId;
+    col3.setAttribute('data-label', 'ID');
+
+    //Add col1 to row
+    li.appendChild(col1);
+    //Add col2 to row
+    li.appendChild(col2);
+    //Add col3 to row
+    li.appendChild(col3);
+    //Add row to table
+    ul.appendChild(li);
+
+    ticketCount++;
+
+}
+function displayTickets()
+{
+    if(localStorage.getItem("userLogin") == null)
+    {
+        return null;
+    }
+    var container = document.getElementById('ticketBox');
+    //container.style.height = "125px"
+
+    Url = 'https://kam.azurewebsites.net/api/messages/to/admin';
+    var result = null;
+     
+    $.ajax({
+        url: Url,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+    });
+    var json = JSON.parse(result);
+    console.log(json);
+    clearTickets();
+    if(json.length == 0)
+    {
+        var ul = document.getElementById('tickets');
+        var li = document.createElement('LI');
+        li.className = 'table-row';
+        //Create column 1
+        var col1 = document.createElement('div');
+        col1.className = 'col col-2';
+        col1.innerText = "No Tickets at this time";
+        li.appendChild(col1);
+        ul.appendChild(li);
+
+    }
+    else
+    {
+        for(let i = 0; i < json.length; i++)
+    {
+        addTicket(json[i].fromMessage, json[i].contents, json[i].messageId);
+    }
+    }
+
+}
 
 function displayMessages()
 {
@@ -46,7 +141,7 @@ function displayMessages()
         return null;
     }
     var container = document.getElementById('box');
-    container.style.height = "125px"
+    //container.style.height = "125px"
     
     //Check for all messages sent from user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/from/' + localStorage.getItem("userLogin");
@@ -243,6 +338,55 @@ function clearList()
     }
 }
 
+function viewTicket(id)
+{
+    var user = id.childNodes.item(0).innerText;
+    var message = id.childNodes.item(1).innerText;
+    var ticketNumber = id.childNodes.item(2).innerText;
+    var span = document.getElementsByClassName("close")[1];
+    var modal = document.getElementById("ticketResponse");
+    modal.style.display = "block";
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+    ticketNumberHeader.innerText = "Ticket: " + ticketNumber;
+    messageHeader.innerText = "Issue: " + message;
+    footer2.innerText = "From: " + user;
+
+    addTicketButton.onclick = function()
+    {
+        moveTicket(ticketNumber);
+        displayMessages();
+        displayTickets();
+        modal.style.display = "none";
+    }
+
+
+}
+function moveTicket(id)
+{
+    var admin = localStorage.getItem('userLogin');
+    const url = 'https://kam.azurewebsites.net/api/messages/' + id;
+    var json = 
+    {
+        toMessage: admin
+    };
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: json,
+        dataType: 'json',
+        success: function(result){
+        }
+     });
+
+}
 function viewMessage(id)
 {
     var span = document.getElementsByClassName("close")[0];
@@ -387,12 +531,12 @@ function viewMessage(id)
         sendMessge(user, from, subject);
         modal.style.display = "none";
         id.childNodes.item(1).innerText = subject;
-        console.log(id.childNodes.item(1).innerText);
         clearList();
         }
     
 }
 displayMessages();
+displayTickets();
 
 //Clears message body so that it updates the message threads without having repeated values
 function clearList()
@@ -410,6 +554,15 @@ function clear()
     idCount = 0;
     var ul = document.getElementById('list');
     while(ul.lastElementChild != document.getElementById('tableHead'))
+    {
+        ul.removeChild(ul.lastElementChild);
+    }
+}
+function clearTickets()
+{
+    ticketCount = 0;
+    var ul = document.getElementById('tickets');
+    while(ul.lastElementChild != document.getElementById('ticketHead'))
     {
         ul.removeChild(ul.lastElementChild);
     }

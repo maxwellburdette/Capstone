@@ -39,9 +39,9 @@ function addMessage(user, description, rating)
     ul.appendChild(li);
 
     //Change height of container when new row is added to page
-    var container = document.getElementById('box');
-    var getHeight = container.offsetHeight + 97;
-    container.style.height = getHeight + "px";
+    //var container = document.getElementById('box');
+    //var getHeight = container.offsetHeight + 97;
+    //container.style.height = getHeight + "px";
     //Change count of id so the next row has a unique id
     idCount++;
 }
@@ -53,7 +53,7 @@ function displayMessages()
         return null;
     }
     var container = document.getElementById('box');
-    container.style.height = "125px"
+    //container.style.height = "125px"
     clearList();
     Url = 'https://kam.azurewebsites.net/api/reviews/'
     var result = null;
