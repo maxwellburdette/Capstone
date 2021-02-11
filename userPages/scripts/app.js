@@ -41,6 +41,7 @@ window.onload = function () {
         return false;
     }
 
+    $('.preloader').addClass('complete');
     //If no one is logged in then it console logs, so no errors occur from if statement
     if(localStorage.getItem('userLogin') == null)
     {

@@ -41,6 +41,7 @@ window.onload = function () {
             window.location.href = "../loginPages/login.html";
         return false;
     }
+    $('.preloader').addClass('complete');
     if(localStorage.getItem("userLogin") == null)
     {
         window.location.href = "../index.html";

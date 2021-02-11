@@ -29,6 +29,7 @@ const navSlide = () => {
 
 //Logs user out and redirects them to login page 
 window.onload = function () {
+    
     var myClass = document.querySelector(".id")
         .onclick = function () {
             if(typeof(Storage) !== "undefined")
@@ -40,6 +41,11 @@ window.onload = function () {
             window.location.href = "loginPages/login.html";
         return false;
     }
+
+    $('.preloader').addClass('complete');
+
+
+
     if(localStorage.getItem('userLogin') == null)
     {
         return false;
