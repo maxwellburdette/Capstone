@@ -374,7 +374,7 @@ button
   left: 0;
   right: 0;
   bottom: 0;
-  background: #262626;
+  background: rgb(226, 226, 226);
   animation: animateBg 2s linear infinite;
 }
 .preloader.complete

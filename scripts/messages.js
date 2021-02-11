@@ -149,7 +149,7 @@ function displayMessages()
     //Check for all messages sent to user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/to/' + localStorage.getItem("userLogin");
     userArray = getFrom(Url, userArray);
-    if(userArray[0] == undefined)
+    if(userArray[0] == undefined || userArray.length == 0)
     {
         clear();
         var ul = document.getElementById('list');
@@ -515,11 +515,20 @@ function viewMessage(id)
     var button = document.createElement('input');
     //Set attributes to style button and get information to send to database
     button.type = 'submit';
-    button.setAttribute('value', 'Submit');
+    button.setAttribute('value', 'Send');
     button.setAttribute('id', 'submit');
+
+    var deleteThread = document.createElement('input');
+    deleteThread.type = 'submit';
+    deleteThread.setAttribute('value','Delete Thread');
+    deleteThread.setAttribute('id', 'delete');
+    deleteThread.style.float = 'right';
+    deleteThread.style.background = 'red';
+    //deleteThread.style.float('right');
     //Add children to our body of text after messages come in
     body.appendChild(textArea);
     body.appendChild(button);
+    body.appendChild(deleteThread);
 
 
     span.onclick = function() {
@@ -546,6 +555,18 @@ function viewMessage(id)
         id.childNodes.item(1).innerText = subject;
         clearList();
         }
+    
+    deleteThread.onclick = function() 
+    {
+        for(let i = 0; i < allMessages.length; i++)
+        {    
+            deleteMessage(allMessages[i].messageId);
+        }    
+        modal.style.display = "none";
+        clearList();
+        displayMessages();
+        displayTickets();
+    }
     
 }
 displayMessages();
@@ -597,8 +618,21 @@ function sendMessge(to, from, contents)
         contents: contents
     };
     $.post(url, message, function(message, status){
-        console.log(`${data} and status is ${status}`);
+        console.log(`${message} and status is ${status}`);
       });
+}
+
+
+function deleteMessage(id)
+{
+    const url = 'https://kam.azurewebsites.net/api/messages/'+id;
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function(result) {
+            console.log(result);
+        }
+    });
 }
 
 //Gets time stamp for messages
