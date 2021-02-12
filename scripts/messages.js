@@ -2,8 +2,17 @@ let idCount = 0;
 let ticketCount = 0;
 function refresh()
 {
-    displayTickets();
-    displayMessages();
+    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+    {
+        displayTickets();
+        displayMessages();
+    }
+    else
+    {
+        displayMessages();
+    }
 }
 function addMessage(toMessage, contents)
 {
@@ -149,6 +158,7 @@ function displayMessages()
     //Check for all messages sent to user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/to/' + localStorage.getItem("userLogin");
     userArray = getFrom(Url, userArray);
+    console.log(userArray);
     if(userArray[0] == undefined || userArray.length == 0)
     {
         clear();
@@ -560,10 +570,15 @@ function viewMessage(id)
     
     deleteThread.onclick = function() 
     {
+        var results = [];
         for(let i = 0; i < allMessages.length; i++)
         {    
-            deleteMessage(allMessages[i].messageId);
+            results.push(deleteMessage(allMessages[i].messageId));
         }    
+        for(let i = 0; i < results.length; i++)
+        {
+
+        }
         modal.style.display = "none";
         clearList();
         refresh();
@@ -627,13 +642,17 @@ function sendMessge(to, from, contents)
 function deleteMessage(id)
 {
     const url = 'https://kam.azurewebsites.net/api/messages/'+id;
+    var result = null;
     $.ajax({
         url: url,
         type: 'DELETE',
-        success: function(result) {
-            console.log(result);
-        }
-    });
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+     });
+    return result;
 }
 
 //Gets time stamp for messages
