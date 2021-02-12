@@ -137,7 +137,7 @@ function displayMessages()
 {
     if(localStorage.getItem("userLogin") == null)
     {
-        return null;
+        return false;
     }
     var container = document.getElementById('box');
     //container.style.height = "125px"
@@ -161,16 +161,18 @@ function displayMessages()
         col1.innerText = "No Messages";
         li.appendChild(col1);
         ul.appendChild(li);
-        return false;
     }
-    clear();
+    else
+    {
+        clear();
     for(let i = 0; i < userArray.length; i++)
     {
         const urlTo = 'https://kam.azurewebsites.net/api/messages/to/' + userArray[i];
         const urlFrom = 'https://kam.azurewebsites.net/api/messages/from/' + userArray[i];
-        var contents = getLatest(urlTo, urlFrom, userArray[i]);
+        var contents = getLatest(urlTo, urlFrom);
         addMessage(userArray[i], contents);
      }
+    }
 }
 
 function getTo(url)
@@ -271,7 +273,7 @@ function getFrom(url, userArray)
      
 }
 
-function getLatest(urlTo, urlFrom, user)
+function getLatest(urlTo, urlFrom)
 {
     var result = null;
     $.ajax({
@@ -564,8 +566,7 @@ function viewMessage(id)
         }    
         modal.style.display = "none";
         clearList();
-        displayMessages();
-        displayTickets();
+        refresh();
     }
     
 }

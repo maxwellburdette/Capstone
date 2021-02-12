@@ -68,7 +68,6 @@ function displayMessages()
         } 
      });
      var json = JSON.parse(result);
-     console.log(json[0].email);
      for(let i = 0; i < json.length; i++)
      {
          addMessage(json[i].email, json[i].description, json[i].rating);
@@ -127,7 +126,7 @@ function sendMessge(to, from, contents)
         contents: contents
     };
     $.post(url, message, function(message, status){
-        console.log(`${data} and status is ${status}`);
+        console.log(`${message} and status is ${status}`);
       });
 }
 
