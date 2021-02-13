@@ -110,6 +110,22 @@ router.route("/rooms").get((request, response) =>
     })
 });
 
+// Get request: retrieves a specific room and its data
+router.route("/rooms/:roomNumber").get((request, response) =>
+{
+    dboperations.getRoom(request.params.roomNumber).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a list of rooms and their data based on the max occupancy
+router.route("/rooms/search/:numberPeople").get((request, response) =>
+{
+    dboperations.getCertainRooms(request.params.numberPeople).then(result => {
+        response.json(result[0]);
+    })
+});
+
 // Post request: Adds room to table
 router.route("/rooms").post((request, response) =>
 {

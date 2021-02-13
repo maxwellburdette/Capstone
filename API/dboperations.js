@@ -184,11 +184,32 @@ async function getRoom(roomNumber)
     }
 }
 
-// Add a room to the table
-async function addRoom(room)
+//Get specific rooms from table based on the number of people who will be staying in the room
+async function getCertainRooms(numberPeople)
 {
     try
     {
+        let pool = await sql.connect(config);
+        let roomList = await pool.request()
+            .input('input_parameter', sql.Int, numberPeople)
+            .query("SELECT * from rooms where maxOccupancy >= @input_parameter");
+        return roomList.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+// Add a room to the table
+async function addRoom(room)
+{
+    // testing
+    console.log("dboperations.js: inside addRoom(room): " + room.viewRoom)
+    try
+    {
+    // testing
+    console.log("dboperations.js: inside addRoom(room) try block: " + room.viewRoom)
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
             .input('roomNumber', sql.Int, room.roomNumber)
@@ -199,7 +220,6 @@ async function addRoom(room)
             .input('viewRoom', sql.NVarChar, room.viewRoom)
             .execute('InsertRoom');
         return insertRoom.recordsets;
-
     }
     catch(error)
     {
@@ -259,6 +279,8 @@ module.exports = {
     getUserReview : getUserReview,
     addReview : addReview,
     getRooms : getRooms,
+    getRoom : getRoom,
+    getCertainRooms: getCertainRooms,
     addRoom : addRoom,
     deleteRoom : deleteRoom,
     updateRoom : updateRoom,
