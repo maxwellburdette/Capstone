@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
     <link rel="stylesheet" href="styling/messages.css">
     <link rel="stylesheet" href="../style.css">
     <title>Messages</title>
@@ -28,7 +29,7 @@
             <div class="line3"></div>
         </div>
     </nav>
-
+    
     <div id="ticketBox" class="container">
       <h2>Tickets</h2>
       <ul id="tickets" class="responsive-table">
@@ -47,11 +48,18 @@
           <li id="tableHead" class="table-header">
             <div class="col col-1">User</div>
             <div class="col col-2">Message</div>
+            <div class="col col-3"></div>
           </li>
         </ul>
     </div>
-      <button class="big-button" onclick="refresh()">Refresh</button>
-      </br>
+
+
+      <div class="buttonContainer">
+        <button id="button" onclick="refresh()"></button>
+      </div>
+
+
+
 
       <div id="myModal" class="modal">
         <!-- Modal content -->
@@ -80,15 +88,24 @@
             <div class="modal-body">
               <h2 id="messageHeader"></h2>
               <input id="addTicketButton" type="submit" value="Add Ticket">
+              <input id="deleteTicket" type="submit" value="Delete Ticket" style="float: right;" style="background-color: red;">
             </div>
             <div class="modal-footer">
               <h3 id="footer2"></h3>
             </div>
           </div>
           </div>
-          <div id="load" class="preloader">
-            <div class="loader"></div>
-        
+
+           
+          
+
+
+
+
+
+            <div id="load" class="preloader">
+              <div class="loader"></div>
+              <div class="hover">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/adminapp.js"></script>

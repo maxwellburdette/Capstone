@@ -1,5 +1,6 @@
 let idCount = 0;
 let ticketCount = 0;
+
 function refresh()
 {
     if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
@@ -38,10 +39,44 @@ function addMessage(toMessage, contents)
     col2.innerText = contents;
     col2.setAttribute('data-label', 'Message');
 
+    //Create column 3
+    var col3 = document.createElement('div');
+    col3.setAttribute('id', idCount.toString(2));
+    var hoverBody = document.createElement('div');
+    hoverBody.className = "hoverBody";
+    var hover = document.createElement('div');
+    hover.className = "hover";
+    var span = document.createElement('span');
+    var ellipsis = document.createElement('i');
+    ellipsis.className = 'fa fa-ellipsis-v';
+    ellipsis.setAttribute('aria-hidden', 'true');
+    span.appendChild(ellipsis);
+    var a  = document.createElement('a');
+    a.className = "social-link";
+    a.target = "_blank";
+    var i = document.createElement('i');
+    i.className = "fa fa-trash";
+    i.setAttribute('aria-hidden', 'true');
+    a.appendChild(i);
+    hover.appendChild(span);
+    hover.appendChild(a);
+    hoverBody.appendChild(hover);
+    col3.appendChild(hoverBody);
+    console.log(col3);
+    // <div class="hoverBody">
+    //   <div class="hover">
+    //     <span>Hover</span>
+    //     <a class="social-link" href="#" target="_blank"><i class="fa fa-trash" aria-hidden="true"></i></a>
+    //   </div>
+    // </div>
+
     //Add col1 to row
     li.appendChild(col1);
     //Add col2 to row
     li.appendChild(col2);
+    //ADd col3 to row
+    li.appendChild(col3);
+    li.childNodes.item(2).setAttribute('pointer-events', 'none');
     //Add row to table
     ul.appendChild(li);
 
@@ -371,6 +406,7 @@ function viewTicket(id)
     var span = document.getElementsByClassName("close")[1];
     var modal = document.getElementById("ticketResponse");
     modal.style.display = "block";
+    deleteTicket.style.background = 'red';
     span.onclick = function() {
         modal.style.display = "none";
     }
@@ -390,6 +426,13 @@ function viewTicket(id)
         displayMessages();
         displayTickets();
         modal.style.display = "none";
+    }
+
+    deleteTicket.onclick = function()
+    {
+        deleteMessage(ticketNumber);
+        modal.style.display = "none";
+        refresh();
     }
 
 
@@ -414,11 +457,19 @@ function moveTicket(id)
 }
 function viewMessage(id)
 {
+    //Getid to check if delete button is clicked
+    var numberId = id.id;
+    var numb = numberId.match(/\d/g);
+    numb = numb.join("");
+    var deleteButton = document.getElementById(numb.toString(2));
+    deleteButton.onclick = function()
+    {
+        console.log('clicked');
+    };
     var span = document.getElementsByClassName("close")[0];
     var modal = document.getElementById("myModal");
     var user = id.childNodes.item(0).innerText;
     var allMessages = [];
-
     Url = 'https://kam.azurewebsites.net/api/messages/from/' + localStorage.getItem("userLogin");
     var result = null;
      
@@ -752,3 +803,22 @@ function getMonth(number)
     }
     return "";
 }
+
+    //Refresh button animation
+    $( "#button" ).click(function() {
+      $( "#button" ).addClass( "onclic", 250, validate());
+    });
+  
+    function validate() {
+      setTimeout(function() {
+        $( "#button" ).removeClass( "onclic" );
+        $( "#button" ).addClass( "validate", 450, callback() );
+      }, 750 );
+    }
+      function callback() {
+        setTimeout(function() {
+          $( "#button" ).removeClass( "validate" );
+        }, 750 );
+      }
+ 
+      
