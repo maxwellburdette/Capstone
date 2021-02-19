@@ -10,54 +10,57 @@
     <title>Home</title>
 </head>
 <body>
-    <nav>
-        <div class="logo">
-            <h4>KAM Hotels</h4>
-        </div>
-        <ul class="navlinks">
-            <li><a href="../index.html">Home</a></li>
-            <li><a id="userName" class="id" href="#">Sign in</a></li>
-            <li><a href="contactus.html">Contact Us</a></li>
-            <li><a id ="account" href="account.html"></a></li>
-            <li><a id="userMessages" href="usermessages.html"></a></li>
-            <li><a id="makeReservation" href="reservations.html"></a></li>
-            <li><a id="manageReservation" href="#"></a></li>
-            <li><a id="leaveReview"href="rating.html"></a></li>
-        </ul>
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-    </nav>
-    <form>
-        <div id="resFilterDates">
-            <!-- 
-                We will need to change the date type of these inputs later since it isn't widely supported.
-                I just wanted to get an idea of what it would look like
-            -->
-            <label for="resCheckIn">Check In: </label>
-            <input type="date" id="resCheckIn" name="resCheckIn"><br />
-            <label for="resCheckIn">Check Out: </label>
-            <input type="date" id="resCheckOut" name="resCheckOut"><br />
-        </div>
-        <div id="resFilterType">
-            <label for="resNumRooms">Number of Rooms: </label>
-            <input type="number" id="resNumRooms" name="resNumRooms"><br />
-            <label for="resNumAdults">Number of Adults: </label>
-            <input type="number" id="resNumAdults" name="resNumAdults"><br />
-            <label for="resNumChildren">Number of Children: </label>
-            <input type="number" id="resNumChildren" name="resNumChildren"><br />
-        </div>
-        <div id="resFilterSearch">
-            <button class="submit" id="showRooms">Show Rooms</button>
-        </div>
-        <div id="resFilterError">
-            <span id="resFilterErrorMsg"></span>
-        </div>
-    </form>
+    <div class="page">
+        <nav>
+            <div class="logo">
+                <h4>KAM Hotels</h4>
+            </div>
+            <ul class="navlinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a id="userName" class="id" href="#">Sign in</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+                <li><a id ="account" href="account.html"></a></li>
+                <li><a id="userMessages" href="usermessages.html"></a></li>
+                <li><a id="makeReservation" href="reservations.html"></a></li>
+                <li><a id="manageReservation" href="#"></a></li>
+                <li><a id="leaveReview" href="rating.html"></a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+        <form>
+            <div id="resFilterDates">
+                <!-- 
+                    We will need to change the date type of these inputs later since it isn't widely supported.
+                    I just wanted to get an idea of what it would look like
+                -->
+                <label for="resCheckIn">Check In: </label>
+                <input type="date" id="resCheckIn" name="resCheckIn"><br />
+                <label for="resCheckIn">Check Out: </label>
+                <input type="date" id="resCheckOut" name="resCheckOut"><br />
+            </div>
+            <div id="resFilterType">
+                <label for="resNumRooms">Number of Rooms: </label>
+                <input type="number" id="resNumRooms" name="resNumRooms"><br />
+                <label for="resNumAdults">Number of Adults: </label>
+                <input type="number" id="resNumAdults" name="resNumAdults"><br />
+                <label for="resNumChildren">Number of Children: </label>
+                <input type="number" id="resNumChildren" name="resNumChildren"><br />
+            </div>
+            <div id="resFilterSearch">
+                <button class="submit" id="showRooms">Show Rooms</button>
+            </div>
+            <div id="resFilterError">
+                <span id="resFilterErrorMsg"></span>
+            </div>
+        </form>
+    </div>
     <div id="load" class="preloader">
         <div class="loader"></div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/app.js"></script>
 </body>

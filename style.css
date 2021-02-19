@@ -21,6 +21,10 @@ nav {
     
 }
 
+.page
+{
+  overflow-x: hidden;
+}
 .logo{
     color: rgb(226, 226, 226);
     text-transform: uppercase;
@@ -129,24 +133,28 @@ nav {
 
 @media screen and (max-width:1024px)
 {
+  .page
+    {
+      position: relative;
+      overflow-x: hidden;
+      height: 100vh;
+    }
     .navlinks {
-        width: 60%;
+        width: 70%;
     }
 }
 
 @media screen and (max-width:705px)
 {
-    body
+    .page
     {
-        overflow-x: hidden;
-    }
-    form
-    {
-        width: 500px;
+      position: relative;
+      overflow-x: hidden;
+      height: 100vh;
     }
     .navlinks
     {
-        width: 65%;
+        width: 80%;
     }
     .logo
     {

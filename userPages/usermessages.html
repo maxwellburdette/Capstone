@@ -12,7 +12,8 @@
     <title>User Messages</title>
 </head>
 <body>
-    <nav>
+    <div class="page">
+      <nav>
         <div class="logo">
             <h4>KAM Hotels</h4>
         </div>
@@ -24,16 +25,16 @@
           <li><a id="userMessages" href="usermessages.html"></a></li>
           <li><a id="makeReservation" href="reservations.html"></a></li>
           <li><a id="manageReservation" href="#"></a></li>
-          <li><a id="leaveReview"href="rating.html"></a></li>
+          <li><a id="leaveReview" href="rating.html"></a></li>
         </ul>
         <div class="burger">
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
         </div>
-    </nav>
-   </br>
-    <div id="box" class="container">
+      </nav>
+      <br>
+      <div id="box" class="container">
         <h2>Messages</h2>
         <ul id="list" class="responsive-table">
           <li id="tableHead" class="table-header">
@@ -46,7 +47,6 @@
       <div class="buttonContainer">
         <button id="button" onclick="displayMessages()"></button>
       </div>
-    </br>
       <div id="myModal" class="modal">
 
         <!-- Modal content -->
@@ -65,7 +65,9 @@
         </div>
         </div>
         <div id="load" class="preloader">
-        <div class="loader"></div>
+          <div class="loader"></div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="../scripts/messages.js"></script>

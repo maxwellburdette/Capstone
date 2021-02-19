@@ -12,101 +12,87 @@
     <title>Messages</title>
 </head>
 <body>
+  <div class="page">
     <nav>
-        <div class="logo">
-            <h4>KAM Hotels</h4>
-        </div>
-        <ul class="navlinks">
-          <li><a href="adminhome.html">Home</a></li>
-          <li><a id="userName" class="id" href="#"></a></li>
-          <li><a id="messages"href="messages.html"></a></li>
-          <li><a id ="account" href="adminaccount.html"></a></li>
-          <li><a id="manageReviews" href="managereviews.html"></a></li>
-        </ul>
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-    </nav>
-    
-    <div id="ticketBox" class="container">
-      <h2>Tickets</h2>
-      <ul id="tickets" class="responsive-table">
-        <li id="ticketHead" class="table-header">
+      <div class="logo">
+          <h4>KAM Hotels</h4>
+      </div>
+      <ul class="navlinks">
+        <li><a href="adminhome.html">Home</a></li>
+        <li><a id="userName" class="id" href="#"></a></li>
+        <li><a id="messages" href="messages.html"></a></li>
+        <li><a id ="account" href="adminaccount.html"></a></li>
+        <li><a id="manageReviews" href="managereviews.html"></a></li>
+      </ul>
+      <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+      </div>
+  </nav>
+  
+  <div id="ticketBox" class="container">
+    <h2>Tickets</h2>
+    <ul id="tickets" class="responsive-table">
+      <li id="ticketHead" class="table-header">
+        <div class="col col-1">User</div>
+        <div class="col col-2">Message</div>
+        <div class="col col-3">Ticket Number</div>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <div id="box" class="container">
+      <h2>Messages from our guests</h2>
+      <ul id="list" class="responsive-table">
+        <li id="tableHead" class="table-header">
           <div class="col col-1">User</div>
           <div class="col col-2">Message</div>
-          <div class="col col-3">Ticket Number</div>
+          <div class="col col-3"></div>
         </li>
       </ul>
+  </div>
+    <div class="buttonContainer">
+      <button id="button" onclick="refresh()"></button>
     </div>
-    </br>
-
-    <div id="box" class="container">
-        <h2>Messages from our guests</h2>
-        <ul id="list" class="responsive-table">
-          <li id="tableHead" class="table-header">
-            <div class="col col-1">User</div>
-            <div class="col col-2">Message</div>
-            <div class="col col-3"></div>
-          </li>
-        </ul>
-    </div>
-
-
-      <div class="buttonContainer">
-        <button id="button" onclick="refresh()"></button>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2 id="fromMessageThread">Send Message</h2>
+        </div>
+        <div id="messageBody" class="modal-body">
+          <h3 id="descriptionHeader"></h3>
+          <h2 id="userHeader"></h2>
+        </div>
+        <div class="modal-footer">
+          <h3 id="footer"></h3>
+        </div>
       </div>
+    </div>
+      <div id="ticketResponse" class="modal">
 
-
-
-
-      <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
           <div class="modal-header">
             <span class="close">&times;</span>
-            <h2 id="fromMessageThread">Send Message</h2>
+            <h2 id="ticketNumberHeader">Ticket</h2>
           </div>
-          <div id="messageBody" class="modal-body">
-            <h3 id="descriptionHeader"></h3>
-            <h2 id="userHeader"></h2>
+          <div class="modal-body">
+            <h2 id="messageHeader"></h2>
+            <input id="addTicketButton" type="submit" value="Add Ticket">
+            <input id="deleteTicket" type="submit" value="Delete Ticket" style="float: right; background-color: red;">
           </div>
           <div class="modal-footer">
-            <h3 id="footer"></h3>
+            <h3 id="footer2"></h3>
           </div>
         </div>
-      </div>
-        <div id="ticketResponse" class="modal">
-
-          <!-- Modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2 id="ticketNumberHeader">Ticket</h2>
-            </div>
-            <div class="modal-body">
-              <h2 id="messageHeader"></h2>
-              <input id="addTicketButton" type="submit" value="Add Ticket">
-              <input id="deleteTicket" type="submit" value="Delete Ticket" style="float: right;" style="background-color: red;">
-            </div>
-            <div class="modal-footer">
-              <h3 id="footer2"></h3>
-            </div>
+        </div>
+          <div id="load" class="preloader">
+            <div class="loader"></div>
           </div>
-          </div>
-
-           
-          
-
-
-
-
-
-            <div id="load" class="preloader">
-              <div class="loader"></div>
-              <div class="hover">
-
+  </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/adminapp.js"></script>
     <script src="../scripts/messages.js"></script>

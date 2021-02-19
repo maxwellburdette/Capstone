@@ -157,11 +157,11 @@ function displayTickets()
     if(json.length == 0)
     {
         var ul = document.getElementById('tickets');
-        var li = document.createElement('LI');
+        var li = document.createElement('LI');0
         li.className = 'table-row';
+        li.style.textAlign = "center";
         //Create column 1
         var col1 = document.createElement('div');
-        col1.className = 'col col-2';
         col1.innerText = "No Tickets at this time";
         li.appendChild(col1);
         ul.appendChild(li);
@@ -200,9 +200,9 @@ function displayMessages()
         var ul = document.getElementById('list');
         var li = document.createElement('LI');
         li.className = 'table-row';
+        li.style.textAlign = "center";
         //Create column 1
         var col1 = document.createElement('div');
-        col1.className = 'col col-2';
         col1.innerText = "No Messages";
         li.appendChild(col1);
         ul.appendChild(li);
