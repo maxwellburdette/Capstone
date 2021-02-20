@@ -67,6 +67,8 @@ navSlide();
 getSignout();
 
 //Displays firstName + lastName | sign out, if clicked it signs user out
+// the below .text bits are what assign the admin menu links for all admin pages
+// in order for these to show, there must be an element with the corresponding index on each admin page
 function getSignout()
 {
     var user = getJson();
@@ -75,6 +77,8 @@ function getSignout()
     $('#account').text("Account");
     $('#messages').text("Messages");
     $('#manageReviews').text("Manage Reviews");
+    $('#editRooms').text("Edit Rooms");
+    $('#manageReservations').text("Manage Reservations");
 
     
 }
