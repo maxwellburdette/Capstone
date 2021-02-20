@@ -1,4 +1,20 @@
 let idCount = 0;
+let ticketCount = 0;
+
+function refresh()
+{
+    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+    {
+        displayTickets();
+        displayMessages();
+    }
+    else
+    {
+        displayMessages();
+    }
+}
 function addMessage(toMessage, contents)
 {
     //Get table
@@ -15,7 +31,7 @@ function addMessage(toMessage, contents)
     var col1 = document.createElement('div');
     col1.className = 'col col-1';
     col1.innerText = toMessage;
-    col1.setAttribute('data-label', "From");
+    col1.setAttribute('data-label', "User");
     
     //Create column 2
     var col2 = document.createElement('div');
@@ -23,30 +39,152 @@ function addMessage(toMessage, contents)
     col2.innerText = contents;
     col2.setAttribute('data-label', 'Message');
 
+    //Create column 3
+    var col3 = document.createElement('div');
+    col3.setAttribute('id', idCount.toString(2));
+    var hoverBody = document.createElement('div');
+    hoverBody.className = "hoverBody";
+    var hover = document.createElement('div');
+    hover.className = "hover";
+    var span = document.createElement('span');
+    var ellipsis = document.createElement('i');
+    ellipsis.className = 'fa fa-ellipsis-v';
+    ellipsis.setAttribute('aria-hidden', 'true');
+    span.appendChild(ellipsis);
+    var a  = document.createElement('a');
+    a.className = "social-link";
+    a.target = "_blank";
+    var i = document.createElement('i');
+    i.className = "fa fa-trash";
+    i.setAttribute('aria-hidden', 'true');
+    a.appendChild(i);
+    hover.appendChild(span);
+    hover.appendChild(a);
+    hoverBody.appendChild(hover);
+    col3.appendChild(hoverBody);
+    console.log(col3);
+    // <div class="hoverBody">
+    //   <div class="hover">
+    //     <span>Hover</span>
+    //     <a class="social-link" href="#" target="_blank"><i class="fa fa-trash" aria-hidden="true"></i></a>
+    //   </div>
+    // </div>
+
     //Add col1 to row
     li.appendChild(col1);
     //Add col2 to row
     li.appendChild(col2);
+    //ADd col3 to row
+    li.appendChild(col3);
+    li.childNodes.item(2).setAttribute('pointer-events', 'none');
     //Add row to table
     ul.appendChild(li);
 
     //Change height of container when new row is added to page
-    var container = document.getElementById('box');
-    var getHeight = container.offsetHeight + 95;
-    container.style.height = getHeight + "px";
+    //var container = document.getElementById('box');
+    //var getHeight = container.offsetHeight + 95;
+    //container.style.height = getHeight + "px";
     //Change count of id so the next row has a unique id
     idCount++;
 }
 
+function addTicket(from, message, messageId)
+{
+    //Get table
+    var ul = document.getElementById('tickets');
 
-function displayMessages()
+    //Create row
+    var li = document.createElement('LI');
+    li.className = 'table-row';
+    //Assign id for element
+    li.setAttribute('id', 'ticket'+ticketCount);
+    var id = 'ticket'+ticketCount;
+    li.setAttribute('onclick', 'viewTicket('+id + ')');
+
+    //Create column 1
+    var col1 = document.createElement('div');
+    col1.className = 'col col-1';
+    col1.innerText = from;
+    col1.setAttribute('data-label', "User");
+
+    //Create column 2
+    var col2 = document.createElement('div');
+    col2.className = 'col col-2';
+    col2.innerText = message;
+    col2.setAttribute('data-label', 'Message');
+
+    //Create column 3
+    var col3 = document.createElement('div');
+    col3.className = "col col-3";
+    col3.innerText = messageId;
+    col3.setAttribute('data-label', 'ID');
+
+    //Add col1 to row
+    li.appendChild(col1);
+    //Add col2 to row
+    li.appendChild(col2);
+    //Add col3 to row
+    li.appendChild(col3);
+    //Add row to table
+    ul.appendChild(li);
+
+    ticketCount++;
+
+}
+function displayTickets()
 {
     if(localStorage.getItem("userLogin") == null)
     {
         return null;
     }
+    var container = document.getElementById('ticketBox');
+    //container.style.height = "125px"
+
+    Url = 'https://kam.azurewebsites.net/api/messages/to/admin';
+    var result = null;
+     
+    $.ajax({
+        url: Url,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+    });
+    var json = JSON.parse(result);
+    clearTickets();
+    if(json.length == 0)
+    {
+        var ul = document.getElementById('tickets');
+        var li = document.createElement('LI');0
+        li.className = 'table-row';
+        li.style.textAlign = "center";
+        //Create column 1
+        var col1 = document.createElement('div');
+        col1.innerText = "No Tickets at this time";
+        li.appendChild(col1);
+        ul.appendChild(li);
+
+    }
+    else
+    {
+        for(let i = 0; i < json.length; i++)
+        {
+            addTicket(json[i].fromMessage, json[i].contents, json[i].messageId);
+        }
+    }
+
+}
+
+function displayMessages()
+{
+    if(localStorage.getItem("userLogin") == null)
+    {
+        return false;
+    }
     var container = document.getElementById('box');
-    container.style.height = "125px"
+    //container.style.height = "125px"
     
     //Check for all messages sent from user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/from/' + localStorage.getItem("userLogin");
@@ -55,14 +193,31 @@ function displayMessages()
     //Check for all messages sent to user signed in
     Url = 'https://kam.azurewebsites.net/api/messages/to/' + localStorage.getItem("userLogin");
     userArray = getFrom(Url, userArray);
-    clear();
+    console.log(userArray);
+    if(userArray[0] == undefined || userArray.length == 0)
+    {
+        clear();
+        var ul = document.getElementById('list');
+        var li = document.createElement('LI');
+        li.className = 'table-row';
+        li.style.textAlign = "center";
+        //Create column 1
+        var col1 = document.createElement('div');
+        col1.innerText = "No Messages";
+        li.appendChild(col1);
+        ul.appendChild(li);
+    }
+    else
+    {
+        clear();
     for(let i = 0; i < userArray.length; i++)
     {
         const urlTo = 'https://kam.azurewebsites.net/api/messages/to/' + userArray[i];
         const urlFrom = 'https://kam.azurewebsites.net/api/messages/from/' + userArray[i];
-        var contents = getLatest(urlTo, urlFrom, userArray[i]);
+        var contents = getLatest(urlTo, urlFrom);
         addMessage(userArray[i], contents);
      }
+    }
 }
 
 function getTo(url)
@@ -163,7 +318,7 @@ function getFrom(url, userArray)
      
 }
 
-function getLatest(urlTo, urlFrom, user)
+function getLatest(urlTo, urlFrom)
 {
     var result = null;
     $.ajax({
@@ -243,13 +398,78 @@ function clearList()
     }
 }
 
+function viewTicket(id)
+{
+    var user = id.childNodes.item(0).innerText;
+    var message = id.childNodes.item(1).innerText;
+    var ticketNumber = id.childNodes.item(2).innerText;
+    var span = document.getElementsByClassName("close")[1];
+    var modal = document.getElementById("ticketResponse");
+    modal.style.display = "block";
+    deleteTicket.style.background = 'red';
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+    ticketNumberHeader.innerText = "Ticket: " + ticketNumber;
+    messageHeader.innerText = "Issue: " + message;
+    footer2.innerText = "From: " + user;
+
+    addTicketButton.onclick = function()
+    {
+        moveTicket(ticketNumber);
+        displayMessages();
+        displayTickets();
+        modal.style.display = "none";
+    }
+
+    deleteTicket.onclick = function()
+    {
+        deleteMessage(ticketNumber);
+        modal.style.display = "none";
+        refresh();
+    }
+
+
+}
+function moveTicket(id)
+{
+    var admin = localStorage.getItem('userLogin');
+    const url = 'https://kam.azurewebsites.net/api/messages/' + id;
+    var json = 
+    {
+        toMessage: admin
+    };
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: json,
+        dataType: 'json',
+        success: function(result){
+        }
+     });
+
+}
 function viewMessage(id)
 {
+    //Getid to check if delete button is clicked
+    var numberId = id.id;
+    var numb = numberId.match(/\d/g);
+    numb = numb.join("");
+    var deleteButton = document.getElementById(numb.toString(2));
+    deleteButton.onclick = function()
+    {
+        console.log('clicked');
+    };
     var span = document.getElementsByClassName("close")[0];
     var modal = document.getElementById("myModal");
     var user = id.childNodes.item(0).innerText;
     var allMessages = [];
-
     Url = 'https://kam.azurewebsites.net/api/messages/from/' + localStorage.getItem("userLogin");
     var result = null;
      
@@ -358,11 +578,20 @@ function viewMessage(id)
     var button = document.createElement('input');
     //Set attributes to style button and get information to send to database
     button.type = 'submit';
-    button.setAttribute('value', 'Submit');
+    button.setAttribute('value', 'Send');
     button.setAttribute('id', 'submit');
+
+    var deleteThread = document.createElement('input');
+    deleteThread.type = 'submit';
+    deleteThread.setAttribute('value','Delete Thread');
+    deleteThread.setAttribute('id', 'delete');
+    deleteThread.style.float = 'right';
+    deleteThread.style.background = 'red';
+    //deleteThread.style.float('right');
     //Add children to our body of text after messages come in
     body.appendChild(textArea);
     body.appendChild(button);
+    body.appendChild(deleteThread);
 
 
     span.onclick = function() {
@@ -387,12 +616,33 @@ function viewMessage(id)
         sendMessge(user, from, subject);
         modal.style.display = "none";
         id.childNodes.item(1).innerText = subject;
-        console.log(id.childNodes.item(1).innerText);
         clearList();
         }
     
+    deleteThread.onclick = function() 
+    {
+        var results = [];
+        for(let i = 0; i < allMessages.length; i++)
+        {    
+            results.push(deleteMessage(allMessages[i].messageId));
+        }    
+        for(let i = 0; i < results.length; i++)
+        {
+
+        }
+        modal.style.display = "none";
+        clearList();
+        refresh();
+    }
+    
 }
 displayMessages();
+if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+{
+        displayTickets();   
+}
 
 //Clears message body so that it updates the message threads without having repeated values
 function clearList()
@@ -414,6 +664,15 @@ function clear()
         ul.removeChild(ul.lastElementChild);
     }
 }
+function clearTickets()
+{
+    ticketCount = 0;
+    var ul = document.getElementById('tickets');
+    while(ul.lastElementChild != document.getElementById('ticketHead'))
+    {
+        ul.removeChild(ul.lastElementChild);
+    }
+}
 
 //Adds message to message database
 function sendMessge(to, from, contents)
@@ -426,8 +685,25 @@ function sendMessge(to, from, contents)
         contents: contents
     };
     $.post(url, message, function(message, status){
-        console.log(`${data} and status is ${status}`);
+        console.log(`${message} and status is ${status}`);
       });
+}
+
+
+function deleteMessage(id)
+{
+    const url = 'https://kam.azurewebsites.net/api/messages/'+id;
+    var result = null;
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+     });
+    return result;
 }
 
 //Gets time stamp for messages
@@ -527,3 +803,22 @@ function getMonth(number)
     }
     return "";
 }
+
+    //Refresh button animation
+    $( "#button" ).click(function() {
+      $( "#button" ).addClass( "onclic", 250, validate());
+    });
+  
+    function validate() {
+      setTimeout(function() {
+        $( "#button" ).removeClass( "onclic" );
+        $( "#button" ).addClass( "validate", 450, callback() );
+      }, 750 );
+    }
+      function callback() {
+        setTimeout(function() {
+          $( "#button" ).removeClass( "validate" );
+        }, 750 );
+      }
+ 
+      

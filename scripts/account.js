@@ -37,8 +37,11 @@ function edit()
 
 function setCard()
 {
+    if(localStorage.getItem('userLogin') == null)
+    {
+        return false;
+    }
     var user = getUser();
-    console.log(user.firstName);
     $('#name').text("Name: " + user.firstName + " " + user.lastName);
     $('#emailAddress').text("Email: " + user.email);
 

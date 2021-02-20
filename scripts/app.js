@@ -29,6 +29,7 @@ const navSlide = () => {
 
 //Logs user out and redirects them to login page 
 window.onload = function () {
+    
     var myClass = document.querySelector(".id")
         .onclick = function () {
             if(typeof(Storage) !== "undefined")
@@ -41,6 +42,14 @@ window.onload = function () {
         return false;
     }
 
+    $('.preloader').addClass('complete');
+
+
+
+    if(localStorage.getItem('userLogin') == null)
+    {
+        return false;
+    }
     //If admin goes to index and is still signed in it redirects them to admin page
     if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
     localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
@@ -62,6 +71,10 @@ getSignout();
 //Displays firstName + lastName | sign out, if clicked it signs user out
 function getSignout()
 {
+    if(localStorage.getItem('userLogin') == null)
+    {
+        return false;
+    }
     var user = getJson();
     var text = user.firstName + " " + user.lastName + " | Sign Out";
     $('#userName').text(text); 

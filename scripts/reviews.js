@@ -32,6 +32,7 @@ function getUsersName(email)
      });
      var json = JSON.parse(result);
      var firstName = json[0].firstName;
+     
      return firstName;
 }
 
@@ -84,14 +85,16 @@ function displayReviews()
 {
     var json = getJSON();
     var randoms = getRandomsArray();
-    for(let i = 0; i < json.length; i++)
+    for(let i = 0; i < randoms.length; i++)
     {
         var row = document.getElementById('row' + (i+1));
-        var name = getUsersName(json[randoms[i]].email);
-        //row.querySelector('.col-1').innerText = json[randoms[i]].email;
+        var email = json[randoms[i]].email;
+        var name = getUsersName(email);
         row.querySelector('.col-1').innerText = name;
         row.querySelector('.col-2').innerText = json[randoms[i]].description;
         row.querySelector('.col-3').innerText = json[randoms[i]].rating;
+        //row.querySelector('.col-1').innerText = json[randoms[i]].email;
+        
     }
     
 }
