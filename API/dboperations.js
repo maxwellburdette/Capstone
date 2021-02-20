@@ -192,7 +192,9 @@ async function getCertainRooms(numberPeople)
         let pool = await sql.connect(config);
         let roomList = await pool.request()
             .input('input_parameter', sql.Int, numberPeople)
-            .query("SELECT * from rooms where maxOccupancy >= @input_parameter");
+            .query("SELECT room.* from hotelRooms r INNER JOIN roomType t" +
+                   "ON r.roomTypeId = t.roomTypeId" + 
+                   "WHERE t.maxOccupancy >= @input_parameter");
         return roomList.recordsets;
     }
     catch(error)
@@ -204,20 +206,13 @@ async function getCertainRooms(numberPeople)
 // Add a room to the table
 async function addRoom(room)
 {
-    // testing
-    console.log("dboperations.js: inside addRoom(room): " + room.viewRoom)
     try
     {
-    // testing
-    console.log("dboperations.js: inside addRoom(room) try block: " + room.viewRoom)
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
             .input('roomNumber', sql.Int, room.roomNumber)
-            .input('bedType', sql.Int, room.bedType)
-            .input('bedCount', sql.Int, room.bedCount)
-            .input('cost', sql.Int, room.cost)
-            .input('maxOccupancy', sql.Int, room.maxOccupancy)
-            .input('viewRoom', sql.NVarChar, room.viewRoom)
+            .input('roomType', sql.Int, room.roomType)
+            .input('roomTier', sql.Int, room.roomTier)
             .execute('InsertRoom');
         return insertRoom.recordsets;
     }
@@ -235,7 +230,7 @@ async function deleteRoom(roomNumber)
         let pool = await sql.connect(config);
         let deleteRoom = await pool.request()
             .input('input_parameter', sql.Int, roomNumber)
-            .query("BEGIN DELETE FROM rooms  WHERE  roomNumber = @input_parameter END ");
+            .query("BEGIN DELETE FROM hotelRooms  WHERE  roomNumber = @input_parameter END ");
         return deleteRoom.recordsets;
     }
     catch(error)
@@ -251,16 +246,10 @@ async function updateRoom(room, roomNumber)
     {
         let pool = await sql.connect(config);
         let updateRoom = await pool.request()
-            .input('bedType', sql.Int, room.bedType)
-            .input('bedCount', sql.Int, room.bedCount)
-            .input('cost', sql.Int, room.cost)
-            .input('maxOccupancy', sql.Int, room.maxOccupancy)
-            .input('viewRoom', sql.NVarChar, room.viewRoom)
-            .input('input_parameter', sql.Int, roomNumber)
-            .query('BEGIN  UPDATE rooms  SET bedType = @bedType,  bedCount = @bedCount,  cost = @cost, ' +
-                   'maxOccupancy = @maxOccupancy, viewRoom = @viewRoom  WHERE  roomNumber = @input_parameter END');
+            .input('roomType', sql.Int, room.roomType)
+            .input('roomTier', sql.NVarChar(20), room.roomTier)
+            .query('BEGIN  UPDATE hotelRooms  SET roomType = @roomType,  roomTier = @roomTier  WHERE  roomNumber = @input_parameter END');
         return updateRoom.recordsets;
-
     }
     catch(error)
     {

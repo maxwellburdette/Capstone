@@ -1,11 +1,9 @@
 class Room {
-    constructor(roomNumber, bedType, bedCount, maxOccupancy, cost, viewRoom)
+    constructor(roomNumber, roomTypeId, roomTier, roomCost)
     {
         this.roomNumber = roomNumber;
-        this.bedType = bedType;
-        this.bedCount = bedCount;
-        this.maxOccupancy = maxOccupancy;
-        this.cost = cost;
-        this.viewRoom = viewRoom;
+        this.roomTypeId = roomTypeId;
+        this.roomTier = roomTier;
+        this.roomCost = roomCost;
     }
 }

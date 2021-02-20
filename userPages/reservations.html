@@ -22,7 +22,6 @@
             <li><a id ="account" href="account.html"></a></li>
             <li><a id="userMessages" href="usermessages.html"></a></li>
             <li><a id="makeReservation" href="reservations.html"></a></li>
-            <li><a id="manageReservation" href="#"></a></li>
             <li><a id="leaveReview"href="rating.html"></a></li>
         </ul>
         <div class="burger">
@@ -31,6 +30,11 @@
             <div class="line3"></div>
         </div>
     </nav>
+<div class="pageContainer">
+    <!-- all of the room information will show up here when the "select room" button is clicked-->
+    <div id="roomPopup">
+        <button onClick="closePopup()">Close</button>
+    </div>
     <form>
         <!--<div id="resFilterDates">
             <!-
@@ -64,6 +68,7 @@
     <div id="roomsContainer">
         <!-- all of the rooms will appear here! -->
     </div>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="../scripts/reservation.js"></script>

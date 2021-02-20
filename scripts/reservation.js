@@ -1,5 +1,41 @@
 /****************************************************************
  * 
+ *       Functions that make the editRoom page look nice
+ * 
+****************************************************************/
+function selectForm(formType) {
+  // first, hide all of the forms and reset the button colors
+  resetForms();
+  var form = document.getElementById(formType);
+  var btn = document.getElementById(formType + "Btn");
+  // then show the form
+  form.style.display = 'block';
+  // then change the button color
+  btnSelect(btn);
+}
+
+function resetForms() {
+  // hide all of the forms
+  document.getElementById("roomForm").style['display'] = 'none';
+  document.getElementById("tierForm").style['display'] = 'none';
+  // color all of the buttons
+  resetBtn(document.getElementById("roomFormBtn"));
+  resetBtn(document.getElementById("tierFormBtn"));
+}
+
+function resetBtn(btn) {
+  btn.style['background-color'] = '#EBE8EA';
+  btn.style['color'] = '#5d4954';
+}
+
+function btnSelect(btn) {
+  btn.style['background-color'] = '#5d4954';
+  btn.style['color'] = '#EBE8EA';
+}
+
+
+/****************************************************************
+ * 
  *   Functions to Add, Update, and Delete Rooms from the table
  * 
 ****************************************************************/
@@ -11,14 +47,8 @@ function addRoom() {
     */
     const url = "http://localhost:8090/api/rooms";
     var roomNumber = parseInt(document.getElementById("roomNumber").value);
-    var bedType = parseInt(document.querySelector('input[name="bedType"]:checked').value);
-    var bedCount = parseInt(document.querySelector('input[name="bedCount"]:checked').value);
-    var cost = parseInt(document.getElementById("cost").value);
-    /*
-    TO-DO: two people per bed for now -- can adjust this to include children
-    */
-    var maxOccupancy = bedCount * 2;
-    var viewRoom = document.getElementById('viewRoom').value;
+    var roomTypeId = parseInt(document.querySelector('input[name="roomTypeId"]:checked').value);
+    var roomTier = document.querySelector('input[name="roomTier"]:checked').value;
 
     /*
     TO-DO: we might want to add functionality to make sure that we can't have two rooms in
@@ -28,16 +58,10 @@ function addRoom() {
     // save the parameters in an object
     var data = {
       roomNumber: roomNumber,
-      bedType: bedType,
-      bedCount: bedCount,
-      cost: cost,
-      maxOccupancy: maxOccupancy,
-      viewRoom: viewRoom
+      roomTypeId: roomTypeId,
+      roomTier: roomTier,
     }
 
-    /*
-    TO-DO: this currently is only sending the first character of the image string, fix it
-    */
     // send the object to the database to add the room with this information
     $.post(url, data, function(data, status){
       console.log(`${data} and status is ${status}`);
@@ -52,17 +76,9 @@ function updateRoom() {
   TO-DO: check if the room number exists. if it does not, have a popup asking the user if they want to add it
   */
 
-  // when we get editRoom working with the dynamic input, it'll always have the fields filled in,
-  // so we should never have to fall onto this catch.
   try {
-    var bedType = parseInt(document.querySelector('input[name="bedType"]:checked').value);
-    var bedCount = parseInt(document.querySelector('input[name="bedCount"]:checked').value);
-    var cost = parseInt(document.getElementById("cost").value);
-    /*
-    TO-DO: two people per bed for now -- can adjust this to include children
-    */
-    var maxOccupancy = bedCount * 2;
-    var viewRoom = document.getElementById('viewRoom').value;
+    var roomTypeId = parseInt(document.querySelector('input[name="roomTypeId"]:checked').value);
+    var roomTier = document.querySelector('input[name="roomTier"]:checked').value;
   } catch (error) {
     console.log(error);
     console.log("missing field(s)");
@@ -70,11 +86,8 @@ function updateRoom() {
 
   // put all of this info into a data object to be sent to the database
   var roomData = {
-    bedType: bedType,
-    bedCount: bedCount,
-    cost: cost,
-    maxOccupancy: maxOccupancy,
-    viewRoom: viewRoom
+    roomTypeId: roomTypeId,
+    roomTier: roomTier
   }
 
   // send the room data info to the database to update it
@@ -118,6 +131,10 @@ function deleteRoom() {
  *   Functions to show the available rooms to the user
  * 
 ****************************************************************/
+
+/*
+TO-DO: change this to get the room types from that table
+*/
 // get a json file based on what the search parameters are
 function getJSON(param)
 {
@@ -137,6 +154,10 @@ function getJSON(param)
      var json = JSON.parse(result);
      return json;
 }
+
+/*
+TO-DO: get json of all of the rooms with the room types created from the above json
+*/
 
 // get the json file for the rooms that apply to the user's query
 function getRooms() {
@@ -166,17 +187,19 @@ function getRooms() {
 }
 
 /*
-TO-DO:
-  right now, this page only works on first load. If you try to do it again with a different number of people,
-  it doesn't reload itself.
-  note that i had to prevent reloading in the getRooms function. could work around this or just make it more dynamic.
-*/
+TO-DO: this function needs to be redone since we're only showing the
+       types of the rooms instead of the actual rooms
 
+       Should probably add some functionality to list how many are remaining
+*/
 // display the rooms on the reservations page
 function displayRooms(rooms) {
   const listContainer = document.getElementById("roomsContainer");
+  // clear what was generated so that the page "refreshes" each time the user clicks submit
+  listContainer.innerHTML = "";
   const list = document.createElement("ul");
   var numberPeople = parseInt(document.getElementById("resNumAdults").value) + parseInt(document.getElementById("resNumChildren").value);
+  // clear the innerHTML if there is any so that it refreshes
   for (i = 0; i < rooms.length; i++) {
     // convert the int bed type to a string
     if (rooms[i].bedType == 0) {
@@ -220,8 +243,9 @@ function displayRooms(rooms) {
     room.innerHTML += (
       "<div class='col3'>" +
         "<span class='numNights'>Nights: " + numberNights + ". Guests: " + numberPeople + ".</span><br>" +
-        "<span class='pricePerNight'>Per Night: $" + rooms[i].cost + "</span><br />" +
-        "<span class='totalCost'>Total: $" + (rooms[i].cost * numberNights) + "</span>" +
+        "<span class='pricePerNight'>Per Night: $" + rooms[i].cost + "</span><br>" +
+        "<span class='totalCost'>Total: $" + (rooms[i].cost * numberNights) + "</span><br>" +
+        "<button class='btnSelectRoom' onClick='selectRoom(" + rooms[i].roomNumber + ")'>Select Room</button>" +
       "</div>");
 
       room.innerHTML += "<hr>";
@@ -229,6 +253,18 @@ function displayRooms(rooms) {
   }
   listContainer.appendChild(list);
 }
+
+// create the popup window for that room's information
+function selectRoom(roomNumber) {
+  // show the popup
+  document.getElementById("roomPopup").style['display'] = 'block';
+  console.log("room " + roomNumber + " added to res");
+}
+
+function closePopup() {
+  document.getElementById("roomPopup").style['display'] = 'none';
+}
+
 
 
 /****************************************************************
@@ -255,3 +291,14 @@ function deleteReservation() {
   // some code
 }
 
+
+
+/****************************************************************
+ * 
+ *               Admin Reservation Functions
+ * 
+****************************************************************/
+
+/*
+TO-DO: create a function to show all reservations based on date, user, and/or room
+*/
