@@ -2,6 +2,8 @@ var Db = require('./dboperations');
 var User = require('./user');
 var Review = require('./review');
 var Room = require('./room');
+var RoomTier = require('./roomTier');
+var RoomType = require('./roomType');
 const dboperations = require('./dboperations');
 
 

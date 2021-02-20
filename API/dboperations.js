@@ -158,7 +158,7 @@ async function getRooms()
     try
     {
         let pool = await sql.connect(config);
-        let rooms = await pool.request().query('SELECT * FROM ROOMS');
+        let rooms = await pool.request().query('SELECT * FROM hotelRooms');
         return rooms.recordsets;
     }
     catch(error)
@@ -175,7 +175,7 @@ async function getRoom(roomNumber)
         let pool = await sql.connect(config);
         let room = await pool.request()
             .input('input_parameter', sql.Int, roomNumber)
-            .query("SELECT * from rooms where roomNumber = @input_parameter");
+            .query("SELECT * from hotelRooms where roomNumber = @input_parameter");
         return room.recordsets;
     }
     catch(error)
@@ -192,7 +192,7 @@ async function getCertainRooms(numberPeople)
         let pool = await sql.connect(config);
         let roomList = await pool.request()
             .input('input_parameter', sql.Int, numberPeople)
-            .query("SELECT room.* from hotelRooms r INNER JOIN roomType t" +
+            .query("SELECT r.* from hotelRooms r INNER JOIN roomType t" +
                    "ON r.roomTypeId = t.roomTypeId" + 
                    "WHERE t.maxOccupancy >= @input_parameter");
         return roomList.recordsets;
