@@ -58,11 +58,6 @@ window.onload = function () {
     }
   
 }
-
-
-
-
-
 navSlide();
 getSignout();
 

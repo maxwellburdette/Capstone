@@ -1,0 +1,9 @@
+{
+"short_name": "KAM",
+"name": "KAM HOtels",
+"icons": [
+
+  ],
+  "start_url": "index.html",
+  "display": "fullscreen"
+}

@@ -44,8 +44,7 @@ window.onload = function () {
 
     $('.preloader').addClass('complete');
 
-
-
+    console.log(localStorage.getItem('userLogin'));
     if(localStorage.getItem('userLogin') == null)
     {
         return false;

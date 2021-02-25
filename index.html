@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width = device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">   
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styling/index.css">
+    <link rel="manifest" href="/manifest.json" >
     <title>Home</title>
 </head>
 <body>
@@ -32,8 +32,13 @@
             <div class="line3"></div>
         </div>
       </nav>
-      <div class="container">
-        <h2>Reviews from our past guests</h2>
+      <div id="starContainer" class="starContainer">
+        <h2>Rating</h2>
+        <div id="rating" class="Stars" style="--rating: 2.3;">
+        </div>
+      </div>
+      <div id="box" class="container">
+        <h2>Past Reviews</h2>
         <ul class="responsive-table">
           <li class="table-header">
             <div class="col col-1">User</div>
@@ -67,5 +72,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/reviews.js"></script>
+    <script src="userPages/scripts/rating.js"></script>
 </body>
 </html>

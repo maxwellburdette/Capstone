@@ -114,7 +114,7 @@
     position: relative;
     width: 100%;
     margin-top: 10px;
-
+    margin-bottom: 20px;
 }
 
 .contactForm .inputBox input,
@@ -228,6 +228,21 @@
     .contactForm .inputBox input,
 .contactForm .inputBox textarea
 {
-    width: 75%;
+    width: 100%;
 }
+}
+
+@media (max-width: 414px)
+{
+    .formContainer .contactInfo .box .text
+    {
+        font-size: 13px;
+    }   
+}
+@media (max-width: 365px)
+{
+    .formContainer .contactInfo .box .text
+    {
+        font-size: 11px;
+    }  
 }

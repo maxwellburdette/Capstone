@@ -40,7 +40,7 @@ function login()
         err.innerText = response;
         if(typeof(Storage) !== "undefined")
         {
-          localStorage.setItem("userLogin", email);
+          localStorage.setItem("userLogin", dbEmail);
         }
         window.location.replace("../adminPages/adminhome.html");
       }
@@ -57,7 +57,7 @@ function login()
         err.innerText = response;
         if(typeof(Storage) !== "undefined")
         {
-          localStorage.setItem("userLogin", email);
+          localStorage.setItem("userLogin", dbEmail);
         }
         window.location.replace("../index.html");
       }

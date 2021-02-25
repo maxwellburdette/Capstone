@@ -132,6 +132,24 @@ function sendMessge(to, from, contents)
 
 displayMessages();
 
+//Autoscrolls after reaching top or bottom
+//Better for mobile site
+$('#box').on('scroll', function()
+{
+  var scrollTop = $(this).scrollTop();
+  
+  if(scrollTop + $(this).innerHeight() >= this.scrollHeight)
+  {
+    $("#fullview").animate({ scrollTop: $('#fullview').prop("scrollHeight")}, 1000);
+  }
+  else if(scrollTop <= 0)
+  {
+    $("#fullview").animate({ scrollTop: 0 }, "slow");
+  }
+  
+});
+
+
 //Refresh button animation
 $( "#button" ).click(function() {
     $( "#button" ).addClass( "onclic", 250, validate());

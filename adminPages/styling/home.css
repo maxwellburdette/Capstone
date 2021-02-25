@@ -8,6 +8,8 @@ body {
     margin-right: auto;
     padding-left: 10px;
     padding-right: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
     height: 425px;
     background-color: #5d4954;
     border-top-right-radius: 25px;
@@ -16,6 +18,7 @@ body {
     border-bottom-right-radius: 10px;
     opacity: .9;
     z-index: -1;
+    overflow-y: scroll;
   }
   
   h2 {
@@ -82,4 +85,9 @@ body {
     {
         height: 675px;
     }
+  }
+  ::-webkit-scrollbar
+  {
+    width: 0;
+    background: transparent;
   }

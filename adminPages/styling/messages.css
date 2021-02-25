@@ -10,6 +10,7 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 10px;
+    margin-top: 5%;
     height: 400px;
     background-color: #5d4954;
     border-top-right-radius: 10px;
@@ -106,6 +107,21 @@ body {
         height: 675px;
     }
   }
+
+  @media all and (max-width: 400px) 
+  {
+    h2
+    {
+      font-size: larger;
+    }
+  }
+  @media all and (max-width: 320px) 
+  {
+    h2
+    {
+      font-size: large;
+    }
+  }
   input[type=text], select, textarea {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */ 
@@ -118,24 +134,10 @@ body {
   }
 
 
-  ::-webkit-scrollbar-track
-  {
-    
-    border-radius: 5px;
-    background-color: #555;
-  }
-  
   ::-webkit-scrollbar
   {
-    width: 12px;
-    background-color: #555;
-  }
-  
-  ::-webkit-scrollbar-thumb
-  {
-    border-radius: 5px;
-    
-    background-color: gray;
+    width: 0;
+    background: transparent;
   }
 
   .hoverBody {
@@ -251,6 +253,7 @@ body {
     align-items: center;
     justify-content: center;
     left: 50%;
+    bottom: 5px;
     margin-left: -130px;
     margin-top: -40px;
     width: 260px;

@@ -116,3 +116,38 @@ function addRating()
     
 }
 
+function getReviews()
+{
+    var json = getJSON();
+    var allRatings = 0;
+    for(let i = 0; i < json.length; i++)
+    {
+        allRatings += json[i].rating;
+    }
+    var rating = round(allRatings/json.length);
+    var star = document.getElementById('rating');
+    var ratingInput = '--rating: ' + rating;
+    star.setAttribute('style', ratingInput); 
+}
+getReviews();
+
+function round(num)
+{
+    var round = Math.round(num * 10) / 10;
+    var whole = Math.floor(num);
+    var decimal = parseFloat((round%1).toFixed(2));
+    if(decimal == .5)
+    {
+        return whole + decimal;
+    }
+    else if(decimal < .5)
+    {
+        return whole;
+    }
+    else
+    {
+        return Math.ceil(num);
+    }
+}
+
+

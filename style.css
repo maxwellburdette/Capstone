@@ -148,7 +148,6 @@ nav {
 {
     .page
     {
-      position: relative;
       overflow-x: hidden;
       height: 100vh;
     }
@@ -160,6 +159,7 @@ nav {
     {
         width: 80%;
     }
+    
 }
 
 
