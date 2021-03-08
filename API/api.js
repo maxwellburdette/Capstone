@@ -1,9 +1,13 @@
 var Db = require('./dboperations');
-var User = require('./user');
-var Review = require('./review');
-var Room = require('./room');
-var RoomTier = require('./roomTier');
-var RoomType = require('./roomType');
+var User = require('./dbTableClasses/user');
+var Review = require('./dbTableClasses/review');
+var Amenity = require('./dbTableClasses/roomType');
+var Reservation = require('./dbTableClasses/reservation');
+var Room = require('./dbTableClasses/room');
+var RoomImage = require('./dbTableClasses/roomImage');
+var RoomSize = require('./dbTableClasses/roomSize');
+var RoomTier = require('./dbTableClasses/roomTier');
+var RoomType = require('./dbTableClasses/roomType');
 const dboperations = require('./dboperations');
 
 
@@ -33,7 +37,7 @@ router.use((request, response, next) => {
 router.route("/users").get((request, response) =>
 {
     dboperations.getUsers().then(result => {
-        console.log(result);
+        //console.log(result);
         response.json(result[0]);
     })
 });
@@ -107,7 +111,6 @@ router.route("/reviews").post((request, response) =>
 router.route("/rooms").get((request, response) =>
 {
     dboperations.getRooms().then(result => {
-        console.log(result);
         response.json(result[0]);
     })
 });
@@ -116,14 +119,6 @@ router.route("/rooms").get((request, response) =>
 router.route("/rooms/:roomNumber").get((request, response) =>
 {
     dboperations.getRoom(request.params.roomNumber).then(result => {
-        response.json(result[0]);
-    })
-});
-
-// Get request: retrieves a list of rooms and their data based on the max occupancy
-router.route("/rooms/search/:numberPeople").get((request, response) =>
-{
-    dboperations.getCertainRooms(request.params.numberPeople).then(result => {
         response.json(result[0]);
     })
 });
@@ -154,13 +149,138 @@ router.route("/rooms/:roomNumber").delete((request, response) =>
     })
 });
 
+/*************************************************************
+*                      ROOM TYPES TABLE
+**************************************************************/
+// Get request: retrieves a list of all room types and their data
+router.route("/roomtypes").get((request, response) =>
+{
+    dboperations.getRoomTypes().then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a specific room type and its data
+router.route("/roomtypes/:roomTypeId").get((request, response) =>
+{
+    dboperations.getRoomType(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a specific room type and ALL of its data (through joins)
+router.route("/roomTypes/alldata/:roomTypeId").get((request, response) =>
+{
+    dboperations.getAllRoomTypeInfo(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a list of room types and their data based on the max occupancy
+router.route("/roomtypes/numberGuests/:numberPeople").get((request, response) =>
+{
+    dboperations.getCertainRoomTypes(request.params.numberPeople).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves the roomTypeId that corresponds to the provided roomSizeId and roomTierId
+router.route("/roomtypes/size/:roomSizeId/tier/:roomTierId").get((request, response) =>
+{
+    dboperations.getRoomTypeId(request.params.roomSizeId, request.params.roomTierId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+
+/*************************************************************
+*                      ROOM TIERS TABLE
+**************************************************************/
+// Get request: retrieves a list of all room tiers and their data
+router.route("/roomtiers").get((request, response) =>
+{
+    dboperations.getRoomTiers().then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a specific room tier and its data
+router.route("/roomtiers/:roomTierId").get((request, response) =>
+{
+    dboperations.getRoomTier(request.params.roomTierId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Post request: Adds a room tier to table
+router.route("/roomtiers").post((request, response) =>
+{
+    let roomTier = {...request.body}
+    dboperations.addRoomTier(roomTier).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Put request: Updates the room tier in the table with the new info
+router.route("/roomtiers/:roomTierId").put((request, response) =>
+{
+    let roomTier = {...request.body}
+    dboperations.updateRoomTier(roomTier, request.params.roomTierId).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Delete request: Deletes the room tier from the table
+router.route("/roomtiers/:roomTierId").delete((request, response) =>
+{
+    dboperations.deleteRoomTier(request.params.roomTierId).then(result => {
+        response.status(200).json(result);
+    })
+});
+
+
+/*************************************************************
+*                      AMENITIES TABLE
+**************************************************************/
+// Get request: retrieves a list of all amenities and their data
+router.route("/amenities").get((request, response) =>
+{
+    dboperations.getAmenities().then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a specific amenity and its data
+router.route("/amenities/:amenityName").get((request, response) =>
+{
+    dboperations.getAmenity(request.params.amenityName).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Get request: retrieves a list of amenities for a given room type
+router.route("/amenities/roomTypeId/:roomTypeId").get((request, response) =>
+{
+    dboperations.getAmenitiesByRoomType(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+
+
+/*************************************************************
+*                      IMAGES TABLE
+**************************************************************/
+// Get request: retrieves a list of images for a given room type
+router.route("/images/roomTypeId/:roomTypeId").get((request, response) =>
+{
+    dboperations.getImagesByRoomType(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
 
 
 var port = process.env.PORT || 8090;
 app.listen(port);
 console.log("User API is running at " + 'http://localhost:' +  port);
-
-dboperations.getUsers().then(result  => 
-{
-    console.log(result[0]);
-});

@@ -2,8 +2,8 @@ form {
     background-color: #5d4954;
     opacity: .9;
     width: 600px;
-    height: 300px;
-    text-align: center;
+    height: auto;
+    text-align: left;
     justify-content: space-around;
     align-items: center;
     margin: 0 auto;
@@ -15,7 +15,7 @@ form {
     font-weight: bold;
     font-size: 18px;
     color: rgb(226, 226, 226);
-    padding: 20px;
+    padding: 20px 80px;
 }
 
 form input[type="submit"] {
@@ -64,4 +64,35 @@ form input[type="submit"] {
 
 #tierForm {
     display: none;
+}
+
+.submitButtons {
+    text-align: center;
+}
+
+.col1 {
+    float: left;
+    width: 40%;
+}
+
+.col2 {
+    float: left;
+    width: 60%;
+}
+
+.clear {
+    clear: both;
+}
+
+#roomNumberSelector select, input[type="text"] {
+    width: 100%;
+}
+
+#imagePlaceholder {
+    margin: 10px;
+    font-size: .8rem;
+    background-color: white;
+    color: #5d4954;
+    height: fit-content;
+    padding: 10px;
 }
