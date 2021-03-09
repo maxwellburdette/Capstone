@@ -61,13 +61,13 @@ function resetForms() {
 }
 
 function resetBtn(btn) {
-  btn.style['background-color'] = '#EBE8EA';
-  btn.style['color'] = '#5d4954';
+  btn.style['background-color'] = 'var(--lightColor)';
+  btn.style['color'] = 'var(--darkColor)';
 }
 
 function btnSelect(btn) {
-  btn.style['background-color'] = '#5d4954';
-  btn.style['color'] = '#EBE8EA';
+  btn.style['background-color'] = 'var(--darkColor)';
+  btn.style['color'] = 'var(--lightColor)';
 }
 
 
@@ -101,19 +101,31 @@ function generateRoomNumberSelector() {
 function generateRoomInfo() {
   const selectRoom = document.getElementById("roomNumberSelector");
   var selected = selectRoom.value;
-
-  // testing
-  console.log(selected + " was clicked");
+  // this is probably not the best way to do check if a string is a number, 
+  // but I'm not sure how else other than looping through the string and checking if each char is a number, 
+  // and this seemed like a more concise way of doing it
+  try {
+    selected = parseInt(selected);
+  } catch (error) {
+    // do nothing since the string is a string
+  }
 
   // if we have selected a room to edit
   if (typeof selected === "number") {
-    const roomRoute = getRoute("/rooms/alldata/" + selected.value);
-    var room = getJSON(route);
+    // get all of the information that pertains to that room and its room type
+    const roomRoute = getRoute("/rooms/" + selected);
+    var room = getJSON(roomRoute)[0];
+    const roomTypeRoute = getRoute("/roomtypes/" + room.roomTypeId);
+    var roomType = getJSON(roomTypeRoute)[0];
 
-    console.log(room.roomNumber);
+    // set the correct radio buttons to be selected based on the room number
+    document.getElementById("selectSize" + roomType.roomSizeId).checked = true;
+    document.getElementById("selectTier" + roomType.roomTierId).checked = true
+
+    // populate the type page with this information
+    getRoomTypeInfo(roomType);
   }
 }
-
 
 /****************************************************************
  * 
@@ -223,6 +235,66 @@ function deleteRoom() {
   */
 }
 
+/****************************************************************
+ * 
+ *            Design/Styling of Edit Type Form
+ * 
+****************************************************************/
+// populate the text boxes with the information gathered from the radios
+  /*
+  TO-DO: only make the radio buttons appear at first, and have a submit button to get the type info. 
+        then allow the user to modidy the max occupancy, cost, and image
+        For cost, should probably display the suggested cost based on the size and tier amounts
+        For max occ, should probably display the suggested max occ based on the bed numbers/sizes/etc
+  */
+function populateTypeForm(type) {
+  // populate the fields in the table with the room type information
+  document.getElementById("typeSize" + type.roomSizeId).checked = true;
+  document.getElementById("typeTier" + type.roomTierId).checked = true;
+  console.log(type.roomTypeName); // undefined
+  document.getElementById("typeName").value = type.roomTypeName;
+  console.log(type.maxOccupancy); // undefined
+  document.getElementById("typeMaxOccupancy").value = parseInt(type.maxOccupancy);
+  console.log(type.totalCost); // undefined
+  document.getElementById("typeCost").value = parseInt(type.totalCost);
+}
+
+/****************************************************************
+ * 
+ *   Functions to Get Info from Type Form & Update Types
+ * 
+****************************************************************/
+// get the room type info depending on whether the room form is filled out or not
+function getRoomTypeInfo(roomType) {
+  var type;
+  // get the radios from the type form
+  var typeSizeRadio = document.querySelector('input[name="typeSizeId"]:checked');
+  var typeTierRadio = document.querySelector('input[name="typeTierId"]:checked');
+
+  // if the rooms form is filled out, get the type associated with that at first
+  // but otherwise just allow the user to select whatever they want
+  if (typeSizeRadio != null && typeTierRadio!= null) {
+    type = getAllRoomTypeInfo(typeSizeRadio.value, typeTierRadio.value)[0];
+  } else if (roomType != null && roomType != null) {
+    type = getAllRoomTypeInfo(roomType.roomSizeId, roomType.roomTierId)[0];
+  }
+  
+  populateTypeForm(type);
+}
+
+// get all room type info
+function getAllRoomTypeInfo(size, tier) {
+    // get the room type that corresponds to the buttons selected
+    var searchBy = "/roomtypes/size/" + size + "/tier/" + tier;
+    var route = getRoute(searchBy);
+    var json = getJSON(route)[0];
+    var typeId = parseInt(json.roomTypeId);
+    const typeRoute = getRoute("/roomtypes/alldata/" + typeId);
+    // variable that stores all data associated with the room type
+    var type = getJSON(typeRoute);
+  
+    return type;
+}
 /****************************************************************
  * 
  *   Functions to Add, Update, and Delete Images from the table
