@@ -160,7 +160,7 @@ router.route("/roomtypes").get((request, response) =>
     })
 });
 
-// Get request: retrieves a specific room type and its data
+// Get request: retrieves a specific room type and its data based on the roomTypeId
 router.route("/roomtypes/:roomTypeId").get((request, response) =>
 {
     dboperations.getRoomType(request.params.roomTypeId).then(result => {
@@ -189,6 +189,15 @@ router.route("/roomtypes/size/:roomSizeId/tier/:roomTierId").get((request, respo
 {
     dboperations.getRoomTypeId(request.params.roomSizeId, request.params.roomTierId).then(result => {
         response.json(result[0]);
+    })
+});
+
+// Put request: Updates the room in the table with the new info
+router.route("/roomtypes/:roomTypeId").put((request, response) =>
+{
+    let roomType = {...request.body}
+    dboperations.updateRoomType(roomType, request.params.roomTypeId).then(result => {
+        response.status(201).json(result);
     })
 });
 
@@ -251,21 +260,20 @@ router.route("/amenities").get((request, response) =>
 });
 
 // Get request: retrieves a specific amenity and its data
-router.route("/amenities/:amenityName").get((request, response) =>
+router.route("/amenities/:amenityId").get((request, response) =>
 {
-    dboperations.getAmenity(request.params.amenityName).then(result => {
+    dboperations.getAmenity(request.params.amenityId).then(result => {
         response.json(result[0]);
     })
 });
 
-// Get request: retrieves a list of amenities for a given room type
-router.route("/amenities/roomTypeId/:roomTypeId").get((request, response) =>
+// Get request: retrieves a list of amenities by room tier
+router.route("/amenities/roomTierId/:roomTierId").get((request, response) =>
 {
-    dboperations.getAmenitiesByRoomType(request.params.roomTypeId).then(result => {
+    dboperations.getAmenitiesByRoomTier(request.params.roomTierId).then(result => {
         response.json(result[0]);
     })
 });
-
 
 
 /*************************************************************

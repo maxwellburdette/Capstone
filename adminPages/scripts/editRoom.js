@@ -99,19 +99,35 @@ function generateRoomNumberSelector() {
 
 // populate the radio fields with the correct room info
 function generateRoomInfo() {
+  // html element variables
+  var btnAddRoom = document.getElementById("addRoomBtn");
+  var btnUpdateRoom = document.getElementById("updateRoomBtn");
+  var btnDeleteRoom = document.getElementById("deleteRoomBtn");
+  var txtRoomNumber = document.getElementById("roomNumberText");
+
   const selectRoom = document.getElementById("roomNumberSelector");
   var selected = selectRoom.value;
-  // this is probably not the best way to do check if a string is a number, 
-  // but I'm not sure how else other than looping through the string and checking if each char is a number, 
-  // and this seemed like a more concise way of doing it
-  try {
-    selected = parseInt(selected);
-  } catch (error) {
-    // do nothing since the string is a string
-  }
 
+  if (selected === "new") {
+    // unhide the add button so we can add the room
+    // hide the update and delete buttons so we can't update or delete a room that hasn't been added
+    btnAddRoom.hidden = false;
+    btnUpdateRoom.hidden = true;
+    btnDeleteRoom.hidden = true;
+
+    txtRoomNumber.style.display = "block";
+  }
   // if we have selected a room to edit
-  if (typeof selected === "number") {
+  else if (selected != "") {
+    // hide the add button so we can't add a room that already exists
+    // unhide the update and delete buttons, if they were hidden
+    btnAddRoom.hidden = true;
+    btnDeleteRoom.hidden = false;
+    btnUpdateRoom.hidden = false;
+
+    // hide the new room number input field
+    txtRoomNumber.style.display = "none";
+
     // get all of the information that pertains to that room and its room type
     const roomRoute = getRoute("/rooms/" + selected);
     var room = getJSON(roomRoute)[0];
@@ -119,8 +135,8 @@ function generateRoomInfo() {
     var roomType = getJSON(roomTypeRoute)[0];
 
     // set the correct radio buttons to be selected based on the room number
-    document.getElementById("selectSize" + roomType.roomSizeId).checked = true;
-    document.getElementById("selectTier" + roomType.roomTierId).checked = true
+    document.getElementById("selectSize" + roomType.roomSizeId).checked = true;;
+    document.getElementById("selectTier" + roomType.roomTierId).checked = true;
 
     // populate the type page with this information
     getRoomTypeInfo(roomType);
@@ -139,7 +155,7 @@ function addRoom() {
     TO-DO: make sure each question is answered so that there are no nulls
     */
     const url = getRoute("/rooms");
-    var roomNumber = parseInt(document.getElementById("roomNumber").value);
+    var roomNumber = parseInt(document.getElementById("roomNumberText").value);
     var roomSizeId = parseInt(document.querySelector('input[name="roomSizeId"]:checked').value);
     var roomTierId = parseInt(document.querySelector('input[name="roomTierId"]:checked').value);
 
@@ -168,13 +184,10 @@ function addRoom() {
 
 // update a specific room's information with the information entered on the editRoom page
 function updateRoom() {
-  var roomNumber = parseInt(document.getElementById("roomNumber").value);
+  var roomNumber = parseInt(document.getElementById("roomNumberSelector").value);
 
-  const url = getRoute("/rooms" + roomNumber);
+  const url = getRoute("/rooms/" + roomNumber);
 
-  /*
-  TO-DO: check if the room number exists. if it does not, have a popup asking the user if they want to add it
-  */
   try {
     var roomSizeId = parseInt(document.querySelector('input[name="roomSizeId"]:checked').value);
     var roomTierId = parseInt(document.querySelector('input[name="roomTierId"]:checked').value);
@@ -214,7 +227,7 @@ function updateRoom() {
 
 // delete a room from the table based on the roomNumber
 function deleteRoom() {
-  const url = getRoute("/rooms/" + document.getElementById("roomNumber").value);
+  const url = getRoute("/rooms/" + document.getElementById("roomNumberSelector").value);
 
   /*
   TO-DO: check if the room number exists and only delete it if it does
@@ -251,13 +264,11 @@ function populateTypeForm(type) {
   // populate the fields in the table with the room type information
   document.getElementById("typeSize" + type.roomSizeId).checked = true;
   document.getElementById("typeTier" + type.roomTierId).checked = true;
-  console.log(type.roomTypeName); // undefined
   document.getElementById("typeName").value = type.roomTypeName;
-  console.log(type.maxOccupancy); // undefined
   document.getElementById("typeMaxOccupancy").value = parseInt(type.maxOccupancy);
-  console.log(type.totalCost); // undefined
   document.getElementById("typeCost").value = parseInt(type.totalCost);
 }
+
 
 /****************************************************************
  * 
@@ -273,13 +284,16 @@ function getRoomTypeInfo(roomType) {
 
   // if the rooms form is filled out, get the type associated with that at first
   // but otherwise just allow the user to select whatever they want
-  if (typeSizeRadio != null && typeTierRadio!= null) {
+  if (typeSizeRadio != null && typeTierRadio != null) {
     type = getAllRoomTypeInfo(typeSizeRadio.value, typeTierRadio.value)[0];
-  } else if (roomType != null && roomType != null) {
+    populateTypeForm(type);
+  } else if (roomType != null && roomType != undefined) {
     type = getAllRoomTypeInfo(roomType.roomSizeId, roomType.roomTierId)[0];
+    populateTypeForm(type);
   }
-  
-  populateTypeForm(type);
+
+  // populate the tier page with this information
+  getRoomTierInfo(type);
 }
 
 // get all room type info
@@ -292,9 +306,78 @@ function getAllRoomTypeInfo(size, tier) {
     const typeRoute = getRoute("/roomtypes/alldata/" + typeId);
     // variable that stores all data associated with the room type
     var type = getJSON(typeRoute);
-  
+
     return type;
 }
+
+function updateRoomType(roomTypeId) {
+  var roomTypeName = document.getElementById("typeName").value;
+  var maxOccupancy = parseInt(document.getElementById("typeMaxOccupancy").value);
+  var totalCost = parseInt(document.getElementById("typeCost").value);
+
+  // save the parameters in an object
+  var typeData = {
+    roomTypeId: roomTypeId,
+    roomTypeName: roomTypeName,
+    maxOccupancy: maxOccupancy,
+    totalCost: totalCost
+  }
+
+  // send the room data info to the database to update it
+  $.ajax({
+    url: url,
+    type: 'put',
+    data: typeData,
+    async: false,
+    success: function(data) {
+        result = data;
+    } 
+  });
+}
+
+
+/****************************************************************
+ * 
+ *            Design/Styling of Edit Tier Form
+ * 
+****************************************************************/
+
+// populate the text boxes with the information gathered from the radios
+function populateTierForm(tier) {
+  // populate the fields in the table with the room type information
+  document.getElementById("tier" + tier.roomTierId).checked = true;
+  document.getElementById("tierCost").value = tier.roomTierPercent;
+}
+
+
+/****************************************************************
+ * 
+ *   Functions to Get Info from Tier Form & Update Tiers
+ * 
+****************************************************************/
+function getRoomTierInfo(roomType) {
+  // get the radios from the type form
+  var tierRadio = document.querySelector('input[name="tierId"]:checked');
+
+  // if the rooms form is filled out, get the tier associated with that at first
+  // but otherwise just allow the user to select whatever they want
+  if (tierRadio != null) {
+    var tier = getAllRoomTierInfo(tierRadio.value);
+    populateTierForm(tier);
+  } else if (roomType != null && roomType != undefined) {
+    populateTierForm(roomType);
+  }
+}
+
+// edit below to be for tiers -- also, we want tier form to populate from type form, too
+
+// get all room type info
+function getAllRoomTierInfo(tierId) {
+  var route = getRoute("/roomtiers/" + tierId);
+  var tier = getJSON(route)[0];
+  return tier;
+}
+ 
 /****************************************************************
  * 
  *   Functions to Add, Update, and Delete Images from the table

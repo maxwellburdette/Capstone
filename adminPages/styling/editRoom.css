@@ -1,35 +1,3 @@
-:root {
-    --lightColor: #E6F6F5;
-    --midColor: #9ADAD6;
-    --darkColor: #288882;
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-html {
-    background: url('../../media/mainBackground.jpg') no-repeat center left fixed; 
-    overflow-x: hidden;
-}
-
-
-nav, .navlinks {
-    background-color: var(--darkColor);
-}
-
-.logo, .navlinks a {
-    color: var(--lightColor);
-}
-
-.navlinks a::after, .burger div {
-    color: var(--lightColor);
-}
-
-.navlinks {
-    width: 20%;
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
 form {
     width: 600px;
     padding: 20px 80px;
@@ -87,6 +55,10 @@ input[type="submit"] {
 
 #roomNumberSelector select, input[type="text"] {
     width: 100%;
+}
+
+#roomNumberText {
+    display: none;
 }
 
 #imagePlaceholder {

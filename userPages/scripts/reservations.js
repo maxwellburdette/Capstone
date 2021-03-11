@@ -3,24 +3,8 @@
  *   Functions to get information from the tables
  * 
 ****************************************************************/
-// get a json file based on number of guests
-function getRoute(key, param) {
-  const domain = "http://localhost:8090/api/";
-  var url;
-  // we need to search by a certain attribute
-  switch (key) {
-    case "maxOccupancy":
-      url = "roomtypes/numberGuests/";
-      break;
-    case "roomTypeIdAmenities":
-      url = "amenities/roomTypeId/";
-      break;
-  }
-
-  // param here is just what we're searching by
-  var route = domain + url + param;
-
-  console.log("route: " + route);
+function getRoute(param) {
+  var route = "http://localhost:8090/api" + param;
 
   return route;
 }
@@ -69,7 +53,7 @@ function displayRooms() {
   var numberGuests = parseInt(numAdults) + parseInt(numKids);
 
   // get the room types that can hold that many people
-  var route = getRoute("maxOccupancy", numberGuests);
+  var route = getRoute("/roomtypes/numberGuests/" + numberGuests);
   var roomTypes = getJSON(route);
 
   // make the area where the rooms will populate visible
@@ -95,7 +79,8 @@ function displayRooms() {
     var tmpImage = "kingstd.jpg";
 
     // get the array of amenities
-    var amenityRoute = getRoute("roomTypeIdAmenities", roomTypes[i].roomTypeId);
+    console.log(roomTypes[i].roomTierId);
+    var amenityRoute = getRoute("/amenities/roomTierId/" + roomTypes[i].roomTierId);
     var amenityArr = getJSON(amenityRoute);
     console.log(amenityArr);
     //var amenityArr = ['am1', 'am2', 'am3'];

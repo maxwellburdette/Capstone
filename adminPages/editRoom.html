@@ -65,9 +65,12 @@
     -->
 
     <label for="roomNumber" class="col1">Room Number: </label>
-    <select class="col2" id="roomNumberSelector" onChange="generateRoomInfo()">
-        <!-- room numbers will dynamically populate here -->
-    </select><br />
+    <div class="col2">
+        <select id="roomNumberSelector" onChange="generateRoomInfo()">
+            <!-- room numbers will dynamically populate here -->
+        </select>
+        <input type="number" id="roomNumberText" value="">
+    </div>
 
     <label for="roomSizeId" class="col1">Room Size: </label>
     <div class="col2">
@@ -109,6 +112,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
 
 <form id = "typeForm">
+    <hidden value=""></hidden>
     <label for="typeSizeId" class="col1">Room Size: </label>
     <div class="col2">
         <input type="radio" id="typeSize3" name="typeSizeId" onchange="getRoomTypeInfo()" value="3">
@@ -173,16 +177,16 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
 
 <form id = "tierForm">
-    <label for="roomTierId" class="col1">Room Tier: </label>
+    <label for="tierId" class="col1">Room Tier: </label>
     <div class="col2">
-        <input type="radio" id="selectTier1" name="roomTierId" value="1">
-        <label for="selectTier1">Standard</label><br>
-        <input type="radio" id="selectTier2" name="roomTierId" value="2">
-        <label for="selectTier2">Premium</label><br>
-        <input type="radio" id="selectTier3" name="roomTierId" value="3">
-        <label for="selectTier3">Deluxe</label><br>
-        <input type="radio" id="selectTier4" name="roomTierId" value="4">
-        <label for="selectTier4">Suite</label><br>
+        <input type="radio" id="tier1" name="tierId" onchange="getRoomTierInfo()" value="1">
+        <label for="tier1">Standard</label><br>
+        <input type="radio" id="tier2" name="tierId" onchange="getRoomTierInfo()" value="2">
+        <label for="tier2">Premium</label><br>
+        <input type="radio" id="tier3" name="tierId" onchange="getRoomTierInfo()" value="3">
+        <label for="tier3">Deluxe</label><br>
+        <input type="radio" id="tier4" name="tierId" onchange="getRoomTierInfo()" value="4">
+        <label for="tier4">Suite</label><br>
     </div>
 
     <label for="tierCost" class="col1">Upcharge (%): </label>

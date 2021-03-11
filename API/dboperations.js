@@ -159,25 +159,20 @@ async function addReview(review)
 *   updateRoom ......... updates a room in the table with the input data
 **************************************************************/
 // Get rooms from table
-async function getRooms()
-{
-    try
-    {
+async function getRooms() {
+    try {
         let pool = await sql.connect(config);
         let rooms = await pool.request().query('SELECT * FROM rooms');
         return rooms.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
 
 //Get specific room from table
-async function getRoom(roomNumber)
-{
-    try
-    {
+async function getRoom(roomNumber) {
+    try {
         console.log("dboperations.getRoom(" + roomNumber + ") running");
         let pool = await sql.connect(config);
         let room = await pool.request()
@@ -185,17 +180,14 @@ async function getRoom(roomNumber)
             .query("SELECT * from rooms r where roomNumber = @roomNumber");
         return room.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
 
 // Add a room to the table
-async function addRoom(room)
-{
-    try
-    {
+async function addRoom(room) {
+    try {
         let pool = await sql.connect(config);
         let insertRoom = await pool.request()
             .input('roomNumber', sql.Int, room.roomNumber)
@@ -203,34 +195,28 @@ async function addRoom(room)
             .query('INSERT INTO rooms (roomNumber, roomTypeId) VALUES (@roomNumber, @roomTypeId);');
         return insertRoom.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
 
 // Delete a room from the table
-async function deleteRoom(roomNumber)
-{
-    try
-    {
+async function deleteRoom(roomNumber) {
+    try {
         let pool = await sql.connect(config);
         let deleteRoom = await pool.request()
             .input('input_parameter', sql.Int, roomNumber)
             .query("BEGIN DELETE FROM rooms  WHERE  roomNumber = @input_parameter END ");
         return deleteRoom.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
 
 // Update a room in the table
-async function updateRoom(room, roomNumber)
-{
-    try
-    {
+async function updateRoom(room, roomNumber) {
+    try {
         let pool = await sql.connect(config);
         let updateRoom = await pool.request()
             .input('roomNumber', sql.Int, roomNumber)
@@ -238,8 +224,7 @@ async function updateRoom(room, roomNumber)
             .query('UPDATE rooms  SET roomTypeId = @roomTypeId WHERE  roomNumber = @roomNumber');
         return updateRoom.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
@@ -249,6 +234,8 @@ async function updateRoom(room, roomNumber)
 *   getRoomTypes ......... gets all room types
 *   getRoomType .......... gets a room type based on room type id
 *   getCertainRoomTypes .. gets room types based on max occupancy
+*   getAllRoomTypeInfo ... gets ALL the info about a room type through joins
+*   updateRoomType ....... updates the room type selected
 **************************************************************/
 // Get rooms types from table
 async function getRoomTypes()
@@ -303,10 +290,8 @@ async function getCertainRoomTypes(numberPeople)
 }
 
 //get the room type based on the roomSizeId and roomTierId
-async function getRoomTypeId(roomSizeId, roomTierId)
-{
-    try
-    {
+async function getRoomTypeId(roomSizeId, roomTierId) {
+    try {
         let pool = await sql.connect(config);
         let roomTypeId = await pool.request()
             .input('roomSizeId', sql.Int, roomSizeId)
@@ -316,109 +301,8 @@ async function getRoomTypeId(roomSizeId, roomTierId)
                    "WHERE roomSizeId = @roomSizeId AND roomTierId = @roomTierId");
         return roomTypeId.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
-    }
-}
-
-
-/*************************************************************
-*                      AMENITY TABLE
-*   getAmenities ......... gets all room types
-*   getAmenity ........... gets a room type based on room type id
-**************************************************************/
-// Get rooms types from table
-async function getAmenities()
-{
-    try
-    {
-        let pool = await sql.connect(config);
-        let amenities = await pool.request()
-            .query('SELECT * FROM amenities');
-        return amenities.recordsets;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-
-// Get specific amenity from table
-async function getAmenity(amenityName)
-{
-    try
-    {
-        let pool = await sql.connect(config);
-        let amenity = await pool.request()
-            .input('input_amenityName', sql.NVarChar, amenityName)
-            .query("SELECT * FROM amenities WHERE amenityName = @input_amenityName");
-        return amenity.recordsets;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-
-
-/*************************************************************
-*                   FUNCTIONS FOR SQL JOINS
-*   getAmenitiesByRoomType
-*   getImagesByRoomType
-*   getAllRoomTypeInfo
-*   getAllRoomInfo
-**************************************************************/
-
-
-
-
-/*
-
-ive been working on this quite literally all day, and my brain is tired.
-
-probably combine these functions into one big joined function to pull ALL
-data that goes with a certain room number so that we can display it on the edit rooms page
-
-*/
-
-
-
-
-// get all amenities based on the room type
-async function getAmenitiesByRoomType(roomTypeId) {
-    try {
-        let pool = await sql.connect(config);
-        let amenities = await pool.request()
-            .input('roomTypeId', sql.Int, roomTypeId)
-            .query("SELECT a.amenityName, a.amenityDescription " +
-                   "FROM roomTypes rt " +
-                   "JOIN tierDetail td ON rt.roomTierId = td.roomTierId " +
-                   "JOIN amenities a ON td.amenityName = a.amenityName " +
-                   "WHERE rt.roomTypeId = @roomTypeId");
-        return amenities.recordsets;
-    }
-    catch(error)
-    {
-        //console.log(error);
-    }
-}
-
-// get all images based on the room type
-async function getImagesByRoomType(roomTypeId) {
-    try {
-        let pool = await sql.connect(config);
-        let images = await pool.request()
-            .input('roomTypeId', sql.Int, roomTypeId)
-            .query("SELECT i.imageName, i.imageAlt" +
-                   "FROM roomTypes t" +
-                   "JOIN roomImages i ON t.roomTypeId = i.roomTypeId" +
-                   "WHERE i.roomTypeId = @roomTypeId");
-        return images.recordsets;
-    }
-    catch(error)
-    {
-        //console.log(error);
     }
 }
 
@@ -428,7 +312,7 @@ async function getAllRoomTypeInfo(roomTypeId) {
         let pool = await sql.connect(config);
         let roomType = await pool.request()
             .input('roomTypeId', sql.Int, roomTypeId)
-            .query("SELECT r.roomTypeId, s.*, t.*, i.imageId, i.imageName, i.imageAlt, td.isFeatured, a.* " +
+            .query("SELECT r.roomTypeId, r.roomTypeName, r.maxOccupancy, r.totalCost, s.*, t.*, i.imageId, i.imageName, i.imageAlt, td.isFeatured, a.* " +
                    "FROM roomTypes r " +
                    "JOIN roomSizes s ON r.roomSizeId = s.roomSizeId " +
                    "JOIN roomTiers t ON r.roomTierId = t.roomTierId " +
@@ -439,12 +323,37 @@ async function getAllRoomTypeInfo(roomTypeId) {
         //let result = getImagesByRoomType(roomTypeId) + getAmenitiesByRoomType(roomTypeId);
         return roomType.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
+/*
+TO-DO: need to be able to update the room type
+*/
 
+/*
+TO-DO: add the ability to update the images table from this form
+*/
+
+
+/*************************************************************
+*                      IMAGES TABLE
+*   getImages ............ gets the images associated with the roomTypeId
+**************************************************************/
+// Get rooms types from table
+async function getImages(roomTypeId) {
+    try {
+        let pool = await sql.connect(config);
+        let images = await pool.request()
+            .input('roomTypeId', sql.Int, roomTypeId)
+            .query('SELECT * FROM images ' +
+                   'WHERE roomTypeId = @roomTypeId');
+        return amenities.recordsets;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
 
 /*************************************************************
 *                     ROOM TIERS TABLE
@@ -460,7 +369,11 @@ async function getRoomTiers()
     try
     {
         let pool = await sql.connect(config);
-        let roomTiers = await pool.request().query('SELECT * FROM roomTiers');
+        let roomTiers = await pool.request()
+        .query('SELECT rt.*, td.*, a.* ' +
+        'FROM roomTiers rt ' +
+        'JOIN tierDetail td ON rt.roomTierId = td.roomTierId ' +
+        'JOIN amenities a ON td.amenityId = a.amenityId');
         return roomTiers.recordsets;
     }
     catch(error)
@@ -472,73 +385,96 @@ async function getRoomTiers()
 //Get specific room tier from table
 async function getRoomTier(roomTierId)
 {
-    try
-    {
+    try {
         let pool = await sql.connect(config);
         let roomTier = await pool.request()
             .input('roomTierId', sql.Int, roomTierId)
-            .query("SELECT * from roomTiers where roomTierId = @roomTierId");
+            .query('SELECT rt.*, td.isFeatured, a.* ' +
+            'FROM roomTiers rt ' +
+            'JOIN tierDetail td ON rt.roomTierId = td.roomTierId ' +
+            'JOIN amenities a ON td.amenityId = a.amenityId ' +
+            'WHERE rt.roomTierId = @roomTierId');
         return roomTier.recordsets;
     }
-    catch(error)
-    {
+    catch(error) {
         console.log(error);
     }
 }
 
-// Add a tier to the table
-async function addRoomTier(roomTier)
-{
-    try
-    {
-        let pool = await sql.connect(config);
-        let insertTier = await pool.request()
-            .input('roomTierPercentage', sql.NVarChar(20), roomTier.roomTierPercentage)
-            .input('roomTierName', sql.Bit, roomTier.roomTierName)
-            .query('INSERT INTO roomTiers (roomTierPercent, roomTierName) VALUES (@roomTierPercent, @roomTierName);');
-        return insertTier.recordsets;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+/*
+TO-DO: need to add the ability to update the tierDetail and amenities tables from this form
+*/
 
-// Delete a tier from the table
-async function deleteRoomTier(roomTierId)
-{
-    try
-    {
-        let pool = await sql.connect(config);
-        let deleteTier = await pool.request()
-            .input('roomTierId', sql.Int, roomTierId)
-            .query("DELETE FROM roomTiers  WHERE  roomTierId = @roomTierId");
-        return deleteTier.recordsets;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-
+/*
+TO-DO: if we update a tier, we should display a list of roomtypes this will affect (and maybe rooms)
+       or at least display some type of message when deleting the tier since we can't delete it
+       unless no room type uses it, due to the fact that room types rely on room tiers
+*/
 // Update a tier in the table
-async function updateRoomTier(roomTier, roomTierId)
-{
-    try
-    {
+async function updateRoomTier(roomTier, roomTierId) {
+    try {
         let pool = await sql.connect(config);
         let updateTier = await pool.request()
             .input('roomTierPercent', sql.Int, roomTier.roomTierPercent)
-            .input('roomTierName', sql.NVarChar, roomTier.roomTierName)
             .query('UPDATE roomTiers  SET ' +
                    'roomTierPercent = @roomTierPercent,  ' + 
-                   'roomTierName = @roomTierName ' +
                    'WHERE roomTierId = @roomTierId');
         return updateTier.recordsets;
-    }
-    catch(error)
-    {
+    } 
+    catch(error) {
         console.log(error);
+    }
+}
+
+/*************************************************************
+*                    AMENITIES TABLE
+*   getAmenity ........... gets an amenitie based on room type id
+*   getAmenities ......... gets either the amenities based on roomTierId or all amenities
+**************************************************************/
+// Get specific amenity from table
+async function getAmenity(amenityName) {
+    try {
+        let pool = await sql.connect(config);
+        let amenity = await pool.request()
+            .input('input_amenityName', sql.NVarChar, amenityName)
+            .query("SELECT * FROM amenities WHERE amenityName = @input_amenityName");
+        return amenity.recordsets;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// get either the amenities based on roomTierId or all amenities
+async function getAmenities(roomTierId) {
+    // if a roomTierId is passed, get the amenities based on the room tier
+    if (roomTierId != null) {
+        try {
+            let pool = await sql.connect(config);
+            let amenities = await pool.request()
+                .input('roomTierId', sql.Int, roomTierId)
+                .query("SELECT td.*, a.amenityName, a.amenityDescription " +
+                    "FROM tierDetail td " +
+                    "JOIN amenities a ON td.amenityName = a.amenityName " +
+                    "WHERE rt.roomTierId = @roomTierId");
+            return amenities.recordsets;
+        }
+        catch(error)
+        {
+            //console.log(error);
+        }
+    } 
+    // get all amenities
+    else {
+        try {
+            let pool = await sql.connect(config);
+            let amenities = await pool.request()
+                .query('SELECT * FROM amenities');
+            return amenities.recordsets;
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 }
 
@@ -563,13 +499,9 @@ module.exports = {
     getCertainRoomTypes : getCertainRoomTypes,
     getRoomTiers : getRoomTiers,
     getRoomTier : getRoomTier,
-    addRoomTier : addRoomTier,
-    deleteRoomTier : deleteRoomTier,
     updateRoomTier : updateRoomTier,
     getAmenities : getAmenities,
     getAmenity : getAmenity,
-    getAmenitiesByRoomType : getAmenitiesByRoomType,
-    getImagesByRoomType : getImagesByRoomType,
     getAllRoomTypeInfo : getAllRoomTypeInfo,
     getRoomTypeId : getRoomTypeId,
 }
