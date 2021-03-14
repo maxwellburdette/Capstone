@@ -207,11 +207,11 @@ function updateRoom() {
        the table with the same room number
  */
 
-    // save the parameters in an object
-    var roomData = {
-      roomNumber: roomNumber,
-      roomTypeId: roomTypeId
-    }
+  // save the parameters in an object
+  var roomData = {
+    roomNumber: roomNumber,
+    roomTypeId: roomTypeId
+  }
 
   // send the room data info to the database to update it
   $.ajax({
@@ -254,12 +254,6 @@ function deleteRoom() {
  * 
 ****************************************************************/
 // populate the text boxes with the information gathered from the radios
-  /*
-  TO-DO: only make the radio buttons appear at first, and have a submit button to get the type info. 
-        then allow the user to modidy the max occupancy, cost, and image
-        For cost, should probably display the suggested cost based on the size and tier amounts
-        For max occ, should probably display the suggested max occ based on the bed numbers/sizes/etc
-  */
 function populateTypeForm(type) {
   // populate the fields in the table with the room type information
   document.getElementById("typeSize" + type.roomSizeId).checked = true;
@@ -310,7 +304,17 @@ function getAllRoomTypeInfo(size, tier) {
     return type;
 }
 
-function updateRoomType(roomTypeId) {
+function updateRoomType() {
+  // get the radios from the type form
+  var size = document.querySelector('input[name="typeSizeId"]:checked').value;
+  var tier = document.querySelector('input[name="typeTierId"]:checked').value;
+  // get the room type that corresponds to the buttons selected
+  var searchBy = "/roomtypes/size/" + size + "/tier/" + tier;
+  var route = getRoute(searchBy);
+  var json = getJSON(route)[0];
+  var roomTypeId = parseInt(json.roomTypeId);
+  const url = getRoute('/roomtypes/' + roomTypeId);
+
   var roomTypeName = document.getElementById("typeName").value;
   var maxOccupancy = parseInt(document.getElementById("typeMaxOccupancy").value);
   var totalCost = parseInt(document.getElementById("typeCost").value);
@@ -342,17 +346,61 @@ function updateRoomType(roomTypeId) {
  * 
 ****************************************************************/
 
+function generateAmenityCheckboxes() {
+  const route = getRoute("/amenities");
+  var json = getJSON(route);
+  const amenitiesCheckboxes = document.getElementById('tierAmenitiesCheckboxes');
+  // clear any existing checkboxes to "refresh" the page
+  amenitiesCheckboxes.innerHTML = ""
+  // get each amenity
+  for (let i = 0; i < json.length; i++) {
+    var amenityContainer = document.createElement('div');
+    amenityContainer.className = 'amenityContainer';
+    // set attributes for each checkbox element
+    var amenity = document.createElement('input');
+    amenity.type = "checkbox";
+    amenity.id = "has" + json[i].amenityName;
+    amenity.name = "tierAmenities";
+    amenity.value = parseInt(json[i].amenityId);
+    var amenityLabel = document.createElement('label');
+    amenityLabel.htmlFor = amenity.id;
+    amenityLabel.appendChild(document.createTextNode(json[i].amenityName)); 
+    // add the checkbox and label to the div
+    amenityContainer.appendChild(amenity);
+    amenityContainer.appendChild(amenityLabel);
+    // add the box div to the page
+    amenitiesCheckboxes.appendChild(amenityContainer);
+  }
+  // add the box div to the page
+  amenitiesCheckboxes.appendChild(amenityContainer);
+}
+
 // populate the text boxes with the information gathered from the radios
 function populateTierForm(tier) {
-  // populate the fields in the table with the room type information
-  document.getElementById("tier" + tier.roomTierId).checked = true;
-  document.getElementById("tierCost").value = tier.roomTierPercent;
+  // populate the radio selection with the room type information from the other forms
+  document.getElementById("tier" + tier[0].roomTierId).checked = true;
+  // check all of the amenities that this tier has
+  for (let i = 0; i < tier.length; i++) {
+    // if the tier doesn't have any amenities, no need to try to populate them
+    if (tier[0].amenityName == null) {
+      break;
+    }
+    // check the amenity
+    document.getElementById("has" + tier[i].amenityName).checked = true;
+  }
+}
+
+function clearCheckBoxes() {
+  let amenities = document.getElementsByName('tierAmenities');
+  for (let i = 0; i < amenities.length; i++) {
+    amenities[i].checked = false;
+  }
 }
 
 
 /****************************************************************
  * 
- *   Functions to Get Info from Tier Form & Update Tiers
+ *   Functions to Get Info from Tier Form & Update Tier Amenities
  * 
 ****************************************************************/
 function getRoomTierInfo(roomType) {
@@ -361,21 +409,67 @@ function getRoomTierInfo(roomType) {
 
   // if the rooms form is filled out, get the tier associated with that at first
   // but otherwise just allow the user to select whatever they want
-  if (tierRadio != null) {
+  if (tierRadio != null && tierRadio != undefined) {
     var tier = getAllRoomTierInfo(tierRadio.value);
+    clearCheckBoxes();
     populateTierForm(tier);
   } else if (roomType != null && roomType != undefined) {
-    populateTierForm(roomType);
+    var tier = getAllRoomTierInfo(roomType.roomTierId);
+    populateTierForm(tier);
   }
 }
 
-// edit below to be for tiers -- also, we want tier form to populate from type form, too
-
-// get all room type info
+// get all room tier info
 function getAllRoomTierInfo(tierId) {
   var route = getRoute("/roomtiers/" + tierId);
-  var tier = getJSON(route)[0];
+  var tier = getJSON(route);
   return tier;
+}
+
+// update the amenities that the tier has
+function updateRoomTier() {
+  var amenities = document.getElementsByName("tierAmenities");
+  // make sure the user selects a tier
+  try {
+    var roomTierId = document.querySelector('input[name="tierId"]:checked').value;
+  } catch (error) {
+    console.log('missing radio selection.');
+  }
+  for (let i = 0; i < amenities.length; i++) { 
+    // check if this tier should have this amenity
+    var search = "/roomtiers/" + roomTierId + "/amenity/" + amenities[i].value;
+    var route = getRoute(search);
+    var json = getJSON(route)[0];
+
+    // if the amenity is checked and there is not data in the tierdetail table, add it
+    if (amenities[i].checked && (json == null || json == undefined)) {
+      var url = getRoute('/tierdetail');
+
+      // save the parameters in an object
+      var data = {
+        roomTierId: roomTierId,
+        amenityId: amenities[i].value,
+        isFeatured: false
+      }
+
+      // send the object to the database to add the tierdetail with this information
+      $.post(url, data, function(data, status){
+        console.log(`${data} and status is ${status}`);
+      });
+    } 
+    // if the amenity is not checked and there is data in the tierdetail table, remove it
+    else if (!amenities[i].checked && json != null && json != undefined) {
+      $.ajax({
+        url: route,
+        type: 'delete',
+        dataType: 'html',
+        async: false,
+        success: function(data) {
+            result = data;
+        } 
+      });
+    }
+  }
 }
  
 /****************************************************************

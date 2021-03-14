@@ -69,3 +69,19 @@ input[type="submit"] {
     height: fit-content;
     padding: 10px;
 }
+
+#tierAmenitiesCheckboxes {
+    margin-left: 20px;
+    column-count: 2;
+    font-size: .9rem;
+}
+.amenityContainer input {
+    float: left;
+    width: fit-content;
+}
+.amenityContainer label {
+    margin-left: 5px;
+}
+.amenityContainer::after {
+    clear: both;
+}

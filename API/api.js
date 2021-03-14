@@ -221,32 +221,6 @@ router.route("/roomtiers/:roomTierId").get((request, response) =>
     })
 });
 
-// Post request: Adds a room tier to table
-router.route("/roomtiers").post((request, response) =>
-{
-    let roomTier = {...request.body}
-    dboperations.addRoomTier(roomTier).then(result => {
-        response.status(201).json(result);
-    })
-});
-
-// Put request: Updates the room tier in the table with the new info
-router.route("/roomtiers/:roomTierId").put((request, response) =>
-{
-    let roomTier = {...request.body}
-    dboperations.updateRoomTier(roomTier, request.params.roomTierId).then(result => {
-        response.status(201).json(result);
-    })
-});
-
-// Delete request: Deletes the room tier from the table
-router.route("/roomtiers/:roomTierId").delete((request, response) =>
-{
-    dboperations.deleteRoomTier(request.params.roomTierId).then(result => {
-        response.status(200).json(result);
-    })
-});
-
 
 /*************************************************************
 *                      AMENITIES TABLE
@@ -284,6 +258,34 @@ router.route("/images/roomTypeId/:roomTypeId").get((request, response) =>
 {
     dboperations.getImagesByRoomType(request.params.roomTypeId).then(result => {
         response.json(result[0]);
+    })
+});
+
+/*************************************************************
+*                      TIERDETAIL TABLE
+**************************************************************/
+// Get request: retrieves a tierdetail based on the roomtierid and amenityid
+router.route("/roomtiers/:roomTierId/amenity/:amenityId").get((request, response) =>
+{
+    dboperations.getTierDetail(request.params.roomTierId, request.params.amenityId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Post request: Adds a tierdetail (tier/amenity relationship) to table
+router.route("/tierdetail").post((request, response) =>
+{
+    let td = {...request.body}
+    dboperations.addTierDetail(td).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Delete request: Deletes the room from the table
+router.route("/roomtiers/:roomTierId/amenity/:amenityId/").delete((request, response) =>
+{
+    dboperations.deleteTierDetail(request.params.roomTierId, request.params.amenityId).then(result => {
+        response.status(200).json(result);
     })
 });
 
