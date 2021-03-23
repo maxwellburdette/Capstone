@@ -1,0 +1,130 @@
+#resPageContainer {
+    position: absolute;
+    z-index: -1;
+    background-color: black;
+    opacity: .2;
+    margin: 0;
+    padding: 0;
+    opacity: .8;
+    width: 100%;
+    height: 100%;
+}
+
+/*****************************************************
+*
+*                Room criteria form
+*
+*****************************************************/
+form {
+    width: 600px;
+    text-align: center;
+    margin: 20px auto 0px;
+    padding: 20px;
+}
+
+/*****************************************************
+*
+*                Display all rooms
+*
+*****************************************************/
+#roomsContainer {
+    background-color: var(--darkColor);
+    opacity: .9;
+    width: 800px;
+    height: auto;
+    text-align: center;
+    margin: 0px auto;
+    border-radius: 1.5em;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 18px;
+    color:black;
+    padding: 20px;
+    overflow: auto;
+    display: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.roomLi {
+    text-decoration: none;
+}
+
+.col1 {
+    width: 35%;
+    height: 250px;
+    float: left;
+    background-color: var(--midColor);
+}
+
+.col1 img {
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    margin: 0;
+}
+
+.col2 {
+    width: 35%;
+    height: 250px;
+    float: left;
+    background-color: var(--lightColor);
+    position: relative;
+}
+
+.amenities {
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    bottom: 0;
+}
+
+.amenities li {
+    padding-left: 5px;
+    text-align: left;
+}
+
+.col3 {
+    width: 30%;
+    height: 250px;
+    float: left;
+    background-color: #C2BBBF;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.col1::after, .col2::after, .col3::after {
+    clear: both;
+}
+
+/*****************************************************
+*
+*           Show all info about one room
+*
+*****************************************************/
+#roomPopup {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -400px;
+    width: 800px;
+    height: 800px;
+    padding: 20px;
+    background-color: var(--lightColor);
+    border-radius: 1.5em;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--darkColor);
+}
+
+#roomPopup button {
+    float: right;
+    top: 0;
+}

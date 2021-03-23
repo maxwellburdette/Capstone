@@ -1,0 +1,114 @@
+form {
+    width: 600px;
+    padding: 20px 80px;
+}
+
+#formSelectButtons {
+    text-align: center;
+    margin-top: 2em;
+}
+
+
+#formSelectButtons button {
+    font-size: 22px;
+}
+
+input[type="submit"] {
+    font-size: 18px;
+}
+
+/* we want the rooms button to be selected by default since thats the form that shows up */
+#formSelectButtons button:first-of-type {
+    background-color: var(--darkColor);
+    color: var(--midColor);
+}
+
+#formSelectButtons button:hover, input[type=submit]:hover{
+    background: var(--midColor);
+}
+
+#roomForm {
+    display: block;
+}
+
+#typeForm {
+    display: none;
+}
+
+#tierForm {
+    display: none;
+}
+
+.submitButtons {
+    text-align: center;
+}
+
+.col1 {
+    float: left;
+    width: 40%;
+}
+
+.col2 {
+    float: left;
+    width: 60%;
+}
+
+#roomNumberSelector select {
+    width: 100%;
+}
+
+#roomNumberText {
+    display: none;
+}
+
+#roomTypeImages {
+    margin: 10px;
+    font-size: .8rem;
+    background-color: var(--lightColor);
+    color: var(--darkColor);
+    height: fit-content;
+    padding: 10px;
+}
+
+#roomTypeImages input, #roomTypeImages textarea{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#roomTypeImages textarea {
+    resize: vertical;
+    min-height: 4rem;
+}
+
+#roomTypeImages button {
+    text-align: center;
+    background-color: var(--darkColor);
+    color: var(--lightColor);
+    margin-top: 5px;
+    padding: 5px 10px;
+}
+
+#imagesContainerLabel {
+    display: none;
+    margin-bottom: 5px;
+}
+
+#imagesContainer img {
+    width: 100%;
+}
+
+#tierAmenitiesCheckboxes {
+    margin-left: 20px;
+    column-count: 2;
+    font-size: .9rem;
+}
+.amenityContainer input {
+    float: left;
+    width: fit-content;
+}
+.amenityContainer label {
+    margin-left: 5px;
+}
+.amenityContainer::after {
+    clear: both;
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">   
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styling/roomsAndRes.css">
+    <link rel="stylesheet" href="styling/editRoom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Edit Rooms</title>
+</head>
+
+<body>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    NAV BAR 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
+    <nav>
+        <div class="logo">
+            <h4>KAM Hotels</h4>
+        </div>
+        <ul class="navlinks">
+            <li><a href="adminhome.html">Home</a></li>
+            <li><a id="userName" class="id" href="#"></a></li>
+            <li><a id="messages"href="messages.html"></a></li>
+            <li><a id ="account" href="adminaccount.html"></a></li>
+            <li><a id="manageReviews" href="managereviews.html"></a></li>
+            <li><a id="editRooms" href="editRoom.html"></a></li>
+            <li><a id="manageReservations" href="manageReservations.html"></a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    EDIT BUTTONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
+
+    <div id = "formSelectButtons">
+        <button id="roomFormBtn" onclick="selectForm('roomForm')">Rooms</button>
+        <button id="typeFormBtn" onclick="selectForm('typeForm')">Types</button>
+        <button id="tierFormBtn" onclick="selectForm('tierForm')">Tiers</button>
+    </div>
+
+    <br />
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    ROOM FORM 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
+<form id = "roomForm">
+    <label for="roomNumber" class="col1">Room Number: </label>
+    <div class="col2">
+        <select id="roomNumberSelector" onChange="generateRoomInfo()">
+            <!-- room numbers will dynamically populate here -->
+        </select>
+        <input type="number" id="roomNumberText" value="">
+    </div>
+
+    <label for="roomSizeId" class="col1">Room Size: </label>
+    <div class="col2">
+        <input type="radio" id="selectSize1" name="roomSizeId" value="1">
+        <label for="selectSize1">1 King Bed</label><br>
+        <input type="radio" id="selectSize2" name="roomSizeId" value="2">
+        <label for="selectSize2">2 Queen Beds</label><br>
+    </div>
+
+    <label for="roomTierId" class="col1">Room Tier: </label>
+    <div class="col2">
+        <input type="radio" id="selectTier1" name="roomTierId" value="1">
+        <label for="selectTier1">Standard</label><br>
+        <input type="radio" id="selectTier2" name="roomTierId" value="2">
+        <label for="selectTier2">Premium</label><br>
+        <input type="radio" id="selectTier3" name="roomTierId" value="3">
+        <label for="selectTier3">Deluxe</label><br>
+    </div>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
+    
+    <br>
+
+    <div class="submitButtons">
+        <!-- When this button is clicked, that room will be added to the database.-->
+        <input type="submit" id="addRoomBtn" onclick="addRoom()" value="Add">
+        <!-- When this button is clicked, that room will be removed from the database.-->
+        <input type="submit" id="deleteRoomBtn" onclick="deleteRoom()" value="Delete">
+        <!-- When this button is clicked, that room will be updated with the values in the form's fields-->
+        <input type="submit" id="updateRoomBtn" onclick="updateRoom()" value="Update">
+    </div>
+</form>
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    TYPE FORM 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
+
+<form id = "typeForm">
+    <hidden value=""></hidden>
+    <label for="typeSizeId" class="col1">Room Size: </label>
+
+    <div class="col2">
+        <input type="radio" id="typeSize1" name="typeSizeId" onchange="getRoomType()" value="1">
+        <label for="typeSize1">1 King Bed</label><br>
+        <input type="radio" id="typeSize2" name="typeSizeId" onchange="getRoomType()" value="2">
+        <label for="typeSize2">2 Queen Beds</label><br>
+    </div>
+
+    <label for="typeTierId" class="col1">Room Tier: </label>
+    <div class="col2">
+        <input type="radio" id="typeTier1" name="typeTierId" onchange="getRoomType()" value="1">
+        <label for="typeTier1">Standard</label><br>
+        <input type="radio" id="typeTier2" name="typeTierId" onchange="getRoomType()" value="2">
+        <label for="typeTier2">Premium</label><br>
+        <input type="radio" id="typeTier3" name="typeTierId" onchange="getRoomType()" value="3">
+        <label for="typeTier3">Deluxe</label><br>
+    </div>
+
+    <br>
+
+    <label for="typeName" class="col1">Room Type: </label>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="text" class="col2" id="typeName" name="typeName" value="" placeholder="Bed Number, Bed Size, - Room Tier"><br>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
+
+    <label for="typeMaxOccupancy" class="col1">Max Occupancy: </label>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="number" class="col2" id="typeMaxOccupancy" name="typeMaxOccupancy" value=""><br>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
+
+    <label for="typeCost" class="col1">Cost/Night ($): </label>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="number" class="col2" id="typeCost" name="typeCost" value="" ><br>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
+
+    <div id="roomTypeImages">
+        <!-- To-Do:
+                For now, images already need to be online. I hope to allow them to upload
+                later, but it is a larger task than I was anticipating, and I'd rather have
+                something "easier" working than something difficult not working. 
+        -->
+        <label for="imagesContainer" id="imagesContainerLabel">Click an image to get its data</label>
+        <div id="imagesContainer">
+            <!-- This will auto-populate based on the radios that are selected -->
+        </div>
+        <!-- Image fields will auto-populate when the user clicks an image -->
+        <label for="imageName">Image Location: </label><br>
+        <input type="text" id="typeImageName" name="imageName" placeholder="www.example.com/example-image.jpg"><br>
+        <label for="imageAlt">Image Alt: </label><br>
+        <textarea id="typeImageAlt" name="imageAlt" rows=4 placeholder="A short description of the image."></textarea><br>
+        <label for="imageSource">Flickr URL: </label><br>
+        <input type="text" id="typeImageSource" name="imageSource" placeholder="www.flickr.com/photos//userName/###########/"><br>
+        <input type="hidden" id="typeImageId" name="typeImageId" value="">
+
+        <div class="submitButtons">
+            <button onclick="addImage()">Add Image</button>
+            <button onclick="updateImage()">Update Image</button>
+            <button onclick="deleteImage()">Delete Image</button>
+        </div>
+    </div>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div><br>
+
+    <div class="submitButtons">
+        <!-- When this button is clicked, that type will be updated with the values in the form's fields-->
+        <input type="submit" id="updateType" onclick="updateRoomType()" value="Update">
+    </div>
+</form>
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    TIER FORM 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->  
+
+<form id = "tierForm">
+    <label for="tierId" class="col1">Room Tier: </label>
+    <div class="col2">
+        <input type="radio" id="tier1" name="tierId" onchange="getRoomTier()" value="1">
+        <label for="tier1">Standard</label><br>
+        <input type="radio" id="tier2" name="tierId" onchange="getRoomTier()" value="2">
+        <label for="tier2">Premium</label><br>
+        <input type="radio" id="tier3" name="tierId" onchange="getRoomTier()" value="3">
+        <label for="tier3">Deluxe</label><br>
+    </div>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
+
+    <label for="tierAmenities" class="col1">Amenities: </label><br>
+    <div id="tierAmenitiesCheckboxes">
+        <!-- populate with js all tier amenities and check those associated with the selected Tier -->
+    </div>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div><br>
+
+    <label for="featuredAmenities" class="col1">Featured Amenities:</label>
+    <select name="featuredAmenities" class="col2"></select>
+    <select name="featuredAmenities" class="col2"></select>
+    <select name="featuredAmenities" class="col2"></select>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div><br>
+
+    <div class="submitButtons">
+        <!-- When this button is clicked, that tier will be updated with the values in the form's fields-->
+        <input type="submit" id="updateTierBtn" onclick="updateRoomTier()" value="Update">
+    </div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="scripts/adminapp.js"></script>
+<script src="scripts/editRoom.js"></script>
+<script>
+    window.onload(generateRoomNumberSelector());
+    window.onload(generateAmenityCheckboxes());
+</script>
+</body>
+</html>
