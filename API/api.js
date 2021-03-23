@@ -108,16 +108,14 @@ router.route("/reviews").post((request, response) =>
 *                       ROOMS TABLE
 **************************************************************/
 // Get request: retrieves a list of all rooms and their data
-router.route("/rooms").get((request, response) =>
-{
+router.route("/rooms").get((request, response) => {
     dboperations.getRooms().then(result => {
         response.json(result[0]);
     })
 });
 
 // Get request: retrieves a specific room and its data
-router.route("/rooms/:roomNumber").get((request, response) =>
-{
+router.route("/rooms/:roomNumber").get((request, response) => {
     dboperations.getRoom(request.params.roomNumber).then(result => {
         response.json(result[0]);
     })
@@ -160,18 +158,10 @@ router.route("/roomtypes").get((request, response) =>
     })
 });
 
-// Get request: retrieves a specific room type and its data based on the roomTypeId
+// Get request: retrieves a specific room type ALL of its data (through joins)
 router.route("/roomtypes/:roomTypeId").get((request, response) =>
 {
     dboperations.getRoomType(request.params.roomTypeId).then(result => {
-        response.json(result[0]);
-    })
-});
-
-// Get request: retrieves a specific room type and ALL of its data (through joins)
-router.route("/roomTypes/alldata/:roomTypeId").get((request, response) =>
-{
-    dboperations.getAllRoomTypeInfo(request.params.roomTypeId).then(result => {
         response.json(result[0]);
     })
 });
@@ -253,13 +243,46 @@ router.route("/amenities/roomTierId/:roomTierId").get((request, response) =>
 /*************************************************************
 *                      IMAGES TABLE
 **************************************************************/
-// Get request: retrieves a list of images for a given room type
-router.route("/images/roomTypeId/:roomTypeId").get((request, response) =>
-{
-    dboperations.getImagesByRoomType(request.params.roomTypeId).then(result => {
+// Get request: retrieves an image from the database
+router.route("/images/:imageId").get((request, response) => {
+    dboperations.getImage(request.params.imageId).then(result => {
         response.json(result[0]);
     })
 });
+
+// Get request: retrieves a list of images for a given room type
+router.route("/images/roomTypeId/:roomTypeId").get((request, response) => {
+    dboperations.getImages(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
+// Post request: Adds image to table
+router.route("/images").post((request, response) =>
+{
+    let image = {...request.body}
+    dboperations.addImage(image).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Put request: Updates the image in the table with the new info
+router.route("/images/:imageId").put((request, response) =>
+{
+    let image = {...request.body}
+    dboperations.updateImage(image, request.params.imageId).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Delete request: Deletes the image from the table
+router.route("/images/:imageId").delete((request, response) =>
+{
+    dboperations.deleteImage(request.params.imageId).then(result => {
+        response.status(200).json(result);
+    })
+});
+
 
 /*************************************************************
 *                      TIERDETAIL TABLE
@@ -277,6 +300,15 @@ router.route("/tierdetail").post((request, response) =>
 {
     let td = {...request.body}
     dboperations.addTierDetail(td).then(result => {
+        response.status(201).json(result);
+    })
+});
+
+// Put request: Updates the tierdetail in the table with the new info
+router.route("/roomtiers/:roomTierId/amenity/:amenityId").put((request, response) =>
+{
+    let td = {...request.body}
+    dboperations.updateTierDetail(request.params.roomTierId, request.params.amenityId, td).then(result => {
         response.status(201).json(result);
     })
 });

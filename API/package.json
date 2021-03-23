@@ -11,6 +11,7 @@
     "body-parser": "^1.19.0",
     "cors": "2.8.1",
     "express": "^4.17.1",
+    "formidable": "^1.2.2",
     "mssql": "^6.2.1",
     "tedious": "^11.0.1"
   },

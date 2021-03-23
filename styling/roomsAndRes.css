@@ -2,6 +2,7 @@
     --lightColor: #E6F6F5;
     --midColor: #9ADAD6;
     --darkColor: #288882;
+    --darkColorTranslucent: rgba(40, 136, 130, 0.9);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -31,8 +32,7 @@ nav, .navlinks {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 form {
-    background-color: var(--darkColor);
-    opacity: .9;
+    background-color: var(--darkColorTranslucent);
     height: auto;
     text-align: left;
     justify-content: space-around;

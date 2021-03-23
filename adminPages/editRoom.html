@@ -63,20 +63,14 @@
         <input type="number" id="roomNumberText" value="">
     </div>
 
-    <!--
-    TO-DO: make this auto-populate
-    -->
     <label for="roomSizeId" class="col1">Room Size: </label>
     <div class="col2">
         <input type="radio" id="selectSize1" name="roomSizeId" value="1">
         <label for="selectSize1">1 King Bed</label><br>
         <input type="radio" id="selectSize2" name="roomSizeId" value="2">
-        <label for="selectSize2">2 Queen Beds</label>
-    </div><br>
+        <label for="selectSize2">2 Queen Beds</label><br>
+    </div>
 
-    <!--
-    TO-DO: make this auto-populate
-    -->
     <label for="roomTierId" class="col1">Room Tier: </label>
     <div class="col2">
         <input type="radio" id="selectTier1" name="roomTierId" value="1">
@@ -109,60 +103,75 @@
 <form id = "typeForm">
     <hidden value=""></hidden>
     <label for="typeSizeId" class="col1">Room Size: </label>
-    <!--
-    TO-DO: make this auto-populate
-    -->
+
     <div class="col2">
-        <input type="radio" id="typeSize1" name="typeSizeId" onchange="getRoomTypeInfo()" value="1">
+        <input type="radio" id="typeSize1" name="typeSizeId" onchange="getRoomType()" value="1">
         <label for="typeSize1">1 King Bed</label><br>
-        <input type="radio" id="typeSize2" name="typeSizeId" onchange="getRoomTypeInfo()" value="2">
+        <input type="radio" id="typeSize2" name="typeSizeId" onchange="getRoomType()" value="2">
         <label for="typeSize2">2 Queen Beds</label><br>
     </div>
 
-    <!--
-    TO-DO: make this auto-populate
-    -->
     <label for="typeTierId" class="col1">Room Tier: </label>
     <div class="col2">
-        <input type="radio" id="typeTier1" name="typeTierId" onchange="getRoomTypeInfo()" value="1">
+        <input type="radio" id="typeTier1" name="typeTierId" onchange="getRoomType()" value="1">
         <label for="typeTier1">Standard</label><br>
-        <input type="radio" id="typeTier2" name="typeTierId" onchange="getRoomTypeInfo()" value="2">
+        <input type="radio" id="typeTier2" name="typeTierId" onchange="getRoomType()" value="2">
         <label for="typeTier2">Premium</label><br>
-        <input type="radio" id="typeTier3" name="typeTierId" onchange="getRoomTypeInfo()" value="3">
+        <input type="radio" id="typeTier3" name="typeTierId" onchange="getRoomType()" value="3">
         <label for="typeTier3">Deluxe</label><br>
     </div>
 
     <br>
 
     <label for="typeName" class="col1">Room Type: </label>
-    <div class="col2">
-        <input type="text" id="typeName" name="typeName" value="" placeholder="Bed Number, Bed Size, - Room Tier">
-        <!-- This will auto-populate based on the boxes that are checked -->
-    </div>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="text" class="col2" id="typeName" name="typeName" value="" placeholder="Bed Number, Bed Size, - Room Tier"><br>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
 
     <label for="typeMaxOccupancy" class="col1">Max Occupancy: </label>
-    <div class="col2">
-        <input type="number" id="typeMaxOccupancy" name="typeMaxOccupancy" value="">
-        <!-- This will auto-populate based on the boxes that are checked -->
-    </div>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="number" class="col2" id="typeMaxOccupancy" name="typeMaxOccupancy" value=""><br>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div>
 
     <label for="typeCost" class="col1">Cost/Night ($): </label>
-    <div class="col2">
-        <input type="number" id="typeCost" name="typeCost" value="" >
-        <!-- This will auto-populate based on the boxes that are checked -->
-    </div>
+    <!-- This will auto-populate based on the radios that are selected -->
+    <input type="number" class="col2" id="typeCost" name="typeCost" value="" ><br>
 
     <!-- clear the floats from the columns -->
     <div class="clear"></div>
 
-    <div>
-        <p id="imagePlaceholder">I hope to be able to upload images here, but not sure how that would work with storing them to be then hosted on Azure.</p>
+    <div id="roomTypeImages">
+        <!-- To-Do:
+                For now, images already need to be online. I hope to allow them to upload
+                later, but it is a larger task than I was anticipating, and I'd rather have
+                something "easier" working than something difficult not working. 
+        -->
+        <label for="imagesContainer" id="imagesContainerLabel">Click an image to get its data</label>
+        <div id="imagesContainer">
+            <!-- This will auto-populate based on the radios that are selected -->
+        </div>
+        <!-- Image fields will auto-populate when the user clicks an image -->
+        <label for="imageName">Image Location: </label><br>
+        <input type="text" id="typeImageName" name="imageName" placeholder="www.example.com/example-image.jpg"><br>
+        <label for="imageAlt">Image Alt: </label><br>
+        <textarea id="typeImageAlt" name="imageAlt" rows=4 placeholder="A short description of the image."></textarea><br>
+        <label for="imageSource">Flickr URL: </label><br>
+        <input type="text" id="typeImageSource" name="imageSource" placeholder="www.flickr.com/photos//userName/###########/"><br>
+        <input type="hidden" id="typeImageId" name="typeImageId" value="">
+
+        <div class="submitButtons">
+            <button onclick="addImage()">Add Image</button>
+            <button onclick="updateImage()">Update Image</button>
+            <button onclick="deleteImage()">Delete Image</button>
+        </div>
     </div>
 
     <!-- clear the floats from the columns -->
-    <div class="clear"></div>
-    
-    <br>
+    <div class="clear"></div><br>
 
     <div class="submitButtons">
         <!-- When this button is clicked, that type will be updated with the values in the form's fields-->
@@ -178,11 +187,11 @@
 <form id = "tierForm">
     <label for="tierId" class="col1">Room Tier: </label>
     <div class="col2">
-        <input type="radio" id="tier1" name="tierId" onchange="getRoomTierInfo()" value="1">
+        <input type="radio" id="tier1" name="tierId" onchange="getRoomTier()" value="1">
         <label for="tier1">Standard</label><br>
-        <input type="radio" id="tier2" name="tierId" onchange="getRoomTierInfo()" value="2">
+        <input type="radio" id="tier2" name="tierId" onchange="getRoomTier()" value="2">
         <label for="tier2">Premium</label><br>
-        <input type="radio" id="tier3" name="tierId" onchange="getRoomTierInfo()" value="3">
+        <input type="radio" id="tier3" name="tierId" onchange="getRoomTier()" value="3">
         <label for="tier3">Deluxe</label><br>
     </div>
 
@@ -195,9 +204,15 @@
     </div>
 
     <!-- clear the floats from the columns -->
-    <div class="clear"></div>
-    
-    <br>
+    <div class="clear"></div><br>
+
+    <label for="featuredAmenities" class="col1">Featured Amenities:</label>
+    <select name="featuredAmenities" class="col2"></select>
+    <select name="featuredAmenities" class="col2"></select>
+    <select name="featuredAmenities" class="col2"></select>
+
+    <!-- clear the floats from the columns -->
+    <div class="clear"></div><br>
 
     <div class="submitButtons">
         <!-- When this button is clicked, that tier will be updated with the values in the form's fields-->
