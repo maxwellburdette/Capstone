@@ -86,7 +86,7 @@ function getSignout()
 //Gets json file from api server
 function getJson()
 {
-    Url = 'http://localhost:8090/api/users/' + localStorage.getItem("userLogin");
+    Url = 'http://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
   var result = null;
      
      $.ajax({

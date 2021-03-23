@@ -1,13 +1,21 @@
 :root {
+    --lightColor: #edeaee;
+    --midColor: #888;
+    --darkColor: #5d4954;
+    --darkColorTranslucent: rgba(93, 73, 84, 0.9);
+}
+
+
+/*:root {
     --lightColor: #E6F6F5;
     --midColor: #9ADAD6;
     --darkColor: #288882;
     --darkColorTranslucent: rgba(40, 136, 130, 0.9);
-}
+}*/
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-html {
+/*html {
     background: url('../media/mainBackground.jpg') no-repeat center left fixed; 
     overflow-x: hidden;
 }
@@ -27,7 +35,7 @@ nav, .navlinks {
 
 .navlinks {
     max-width: 300px;
-}
+}*/
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
