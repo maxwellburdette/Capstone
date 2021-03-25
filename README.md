@@ -1,9 +1,9 @@
 # KAM Hotels Web App
 
-#Hosted Site
+# Hosted Site
 https://happy-bush-031adc410.azurestaticapps.net
 
-#Installation
+# Installation
 Clone repo. All files in this directory are HTML/CSS and vanilla JS. Our API is Node.js based.
 
 #API
