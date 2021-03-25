@@ -534,6 +534,93 @@ async function deleteTierDetail(roomTierId, amenityId) {
     }
 }
 
+/**
+ * SQL functions for messages
+ */
+//Add send message to sql table
+async function sendMessage(message)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let insertMessage = await pool.request()
+            .input('toMessage', sql.NVarChar, message.toMessage)
+            .input('fromMessage', sql.NVarChar, message.fromMessage)
+            .input('contents', sql.NVarChar, message.contents)
+            .execute('InsertMessage');
+        return insertMessage.recordsets;
+
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+async function getFromMessage(fromMessage)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let messages = await pool.request()
+            .input('input_parameter', sql.NVarChar, fromMessage)
+            .query("SELECT * from messages where fromMessage = @input_parameter ORDER BY messageId ASC");
+        return messages.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+async function getToMessage(toMessage)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let messages = await pool.request()
+            .input('input_parameter', sql.NVarChar, toMessage)
+            .query("SELECT * from messages where toMessage = @input_parameter ORDER BY messageId ASC");
+        return messages.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+//Change who message is directed to
+async function updateMessage(user, id)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let updateMessage = await pool.request()
+            .input('input_parameter', sql.NVarChar, user)
+            .input('input_parameter2', sql.Int, id)
+            .query('BEGIN  UPDATE messages SET toMessage = @input_parameter WHERE messageId = @input_parameter2  END');
+        return updateMessage.recordsets;
+
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+//Delete message
+async function deleteMessage(id)
+{
+    try
+    {
+        let pool = await sql.connect(config);
+        let message = await pool.request()
+            .input('input_parameter', sql.Int, id)
+            .query("BEGIN DELETE FROM messages  WHERE  messageId = @input_parameter END ");
+        return message.recordsets;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
     getUsers : getUsers,
@@ -565,4 +652,9 @@ module.exports = {
     addTierDetail : addTierDetail,
     updateTierDetail : updateTierDetail,
     deleteTierDetail : deleteTierDetail,
+    sendMessage : sendMessage,
+    getFromMessage : getFromMessage,
+    getToMessage : getToMessage,
+    updateMessage : updateMessage,
+    deleteMessage : deleteMessage
 }

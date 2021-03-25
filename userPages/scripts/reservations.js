@@ -4,7 +4,7 @@
  * 
 ****************************************************************/
 function getRoute(param) {
-  var route = "http://kam.azurewebsites.net/api" + param;
+  var route = "https://kam.azurewebsites.net/api" + param;
 
   return route;
 }
