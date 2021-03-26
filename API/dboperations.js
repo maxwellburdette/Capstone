@@ -268,7 +268,7 @@ async function getCertainRoomTypes(numberPeople) {
         let pool = await sql.connect(config);
         let roomTypeList = await pool.request()
             .input('numberPeople', sql.Int, numberPeople)
-            .query("SELECT roomTypeId, roomTypeName, maxOccupancy, totalCost " +
+            .query("SELECT roomTypeId, roomTierId, roomSizeId, roomTypeName, maxOccupancy, totalCost," +
                    "FROM roomTypes " +
                    "WHERE maxOccupancy >= @numberPeople");
         return roomTypeList.recordsets;
@@ -323,7 +323,7 @@ async function updateRoomType(roomType, roomTypeId) {
 *   deleteImage .......... deltes an image from the table
 **************************************************************/
 // Get an image from table
-async function getImages(imageId) {
+async function getImage(imageId) {
     try {
         let pool = await sql.connect(config);
         let image = await pool.request()
@@ -554,6 +554,7 @@ module.exports = {
     getCertainRoomTypes : getCertainRoomTypes,
     updateRoomType : updateRoomType,
     getRoomTypeId : getRoomTypeId,
+    getImage : getImage,
     getImages : getImages,
     addImage : addImage,
     updateImage : updateImage,

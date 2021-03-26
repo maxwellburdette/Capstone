@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://kam.azurewebsites.net/api/amenities/roomTypeId/:roomTypeId",
+            "url": "http://localhost:8090/api/amenities/roomTypeId/:roomTypeId",
             "webRoot": "${workspaceFolder}"
         }
     ]

@@ -4,7 +4,7 @@
  * 
 ****************************************************************/
 function getRoute(param) {
-  var route = "http://kam.azurewebsites.net/api" + param;
+  var route = "http://localhost:8090/api" + param;
 
   return route;
 }
@@ -73,34 +73,28 @@ function displayRooms() {
     // TEMP VARIABLES
     var numberNights = 2;
 
+    let amenities = getJSON(getRoute("/amenities/roomTierId/" + roomTypes[i].roomTierId))
+    let images = getJSON(getRoute("/images/roomTypeId/" + roomTypes[i].roomTypeId));
+
     /*
     TO-DO: make the images window have arrows on either side to click between the images
     */
-    var tmpImage = "kingstd.jpg";
 
-    // get the array of amenities
-    console.log(roomTypes[i].roomTierId);
-    var amenityRoute = getRoute("/amenities/roomTierId/" + roomTypes[i].roomTierId);
-    var amenityArr = getJSON(amenityRoute);
-    console.log(amenityArr);
-    //var amenityArr = ['am1', 'am2', 'am3'];
-
-    var room = document.createElement("li");
+    let room = document.createElement("li");
     room.className="roomLi";
     // image section HTML
     room.innerHTML += (
       "<div class='col1'>" +
-        "<img src='../RoomPic/" + tmpImage + "'>" +
+        "<img src='" + images[0].imageName + "' id='roomPreviewImage'>" +
       "</div>");
 
-    /*
-    TO-DO: amenities currently don't work in the api. there is some kind of issue loading them.
-    */
-
-    // generate html for the first 4 amenities
+    // generate html for the featured amenities
     var amenityHTML = "";
-    for (let j = 0; j < 4; j++) {
-      amenityHTML += "<li>" + amenityArr[j].amenityName + "</li>"
+    for (let j = 0; j < amenities.length; j++) {
+      if (amenities.isFeatured) {
+        amenityHTML += "<li>" + amenities.amenityName + "</li>"
+        console.log(j);
+      }
     };
 
     // amenities section HTML
@@ -109,7 +103,7 @@ function displayRooms() {
         "<span class='title'>" + roomTypes[i].roomTypeName + "</span><br>" +
         "<span class='roomOccupancy'> Max Occupancy: " + roomTypes[i].maxOccupancy + "</span><br>" +
         "<ul class='amenities'>" +
-        amenityHTML +
+          amenityHTML +
         "</ul>" +
       "</div>"
     );
@@ -120,17 +114,17 @@ function displayRooms() {
         "<span class='numNights'>Nights: " + numberNights + " Guests: " + numberGuests + "</span><br>" +
         "<span class='pricePerNight'>Per Night: $" + roomTypes[i].totalCost + "</span><br>" +
         "<span class='totalCost'>Total: $" + (roomTypes[i].totalCost * numberNights) + "</span><br>" +
-        "<button class='btnSelectRoom' onClick='selectRoom(" + roomTypes[i].roomTypeId + ")'>Select Room</button>" +
+        "<button class='btnViewRoom' onClick='viewRoom(" + roomTypes[i].roomTypeId + ")'>View Room</button><br>" +
+        "<button class='btnBookRoom' onClick='bookRoom(" + roomTypes[i].roomTypeId + ")'>Book Room</button>" +
       "</div>");
 
-      room.innerHTML += "<hr>";
     list.appendChild(room);
   }
   listContainer.appendChild(list);
 }
 
 // create the popup window for that room's information
-function selectRoom(roomTypeId) {
+function viewRoom(roomTypeId) {
   // show the popup
   document.getElementById("roomPopup").style['display'] = 'block';
   console.log("roomTypeId: " + roomTypeId + " selected");

@@ -234,7 +234,7 @@ router.route("/amenities/:amenityId").get((request, response) =>
 // Get request: retrieves a list of amenities by room tier
 router.route("/amenities/roomTierId/:roomTierId").get((request, response) =>
 {
-    dboperations.getAmenitiesByRoomTier(request.params.roomTierId).then(result => {
+    dboperations.getAmenities(request.params.roomTierId).then(result => {
         response.json(result[0]);
     })
 });

@@ -29,7 +29,6 @@ form {
 *****************************************************/
 #roomsContainer {
     background-color: var(--darkColor);
-    opacity: .9;
     width: 800px;
     height: auto;
     text-align: center;
@@ -52,11 +51,14 @@ ul {
 
 .roomLi {
     text-decoration: none;
+    height: 225px;
+    margin: 5px 0px;
 }
 
 .col1 {
     width: 35%;
-    height: 250px;
+    height: 100%;
+    overflow: hidden;
     float: left;
     background-color: var(--midColor);
 }
@@ -70,7 +72,8 @@ ul {
 
 .col2 {
     width: 35%;
-    height: 250px;
+    height: 100%;
+    overflow: hidden;
     float: left;
     background-color: var(--lightColor);
     position: relative;
@@ -90,10 +93,20 @@ ul {
 
 .col3 {
     width: 30%;
-    height: 250px;
     float: left;
-    background-color: #C2BBBF;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--lighterMidColor);
     padding: 10px;
+}
+
+.roomLi button {
+    margin: 5px;
+}
+
+.btnBookRoom {
+    vertical-align: baseline;
+    font-size: 1.2rem;
 }
 
 /* Clear floats after the columns */
