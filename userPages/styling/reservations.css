@@ -119,14 +119,13 @@ ul {
 *           Show all info about one room
 *
 *****************************************************/
-#roomPopup {
+.roomPopup {
     display: none;
     position: absolute;
     z-index: 1;
     left: 50%;
     margin-left: -400px;
     width: 800px;
-    height: 800px;
     padding: 20px;
     background-color: var(--lightColor);
     border-radius: 1.5em;
@@ -137,7 +136,41 @@ ul {
     color: var(--darkColor);
 }
 
-#roomPopup button {
-    float: right;
+.roomPopup button {
     top: 0;
+    right: 0;
+    border-radius: 1.5em;
+    position: absolute;
+}
+
+.roomPopup button:hover {
+    background-color: var(--lighterMidColor);
+}
+
+.roomPopup h1 {
+    font-size: 20px;
+    top: 0;
+    margin: 0;
+    height: 40px;
+}
+
+.popupImagesContainer {
+    width: 50%;
+    height: 100%;
+    padding: 5px;
+    background-color: var(--lighterMidColor);
+    float: left;
+    position: relative;
+}
+.popupImagesContainer img{
+    width: 100%;
+}
+
+.popupInfoContainer {
+    width: 50%;
+    height: calc(100% - 40px);
+    padding: 5px;
+    background-color: var(--midColor);
+    float: left;
+    position: relative;
 }

@@ -201,11 +201,6 @@ function addRoom() {
 function updateRoom() {
   const url = getRoute("/rooms/" + roomNumber);
 
-  /*
-  TO-DO: we might want to add functionality to make sure that we can't have two rooms in
-        the table with the same room number
-  */
-
   var roomData = {
     roomNumber: parseInt(document.getElementById("roomNumberSelector").value),
     roomTypeId: getRoomTypeId('room')
@@ -216,10 +211,6 @@ function updateRoom() {
 // delete a room from the table based on the roomNumber
 function deleteRoom() {
   const url = getRoute("/rooms/" + document.getElementById("roomNumberSelector").value);
-
-  /*
-  TO-DO: check if the room number exists and only delete it if it does
-  */
   deleteItem(url)
 
   /*

@@ -268,7 +268,7 @@ async function getCertainRoomTypes(numberPeople) {
         let pool = await sql.connect(config);
         let roomTypeList = await pool.request()
             .input('numberPeople', sql.Int, numberPeople)
-            .query("SELECT roomTypeId, roomTierId, roomSizeId, roomTypeName, maxOccupancy, totalCost," +
+            .query("SELECT roomTypeId, roomTierId, roomSizeId, roomTypeName, maxOccupancy, totalCost " +
                    "FROM roomTypes " +
                    "WHERE maxOccupancy >= @numberPeople");
         return roomTypeList.recordsets;
@@ -455,8 +455,8 @@ async function getAmenities(roomTierId) {
                 .input('roomTierId', sql.Int, roomTierId)
                 .query("SELECT td.*, a.amenityName, a.amenityDescription " +
                     "FROM tierDetail td " +
-                    "JOIN amenities a ON td.amenityName = a.amenityName " +
-                    "WHERE rt.roomTierId = @roomTierId " +
+                    "JOIN amenities a ON td.amenityId = a.amenityId " +
+                    "WHERE td.roomTierId = @roomTierId " +
                     "ORDER BY a.amenityName ASC");
             return amenities.recordsets;
         } catch(error) {
