@@ -1,15 +1,3 @@
-#resPageContainer {
-    position: absolute;
-    z-index: -1;
-    background-color: black;
-    opacity: .2;
-    margin: 0;
-    padding: 0;
-    opacity: .8;
-    width: 100%;
-    height: 100%;
-}
-
 /*****************************************************
 *
 *                Room criteria form
@@ -119,6 +107,10 @@ ul {
 *           Show all info about one room
 *
 *****************************************************/
+#roomPopupContainer {
+    margin: 20px auto 0px;
+}
+
 .roomPopup {
     display: none;
     position: absolute;

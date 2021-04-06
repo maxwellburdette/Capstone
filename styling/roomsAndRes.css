@@ -71,3 +71,20 @@ button, input[type="submit"] {
 .clear {
     clear: both;
 }
+
+#pageContainer {
+    background-color: var(--darkColor);
+    width: 800px;
+    height: auto;
+    text-align: center;
+    margin: 20px auto 0px;
+    border-radius: 1.5em;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 18px;
+    color:black;
+    padding: 20px;
+    overflow: auto;
+}

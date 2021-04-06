@@ -166,6 +166,14 @@ router.route("/roomtypes/:roomTypeId").get((request, response) =>
     })
 });
 
+// Get request: retrieves a specific room type's name
+router.route("/roomtypes/booktype/:roomTypeId").get((request, response) =>
+{
+    dboperations.getRoomTypeName(request.params.roomTypeId).then(result => {
+        response.json(result[0]);
+    })
+});
+
 // Get request: retrieves a list of room types and their data based on the max occupancy
 router.route("/roomtypes/numberGuests/:numberPeople").get((request, response) =>
 {

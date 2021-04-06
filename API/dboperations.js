@@ -242,6 +242,21 @@ async function getRoomTypes() {
     }
 }
 
+// Get a specific type's name
+async function getRoomTypeName(roomTypeId) {
+    try {
+        let pool = await sql.connect(config);
+        let roomTypeName = await pool.request()
+            .input('roomTypeId', sql.Int, roomTypeId)
+            .query('SELECT roomTypeName, totalCost ' + 
+                   'FROM roomTypes ' +
+                   'WHERE roomTypeId = @roomTypeId');
+        return roomTypeName.recordsets;
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 //Get specific room type from table
 async function getRoomType(roomTypeId) {
     try {
@@ -551,6 +566,7 @@ module.exports = {
     updateRoom : updateRoom,
     getRoomType : getRoomType,
     getRoomTypes : getRoomTypes,
+    getRoomTypeName : getRoomTypeName,
     getCertainRoomTypes : getCertainRoomTypes,
     updateRoomType : updateRoomType,
     getRoomTypeId : getRoomTypeId,
