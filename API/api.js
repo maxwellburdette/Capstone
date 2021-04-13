@@ -330,6 +330,18 @@ router.route("/roomtiers/:roomTierId/amenity/:amenityId/").delete((request, resp
 });
 
 
+/*************************************************************
+*                      RESERVATIONS TABLE
+**************************************************************/
+// Post request: Adds a reservation to table
+router.route("/reservations").post((request, response) =>
+{
+    let res = {...request.body}
+    dboperations.addReservation(res).then(result => {
+        response.status(201).json(result);
+    })
+});
+
 
 var port = process.env.PORT || 8090;
 app.listen(port);

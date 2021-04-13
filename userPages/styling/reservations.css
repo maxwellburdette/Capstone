@@ -135,10 +135,6 @@ ul {
     position: absolute;
 }
 
-.roomPopup button:hover {
-    background-color: var(--lighterMidColor);
-}
-
 .roomPopup h1 {
     font-size: 20px;
     top: 0;

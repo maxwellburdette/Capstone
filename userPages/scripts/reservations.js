@@ -37,9 +37,15 @@ function getJSON(route) {
 function displayRooms() {
   event.preventDefault();
 
-  /*
-  * TO-DO: this page crashes when one or more fields are blank - fix it
-  */
+  var checkIn = new Date(document.getElementById("resCheckIn").value);
+  var checkOut = new Date(document.getElementById("resCheckOut").value);
+  // get only the dates in string form
+  let checkInArr = checkIn.toISOString().split("T")[0].split("-");
+  let checkOutArr = checkOut.toISOString().split("T")[0].split("-");
+
+  let checkInString = checkInArr[0] + checkInArr[1] + checkInArr[2];
+  let checkOutString = checkOutArr[0] + checkOutArr[1] + checkOutArr[2];
+
   // get the number of people from the user's entries
   var numAdults = document.getElementById("resNumAdults").value;
   var numKids = document.getElementById("resNumChildren").value;
@@ -59,12 +65,7 @@ function displayRooms() {
 
   for (let i = 0; i < roomTypes.length; i++) {
     // get the number of nights
-    /*
-    TO-DO: calculate the number of nights based on the dates
-    */
-   
-    // TEMP VARIABLES
-    var numberNights = 2;
+    let numberNights = ((checkOut - checkIn)/1000/60/60/24);
 
     let amenities = getJSON(getRoute("/amenities/roomTierId/" + roomTypes[i].roomTierId));
     let images = getJSON(getRoute("/images/roomTypeId/" + roomTypes[i].roomTypeId));
@@ -106,7 +107,7 @@ function displayRooms() {
        "<span class='pricePerNight'>Per Night: $" + roomTypes[i].totalCost + "</span><br>" +
        "<span class='totalCost'>Total: $" + (roomTypes[i].totalCost * numberNights) + "</span><br>" +
        "<button class='btnViewRoom' onclick='viewRoom(" + roomTypes[i].roomTypeId + ")'>View Room</button><br>" +
-       "<button class='btnBookRoom' onclick='bookRoom(" + roomTypes[i].roomTypeId + ")'>Book Room</button>" +
+       "<button class='btnBookRoom' onclick='bookRoom(" + roomTypes[i].roomTypeId + ", " + checkInString + ", " + checkOutString + ")'>Book Room</button>" +
      "</div>");
 
     list.appendChild(room);
@@ -179,20 +180,16 @@ function closePopup(roomTypeId) {
 }
 
 // navigate to the book room page
-function bookRoom(roomTypeId) {
-  window.location.replace("bookReservation.html?roomTypeId=" + roomTypeId);
+function bookRoom(roomTypeId, checkIn, checkOut) {
+  window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
 }
 
 
 /****************************************************************
  * 
- *   Functions to Make, Update, and Cancel a Reservation
+ *   Functions to Update, and Cancel a Reservation
  * 
 ****************************************************************/
-// add a reservation to the table
-function addReservation() {
-  // some code
-}
 
 /*
 TO-DO: create a spot to manage reservations; the below functions aren't needed without that page
@@ -206,4 +203,36 @@ function updateReservation() {
 // delete a reservation
 function deleteReservation() {
   // some code
+}
+
+/****************************************************************
+ * 
+ *   Misc functions
+ * 
+****************************************************************/
+
+function getToday() {
+  // get tomorrow's date code from
+  // https://flaviocopes.com/how-to-get-tomorrow-date-javascript/
+  let today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  document.getElementById("resCheckIn").value = formatFullDate(today);
+  document.getElementById("resCheckOut").value = formatFullDate(tomorrow);
+}
+
+// convert the full date to a locale date string and format it with leading 0s where necessary
+function formatFullDate(date) {
+  let str = date.toLocaleDateString().split('/');
+  return str[2] + "-" + formatDate(str[0]) + "-" + formatDate(str[1])
+}
+
+// format with leading zeros where necessary
+function formatDate(date) {
+  if (date.length < 2) {
+    return "0" + date;
+  } else {
+    return date;
+  }
 }

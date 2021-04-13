@@ -1,11 +1,12 @@
-/*:root {
+/* :root {
     --lightColor: #edeaee;
     --lighterMidColor: #C2BBBF;
     --midColor: #888;
     --darkColor: #5d4954;
     --darkColorTranslucent: rgba(93, 73, 84, 0.9);
-}*/
+}
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 :root {
     --lightColor: #E6F6F5;
@@ -14,8 +15,6 @@
     --darkColor: #288882;
     --darkColorTranslucent: rgba(40, 136, 130, 0.9);
 }
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 html {
     background: url('../media/mainBackground.jpg') no-repeat center left fixed; 
@@ -68,13 +67,18 @@ button, input[type="submit"] {
     border-radius: 1px;
 }
 
+button:hover, input[type="submit"]:hover {
+    background-color: var(--lighterMidColor);
+}
+
 .clear {
     clear: both;
 }
 
 #pageContainer {
     background-color: var(--darkColor);
-    width: 800px;
+    width: 90%vw;
+    max-width: 800px;
     height: auto;
     text-align: center;
     margin: 20px auto 0px;

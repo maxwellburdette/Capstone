@@ -549,6 +549,28 @@ async function deleteTierDetail(roomTierId, amenityId) {
     }
 }
 
+/*************************************************************
+*                   RESERVATIONS TABLE
+*   addReservation ......... adds a reservation to the table
+**************************************************************/
+// Add an amenity to a tier
+async function addReservation(res) {
+    try {
+        let pool = await sql.connect(config);
+        let reservation = await pool.request()
+            .input('email', sql.NVarChar(255), res.email)
+            .input('checkIn', sql.Date, res.checkIn)
+            .input('checkOut', sql.Date, res.checkOut)
+            .input('roomTypeId', sql.Int, res.roomTypeId)
+            .input('totalCost', sql.Int, res.totalCost)
+            .query('INSERT INTO reservations (email, checkIn, checkOut, roomTypeId, totalCost) ' + 
+                   'VALUES (@email, @checkIn, @checkOut, @roomTypeId, @totalCost);');
+        return reservation.recordsets;
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
     getUsers : getUsers,
@@ -582,4 +604,5 @@ module.exports = {
     addTierDetail : addTierDetail,
     updateTierDetail : updateTierDetail,
     deleteTierDetail : deleteTierDetail,
+    addReservation : addReservation,
 }
