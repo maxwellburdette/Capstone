@@ -1,5 +1,7 @@
 var config = require('./dbconfig');
 const sql = require('mssql');
+const { query } = require('express');
+const e = require('express');
 
 
 
@@ -226,8 +228,10 @@ async function updateRoom(room, roomNumber) {
 /*************************************************************
 *                      ROOM TYPE TABLE
 *   getRoomTypes ......... gets all room types
-*   getRoomType .......... gets a room type based on room type id
+*   getRoomTypeName ...... gets the room type name based on room type id
+*   getRoomType .......... gets a room type (all data about it) based on room type id
 *   getCertainRoomTypes .. gets room types based on max occupancy
+*   getRoomTypeId ........ gets a room type id based on the room size and room tier
 *   updateRoomType ....... updates the room type selected
 **************************************************************/
 // Get rooms types from table
@@ -328,7 +332,6 @@ async function updateRoomType(roomType, roomTypeId) {
     }
 }
 
-
 /*************************************************************
 *                      IMAGES TABLE
 *   getImage    .......... gets a specific image from the table
@@ -416,9 +419,6 @@ async function deleteImage(imageId) {
 *                     ROOM TIERS TABLE
 *   getRoomTiers ......... gets all room tiers
 *   getRoomTier .......... gets a room tier based on tier name
-*   addRoomTier .......... adds a room tier to the table
-*   deleteRoomTier ....... deletes a room tier from the table
-*   updateRoomTier ....... updates a room tier with the input data
 **************************************************************/
 // Get room tiers from table
 async function getRoomTiers() {
@@ -458,6 +458,7 @@ async function getRoomTier(roomTierId) {
 *   getAmenities ......... gets either the amenities based on roomTierId or all amenities
 *   getTierDetail ........ gets the tierdetail for that roomtierid/amenityid combo
 *   addTierDetail ........ adds a tier/amenity relationship
+*   updateTierDetail ..... updates a tier/amenity relationship
 *   deletesTierDetail .... deletes a tier/amenity relationship
 **************************************************************/
 // get either the amenities based on roomTierId or all amenities
@@ -552,8 +553,9 @@ async function deleteTierDetail(roomTierId, amenityId) {
 /*************************************************************
 *                   RESERVATIONS TABLE
 *   addReservation ......... adds a reservation to the table
+*   getReservations ........ gets reservations for a certain date range
 **************************************************************/
-// Add an amenity to a tier
+// Add a reservation
 async function addReservation(res) {
     try {
         let pool = await sql.connect(config);
@@ -564,9 +566,36 @@ async function addReservation(res) {
             .input('roomTypeId', sql.Int, res.roomTypeId)
             .input('totalCost', sql.Int, res.totalCost)
             .query('INSERT INTO reservations (email, checkIn, checkOut, roomTypeId, totalCost) ' + 
-                   'VALUES (@email, @checkIn, @checkOut, @roomTypeId, @totalCost);');
+                   'VALUES (@email, @checkIn, @checkOut, @roomTypeId, @totalCost)');
         return reservation.recordsets;
     } catch(error) {
+        console.log(error);
+    }
+}
+
+async function getReservations(date) {
+    try {
+        let pool = await sql.connect(config);
+        let reservations = await pool.request()
+            .input('date', sql.Date, date)
+            .query('SELECT roomTypeId FROM reservations ' + 
+                   'WHERE checkIn <= @date AND checkOut >= @date'
+            )
+        return reservations.recordsets;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getUserReservations(email) {
+    try {
+        let pool = await sql.connect(config);
+        let reservations = await pool.request()
+            .input('email', sql.NVarChar(255), email)
+            .query('SELECT * FROM reservations WHERE email = @email'
+            )
+        return reservations.recordsets;
+    } catch (error) {
         console.log(error);
     }
 }
@@ -605,4 +634,6 @@ module.exports = {
     updateTierDetail : updateTierDetail,
     deleteTierDetail : deleteTierDetail,
     addReservation : addReservation,
+    getReservations: getReservations,
+    getUserReservations: getUserReservations
 }

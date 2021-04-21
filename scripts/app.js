@@ -79,7 +79,6 @@ function getSignout()
     $('#userName').text(text); 
     $('#account').text("Account");
     $('#userMessages').text("Messages");
-    $('#manageReservation').text("Manage Reservations");
     $('#makeReservation').text("Make Reservation");
     $('#leaveReview').text("Leave us a review");
 

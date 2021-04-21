@@ -39,10 +39,12 @@ function displayRooms() {
 
   var checkIn = new Date(document.getElementById("resCheckIn").value);
   var checkOut = new Date(document.getElementById("resCheckOut").value);
+  // get the number of nights
+  let numberNights = ((checkOut - checkIn)/1000/60/60/24);
+
   // get only the dates in string form
   let checkInArr = checkIn.toISOString().split("T")[0].split("-");
   let checkOutArr = checkOut.toISOString().split("T")[0].split("-");
-
   let checkInString = checkInArr[0] + checkInArr[1] + checkInArr[2];
   let checkOutString = checkOutArr[0] + checkOutArr[1] + checkOutArr[2];
 
@@ -52,8 +54,7 @@ function displayRooms() {
   var numberGuests = parseInt(numAdults) + parseInt(numKids);
 
   // get the room types that can hold that many people
-  var route = getRoute("/roomtypes/numberGuests/" + numberGuests);
-  var roomTypes = getJSON(route);
+  let roomTypes = getAvailableRoomTypes(numberGuests, checkIn, numberNights);
 
   // make the area where the rooms will populate visible
   const listContainer = document.getElementById("roomsContainer");
@@ -61,11 +62,15 @@ function displayRooms() {
   listContainer.style['display'] = 'block';
   // clear what was generated so that the page "refreshes" each time the user clicks submit
   listContainer.innerHTML = "";
+
+  // if there are no available rooms for that number of people and that date range...
+  if (roomTypes.length == 0) {
+    listContainer.innerText = "We're sorry!\nThere are no available rooms that can sleep " + numberGuests + " of people for the selected dates.";
+  }
+ 
   const list = document.createElement("ul");
 
   for (let i = 0; i < roomTypes.length; i++) {
-    // get the number of nights
-    let numberNights = ((checkOut - checkIn)/1000/60/60/24);
 
     let amenities = getJSON(getRoute("/amenities/roomTierId/" + roomTypes[i].roomTierId));
     let images = getJSON(getRoute("/images/roomTypeId/" + roomTypes[i].roomTypeId));
@@ -179,48 +184,78 @@ function closePopup(roomTypeId) {
   document.getElementById("roomsContainer").style['display'] = 'block';
 }
 
+function getAvailableRoomTypes(numberGuests, checkIn, numNights) {
+  // calculate the number of available room types
+  const allRooms = getJSON(getRoute("/rooms"));
+  let availableTypes = getTypeCount(allRooms);
+  const reservedTypes = getReservedTypes(checkIn, numNights);
+  for (let i = 0; i < availableTypes.length; i++) {
+    availableTypes[i] -= reservedTypes[i];
+  }
+  
+  // tell the site which rooms to display of the ones available based on the number of guests
+  const allRoomTypes = getJSON(getRoute("/roomtypes/numberGuests/" + numberGuests));
+  for (j = 0; j < allRoomTypes.length; j++) {
+    let roomTypeId = allRoomTypes[j].roomTypeId;
+    // if this room type has 0 available, remove it from the array
+    if (availableTypes[roomTypeId - 1] == 0) {
+      allRoomTypes.splice(j, 1);
+    }
+  }
+  return allRoomTypes;
+}
+
+function getReservedTypes(checkIn, numNights) {
+    // this will store the max number of reserved rooms per room type over this date range
+  // which will determine which rooms are not available for the dates the customer selected
+  let maxReserved = [0, 0, 0, 0, 0, 0];
+  let route, reservations, reserved;
+  let date = new Date(checkIn);
+  // get the room types of all of the reservations for this date range
+  for (let i = 0; i < numNights; i++) {
+    date.setDate(date.getDate() + 1);
+    route = getRoute("/reservations/" + date.toISOString().split('T')[0]);
+    reservations = getJSON(route)[0];
+    reserved = getTypeCount(reservations);
+    // adjust the max number of reservations per room type if needed
+    for (let j = 0; j < reserved.length; j++) {
+      maxReserved[j] = Math.max(maxReserved[j], reserved[j]);
+    }
+  }
+  return maxReserved;
+}
+
+function getTypeCount(rooms) {
+  let typeCount = [0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < rooms.length; i++) {
+    let roomTypeId = rooms[i].roomTypeId;
+    typeCount[roomTypeId - 1]++;
+  }
+  return typeCount;
+}
+
 // navigate to the book room page
 function bookRoom(roomTypeId, checkIn, checkOut) {
   window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
 }
 
-
 /****************************************************************
  * 
- *   Functions to Update, and Cancel a Reservation
+ *   Date Picker Functions
  * 
 ****************************************************************/
-
-/*
-TO-DO: create a spot to manage reservations; the below functions aren't needed without that page
-*/
-
-// update a reservation based on the information provided on the form at manageReservations.html
-function updateReservation() {
-  // some code
-}
-
-// delete a reservation
-function deleteReservation() {
-  // some code
-}
-
-/****************************************************************
- * 
- *   Misc functions
- * 
-****************************************************************/
-
-function getToday() {
-  // get tomorrow's date code from
+/*function getTomorrow(today) {
+  // get tomorrow's date code adapted from
   // https://flaviocopes.com/how-to-get-tomorrow-date-javascript/
-  let today = new Date();
+  if (today == null || today == undefined) {
+    today = new Date();
+  }
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
 
   document.getElementById("resCheckIn").value = formatFullDate(today);
   document.getElementById("resCheckOut").value = formatFullDate(tomorrow);
-}
+}*/
 
 // convert the full date to a locale date string and format it with leading 0s where necessary
 function formatFullDate(date) {
@@ -236,3 +271,22 @@ function formatDate(date) {
     return date;
   }
 }
+
+// use Zebra_Datepicker for a cross-browser-friendly date picker
+$(document).ready(function() {
+  // check in date defaults to today
+  $('#resCheckIn').Zebra_DatePicker({
+    direction: true,
+    pair: $('#resCheckOut'),
+    format: 'm/d/Y',
+    default_position: 'below',
+    offset: [20, 0]
+  })
+  // check out date allows only dates after today
+  $('#resCheckOut').Zebra_DatePicker({
+    direction: 1,
+    format: 'm/d/Y',
+    default_position: 'below',
+    offset: [20, 0]
+  })
+});

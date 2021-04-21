@@ -342,6 +342,22 @@ router.route("/reservations").post((request, response) =>
     })
 });
 
+// Get request: retrieves all reservations for a certain day
+router.route("/reservations/:date").get((request, response) =>
+{
+    dboperations.getReservations(request.params.date).then(result => {
+        response.json(result);
+    })
+});
+
+// Get request: retrieves all reservations for a certain user
+router.route("/reservations/user/:email").get((request, response) =>
+{
+    dboperations.getUserReservations(request.params.email).then(result => {
+        response.json(result);
+    })
+});
+
 
 var port = process.env.PORT || 8090;
 app.listen(port);

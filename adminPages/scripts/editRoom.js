@@ -3,9 +3,6 @@ TO-DO: consider storing variables that are used in multiple functions in a names
        saved each time the user clicks one of the submit buttons
 */
 
-// allows us to upload images
-//var formidable = require('formidable');
-
 /****************************************************************
  * 
  *   Functions to manipulate the database/communicate with the API

@@ -46,9 +46,9 @@ window.onload = function () {
     if(localStorage.getItem('userLogin') == null)
     {
         console.log(window.location.href);
-        if(document.URL.includes('contactus.html'))
+        if(document.URL.includes('contactus.html') || document.URL.includes('reservations.html'))
         {
-
+        
         }
         else
         {
@@ -84,7 +84,6 @@ function getSignout()
     $('#userName').text(text); 
     $('#account').text("Account");
     $('#userMessages').text("Messages");
-    $('#manageReservation').text("Manage Reservations");
     $('#makeReservation').text("Make Reservation");
     $('#leaveReview').text("Leave us a review");
 
@@ -94,7 +93,7 @@ function getSignout()
 //Gets json file from api server
 function getJson()
 {
-    Url = 'http://localhost:8090/api/users/' + localStorage.getItem("userLogin");
+    Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
   var result = null;
      
      $.ajax({
@@ -110,4 +109,3 @@ function getJson()
     var json = JSON.parse(jsonText);
     return json;
 }
-
