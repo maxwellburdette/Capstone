@@ -76,6 +76,7 @@ function setReservation() {
 		let h3 = document.createElement("h3");
 		let h4 = document.createElement("h4");
 		h3.style = "text-align: center";
+        h3.style = "padding: 10px"
         h3.innerText = "ReservationId: " + reservations[i].reservationId
 		h4.innerText =
 			"Check in Date: " +
