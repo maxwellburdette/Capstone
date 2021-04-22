@@ -331,7 +331,6 @@ router.route("/roomtiers/:roomTierId/amenity/:amenityId/").delete((request, resp
 });
 
 
-<<<<<<< HEAD
 /*************************************************************
 *                      RESERVATIONS TABLE
 **************************************************************/
@@ -357,7 +356,10 @@ router.route("/reservations/user/:email").get((request, response) =>
 {
     dboperations.getUserReservations(request.params.email).then(result => {
         response.json(result);
-=======
+    })
+});
+
+
 /**
  * SQL commands for messages table
  */
@@ -397,7 +399,6 @@ router.route("/messages/:id").delete((request, response) =>
 {
     dboperations.deleteMessage(request.params.id).then(result => {
         response.status(200).json(result);
->>>>>>> main
     })
 });
 
