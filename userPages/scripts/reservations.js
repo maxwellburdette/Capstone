@@ -341,7 +341,7 @@ function showSignUp() {
   document.getElementById("newLastName").value = "";
 }
 
-function login(roomTypeId, checkIn, checkOut) {
+function login() {
   event.preventDefault();
 
   const email = document.getElementById("email").value;
@@ -372,24 +372,12 @@ function login(roomTypeId, checkIn, checkOut) {
     if(typeof(Storage) !== "undefined") {
       localStorage.setItem("userLogin", email);
     }
-   
-
-
-
-
-
-
-
-
-
-
-    // the user is now signed in, so go to the book reservation page
-    // window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
+    errorSignIn.textContent = user.firstName + " " + user.lastName + " has been signed in!";
     return true;
   }
 }
 
-function signUp(roomTypeId, checkIn, checkOut) {
+function signUp() {
   event.preventDefault();
   
   const email = document.getElementById("newEmail").value;
@@ -426,17 +414,7 @@ function signUp(roomTypeId, checkIn, checkOut) {
     if(typeof(Storage) !== "undefined") {
       localStorage.setItem("userLogin", email);
     }
-
-
-
-
-
-
-
-
-    
-    // the user is now signed in, so go to the book reservation page
-    // window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
+    errorSignUp.textContent = "Account successfully created for " + firstName + " " + lastName + "!";
     return true;
   }
 }
