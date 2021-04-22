@@ -81,11 +81,7 @@ function getSignout()
 //Gets json file from api server
 function getJson()
 {
-<<<<<<< HEAD
     Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
-=======
-    Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
->>>>>>> main
   var result = null;
      
      $.ajax({
