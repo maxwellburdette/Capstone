@@ -1,10 +1,6 @@
 function getJSON()
 {
-<<<<<<< HEAD
-    Url = "https://kam.azurewebsites.net/api/reviews"
-=======
-    Url = "https://kam.azurewebsites.net/api/reviews"
->>>>>>> main
+    Url = "https://kam.azurewebsites.net/api/reviews";
     var result = null;
      
      $.ajax({
@@ -105,11 +101,7 @@ function displayReviews()
 
 function calculateRating()
 {
-<<<<<<< HEAD
     Url = 'https://kam.azurewebsites.net/api/reviews';
-=======
-    Url = 'https://kam.azurewebsites.net/api/reviews';
->>>>>>> main
     var result = null;
      
      $.ajax({
