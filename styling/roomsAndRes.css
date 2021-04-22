@@ -1,7 +1,8 @@
  :root {
     --lightColor: #edeaee;
+    --darkerLightColor: #DFDDE0;
     --lighterMidColor: #C2BBBF;
-    --midColor: #888;
+    --midColor: #888888;
     --darkColor: #5d4954;
     --darkColorTranslucent: rgba(93, 73, 84, 0.9);
 }
@@ -64,7 +65,7 @@ button, input[type="submit"] {
     background-color: var(--lightColor);
     color: var(--darkColor);
     border: none;
-    border-radius: 1px;
+    border-radius: 5px;
 }
 
 button:hover, input[type="submit"]:hover {

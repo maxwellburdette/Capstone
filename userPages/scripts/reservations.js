@@ -123,24 +123,30 @@ function displayRooms() {
 }
 
 function createPopup(roomType, amenities, images) {
-
-  // create the window that will hold the room type information
-  const container = document.getElementById("roomPopupContainer");
-  const popup = document.createElement('div');
+// create the window that will hold the room type information
+const container = document.getElementById("roomPopupContainer");
+  const popup = document.createElement('section');
   popup.className = "roomPopup";
-  popup.id = "roomPopup" + roomType.roomTypeId; // <div id = "roomPopup1">
-  
-  // create the main blocks of the popup
-  const btnClose = document.createElement('button');
-  btnClose.innerText = 'Close';
-  const roomTypeName = document.createElement('h2');
-  const imgContainer = document.createElement('div');
-  imgContainer.className = "popupImagesContainer";
-  imgContainer.innerHTML = "<h2>Images: </h2>";
-  const amenitiesContainer = document.createElement('div');
-  amenitiesContainer.className = "popupInfoContainer";
-  amenitiesContainer.innerHTML = "<h2>Amenities: </h2>";
+  popup.id = "roomPopup" + roomType.roomTypeId; // <section id = "roomPopup1">
 
+    // create the main blocks of the popup
+    const btnClose = document.createElement('button');
+    btnClose.innerText = 'Close';
+    btnClose.className = "btnClose";
+    const roomTypeName = document.createElement('h1');
+    const popupInfo = document.createElement('div');
+    popupInfo.className = "popupInfo";
+
+      // create the 2 columns within the popup
+      const imgContainer = document.createElement('div');
+      imgContainer.className = "popupImagesContainer";
+      imgContainer.innerHTML = "<h2>Images: </h2>";
+      const amenitiesContainer = document.createElement('div');
+      amenitiesContainer.className = "popupInfoContainer";
+      amenitiesContainer.innerHTML = "<h2>Amenities: </h2>";
+    
+    // end popupInfo div
+  // end roomPopup section
   
   // set all of the blocks to contain information pertaining to that room type
   btnClose.onclick = function() {
@@ -156,15 +162,19 @@ function createPopup(roomType, amenities, images) {
     imgContainer.appendChild(image);
   }
 
+  // display all amenities
   for (let j = 0; j < amenities.length; j++) {
     let amenity = document.createElement('li');
     amenity.innerText = amenities[j].amenityName;
     amenitiesContainer.appendChild(amenity);
   }
+  
+  // add all of these elements to the page
   popup.appendChild(btnClose);
   popup.appendChild(roomTypeName);
-  popup.appendChild(imgContainer);
-  popup.appendChild(amenitiesContainer);
+  popup.appendChild(popupInfo);
+  popupInfo.appendChild(imgContainer);
+  popupInfo.appendChild(amenitiesContainer);
   container.appendChild(popup);
 }
 
@@ -234,33 +244,24 @@ function getTypeCount(rooms) {
   return typeCount;
 }
 
-// navigate to the book room page
-function bookRoom(roomTypeId, checkIn, checkOut) {
-  window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
-}
 
 /****************************************************************
  * 
  *   Date Picker Functions
  * 
 ****************************************************************/
-/*function getTomorrow(today) {
-  // get tomorrow's date code adapted from
-  // https://flaviocopes.com/how-to-get-tomorrow-date-javascript/
-  if (today == null || today == undefined) {
-    today = new Date();
-  }
+function getTomorrow(today) {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
 
   document.getElementById("resCheckIn").value = formatFullDate(today);
   document.getElementById("resCheckOut").value = formatFullDate(tomorrow);
-}*/
+}
 
 // convert the full date to a locale date string and format it with leading 0s where necessary
 function formatFullDate(date) {
   let str = date.toLocaleDateString().split('/');
-  return str[2] + "-" + formatDate(str[0]) + "-" + formatDate(str[1])
+  return formatDate(str[0]) + "/" + formatDate(str[1]) + "/" + str[2];
 }
 
 // format with leading zeros where necessary
@@ -274,19 +275,57 @@ function formatDate(date) {
 
 // use Zebra_Datepicker for a cross-browser-friendly date picker
 $(document).ready(function() {
+  const today = new Date();
+  getTomorrow(today);
   // check in date defaults to today
   $('#resCheckIn').Zebra_DatePicker({
     direction: true,
+    start_date: today,
     pair: $('#resCheckOut'),
     format: 'm/d/Y',
     default_position: 'below',
     offset: [20, 0]
-  })
+  });
   // check out date allows only dates after today
   $('#resCheckOut').Zebra_DatePicker({
     direction: 1,
     format: 'm/d/Y',
     default_position: 'below',
     offset: [20, 0]
-  })
+  });
 });
+
+
+/****************************************************************
+ * 
+ *      Sign In/Out Functions
+ *          & Navigate to bookReservation.html
+ * 
+****************************************************************/
+
+// navigate to the book room page
+function bookRoom(roomTypeId, checkIn, checkOut) {
+  // if the user isn't signed in, make them do so (or create an account)
+  if(localStorage.getItem('userLogin') == null) {
+    document.getElementById("sectLogin").style['display'] = "block";
+    showSignIn();
+  } else {
+    // pull this out of the else later, but i need it to not run automatically for testing
+    window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
+  }
+}
+
+function closeLogin() {
+  document.getElementById("sectLogin").style['display'] = "none";
+  showSignIn();
+}
+
+function showSignIn() {
+  document.getElementById("signIn").style['display'] = "block";
+  document.getElementById("signUp").style['display'] = "none";
+}
+
+function showSignUp() {
+  document.getElementById("signIn").style['display'] = "none";
+  document.getElementById("signUp").style['display'] = "block";
+}

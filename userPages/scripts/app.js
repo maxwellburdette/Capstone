@@ -55,9 +55,11 @@ window.onload = function () {
             window.location.href = '../index.html';
         }
     }
-    if(localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
-    localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
-    localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0)
+// can't compare to our email addresses if the email address is null, so added this check here
+if(localStorage.getItem("userLogin") != null && 
+    (localStorage.getItem("userLogin").localeCompare("maxbdevelops@gmail.com") == 0 ||
+        localStorage.getItem("userLogin").localeCompare("schlegek@csp.edu") == 0||
+        localStorage.getItem("userLogin").localeCompare("perrinea@csp.edu") == 0))
     {
         window.location.href = "../adminPages/adminhome.html";
     }

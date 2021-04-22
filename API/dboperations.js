@@ -579,8 +579,7 @@ async function getReservations(date) {
         let reservations = await pool.request()
             .input('date', sql.Date, date)
             .query('SELECT roomTypeId FROM reservations ' + 
-                   'WHERE checkIn <= @date AND checkOut >= @date'
-            )
+                   'WHERE checkIn <= @date AND checkOut >= @date');
         return reservations.recordsets;
     } catch (error) {
         console.log(error);
@@ -592,8 +591,7 @@ async function getUserReservations(email) {
         let pool = await sql.connect(config);
         let reservations = await pool.request()
             .input('email', sql.NVarChar(255), email)
-            .query('SELECT * FROM reservations WHERE email = @email'
-            )
+            .query('SELECT * FROM reservations WHERE email = @email');
         return reservations.recordsets;
     } catch (error) {
         console.log(error);
