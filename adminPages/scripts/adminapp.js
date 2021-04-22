@@ -73,7 +73,6 @@ function getSignout()
     $('#messages').text("Messages");
     $('#manageReviews').text("Manage Reviews");
     $('#editRooms').text("Edit Rooms");
-    $('#manageReservations').text("Manage Reservations");
 
     
 }
