@@ -148,6 +148,7 @@ function validateForm() {
 // add a reservation to the table
 function addReservation() {
     const url = getRoute("/reservations");
+    
     const data = {
         email: document.getElementById("email").value,
         // convert the dates into SQL date format

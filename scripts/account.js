@@ -76,14 +76,16 @@ function setReservation() {
 		let h3 = document.createElement("h3");
 		let h4 = document.createElement("h4");
 		h3.style = "text-align: center";
-        h3.innerText = "ReservationId: " + reservations[i].reservationId
+		h3.innerText = "ReservationId: " + reservations[i].reservationId
+		let checkIn = new Date(reservations[i].checkIn);
+		let checkOut = new Date(reservations[i].checkOut);
 		h4.innerText =
 			"Check in Date: " +
-			reservations[i].checkIn +
+			formatFullDate(checkIn) +
 			" " +
 			"Check out Date: " +
-			reservations[i].checkOut + 
-            " Total cost: $" + reservations[i].totalCost;
+			formatFullDate(checkOut) + 
+            "\n Total cost: $" + reservations[i].totalCost;
         reservationContainer.appendChild(h3);
 		reservationsContainer.appendChild(h4);
         reservationsContainer.appendChild(document.createElement('br'))
