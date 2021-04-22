@@ -65,7 +65,7 @@ function displayRooms() {
 
   // if there are no available rooms for that number of people and that date range...
   if (roomTypes.length == 0) {
-    listContainer.innerText = "We're sorry!\nThere are no available rooms that can sleep " + numberGuests + " of people for the selected dates.";
+    listContainer.textContent = "We're sorry!\nThere are no available rooms that can sleep " + numberGuests + " of people for the selected dates.";
   }
  
   const list = document.createElement("ul");
@@ -131,7 +131,7 @@ const container = document.getElementById("roomPopupContainer");
 
     // create the main blocks of the popup
     const btnClose = document.createElement('button');
-    btnClose.innerText = 'Close';
+    btnClose.textContent = 'Close';
     btnClose.className = "btnClose";
     const roomTypeName = document.createElement('h1');
     const popupInfo = document.createElement('div');
@@ -153,7 +153,7 @@ const container = document.getElementById("roomPopupContainer");
     closePopup(roomType.roomTypeId);
   }
 
-  roomTypeName.innerText = roomType.roomTypeName;
+  roomTypeName.textContent = roomType.roomTypeName;
   // display all images
   for (let i = 0; i < images.length; i++) {
     let image = document.createElement('img');
@@ -165,7 +165,7 @@ const container = document.getElementById("roomPopupContainer");
   // display all amenities
   for (let j = 0; j < amenities.length; j++) {
     let amenity = document.createElement('li');
-    amenity.innerText = amenities[j].amenityName;
+    amenity.textContent = amenities[j].amenityName;
     amenitiesContainer.appendChild(amenity);
   }
   
@@ -305,27 +305,144 @@ $(document).ready(function() {
 
 // navigate to the book room page
 function bookRoom(roomTypeId, checkIn, checkOut) {
-  // if the user isn't signed in, make them do so (or create an account)
+  // if the user isn't signed in, prompt them to do so (or create an account)
   if(localStorage.getItem('userLogin') == null) {
     document.getElementById("sectLogin").style['display'] = "block";
     showSignIn();
   } else {
-    // pull this out of the else later, but i need it to not run automatically for testing
+    // the user is already signed in, so go to the checkout page
     window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
   }
 }
 
 function closeLogin() {
   document.getElementById("sectLogin").style['display'] = "none";
-  showSignIn();
 }
 
 function showSignIn() {
   document.getElementById("signIn").style['display'] = "block";
-  document.getElementById("signUp").style['display'] = "none";
+  document.getElementById("signUp").style['display'] = "none"; 
+
+  // clear all fields
+  document.getElementById("errorSignIn").textContent = "";
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
 }
 
 function showSignUp() {
   document.getElementById("signIn").style['display'] = "none";
   document.getElementById("signUp").style['display'] = "block";
+
+  // clear all fields
+  document.getElementById("errorSignUp").textContent= "";
+  document.getElementById("newEmail").value = "";
+  document.getElementById("newPassword").value = "";
+  document.getElementById("newFirstName").value = "";
+  document.getElementById("newLastName").value = "";
+}
+
+function login(roomTypeId, checkIn, checkOut) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  let errorSignIn = document.getElementById("errorSignIn");
+  errorSignIn.textContent = "";
+
+  if (email == "" || password == "") {
+    return false;
+  }
+
+  const user = getJSON(getRoute("/users/" + email))[0];
+
+  // if there is no user associated with the email provided...
+  if (user == undefined) {
+    errorSignIn.textContent = "You do not have an account!\n Please sign up!";
+    return false;
+  } 
+  // is the user enters the wrong password...
+  else if (password != user.password) {
+    console.log("logging 3: " + errorSignIn.textContent);
+    errorSignIn.textContent = "The password you have entered is incorrect!";
+    console.log("logging 4: " + errorSignIn.textContent);
+    return false;
+  } else {
+    // the user entered the correct email & password combo
+    // save the email address in the local storage so that we know this user is signed in
+    if(typeof(Storage) !== "undefined") {
+      localStorage.setItem("userLogin", email);
+    }
+   
+
+
+
+
+
+
+
+
+
+
+    // the user is now signed in, so go to the book reservation page
+    // window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
+    return true;
+  }
+}
+
+function signUp(roomTypeId, checkIn, checkOut) {
+  event.preventDefault();
+  
+  const email = document.getElementById("newEmail").value;
+  const password = document.getElementById("newPassword").value;
+  const firstName = document.getElementById("newFirstName").value;
+  const lastName = document.getElementById("newLastName").value;
+  let errorSignUp =  document.getElementById("errorSignUp");
+
+  const user = getJSON(getRoute("/users/" + email))[0];
+
+  // if the email address format isn't valid
+  if (!validEmail(email)){
+    errorSignUp.textContent = "The email address entered is not valid."
+    return false;
+  } 
+   // if there is already a user associated with the email provided...
+  else if (user != undefined) {
+    errorSignUp.textContent = "This email address is already associated with an account!\n Please sign in or enter a different email address.";
+    return false;
+  } 
+  // the information entered is valid, so create a new account
+  else {
+    const url = getRoute("/users/");
+    const data = {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName
+    }
+    $.post(url, data, function(data, status){
+      console.log(`${data} and status is ${status}`);
+    });
+    // save the email address in the local storage so that we know this user is signed in
+    if(typeof(Storage) !== "undefined") {
+      localStorage.setItem("userLogin", email);
+    }
+
+
+
+
+
+
+
+
+    
+    // the user is now signed in, so go to the book reservation page
+    // window.location.assign("bookReservation.html?roomTypeId=" + roomTypeId + "&checkIn=" + checkIn + "&checkOut=" + checkOut);
+    return true;
+  }
+}
+
+// make sure the email is formated in the format prefix@domain.com
+function validEmail(email) {
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  return email.match(pattern)
 }

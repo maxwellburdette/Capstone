@@ -161,12 +161,3 @@ function addReservation() {
         console.log(`${data} and status is ${status}`);
     });
 }
-
-/****************************************************************
- * 
- *   Functions to make sure the user is logged in
- * 
-****************************************************************/
-function displaySignUp() {
-
-}

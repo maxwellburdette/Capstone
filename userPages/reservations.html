@@ -66,26 +66,31 @@
         <div class="modal-content" id="signIn">
             <button class="btnClose" onclick="closeLogin()">Close</button>
             <h1 class="loginTitle">Sign In</h1>
-            <form>
-                <input type="text" placeholder="Email" id="email"><br>
-                <input type="password" placeholder="Password" id="password"><br>
-                <button onclick="login()">Sign In</button><br>
-                <button onclick="showSignUp()">Sign Up</button>
+            <form id="formSignIn" onsubmit="login()">
+                <input type="text" placeholder="Email" id="email" required><br>
+                <input type="password" placeholder="Password" id="password" required><br>
+                <button class="btnSubmit">Sign In</button><br>
             </form>
+            <button onclick="showSignUp()" class="btnSubmit">Sign Up</button><br>
+            <span id="errorSignIn"></span>
         </div>
 
         <div class="modal-content" id="signUp">
             <button class="btnClose" onclick="closeLogin()">Close</button>
             <h1 class="loginTitle">Sign Up</h1>
-            <form>
-                <input type="text" placeholder="Email" id="email"><br>
-                <input type="password" placeholder="Password" id="password"><br>
-                <input type="text" placeholder="First Name" id="firstName"><br>
-                <input type="text" placeholder="Last Name" id="lastName"><br>
-                <button onclick="addUser()">Sign Up</button><br>
-                <button onclick="showSignIn()">Sign In</button>
+            <form id="formSignUp" onsubmit="signUp()">
+                <input type="text" placeholder="Email" id="newEmail" required><br>
+                <input type="password" placeholder="Password" id="newPassword" required><br>
+                <input type="text" placeholder="First Name" id="newFirstName" required><br>
+                <input type="text" placeholder="Last Name" id="newLastName" required><br>
+                <button class="btnSubmit">Sign Up</button><br>
             </form>
+            <button onclick="showSignIn()" class="btnSubmit">Sign In</button><br>
+            <span id="errorSignUp"></span>
         </div>
+        <input type="hidden" id="bookRoomTypeId">
+        <input type="hidden" id="bookCheckIn">
+        <input type="hidden" id="bookCheckOut">
     </section>
 </div>
 <div id="load" class="preloader">
@@ -95,6 +100,5 @@
 <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@1.9.13/dist/zebra_datepicker.min.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/reservations.js"></script>
-<script src="../loginPages/test.js"></script>
 </body>
 </html>

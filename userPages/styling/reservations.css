@@ -188,7 +188,11 @@ ul {
 }
 
 /* default to having sign in pop up rather than sign up*/
-#signIn, #signUp {
+#signIn {
+    display: block;
+}
+
+#signUp {
     display: none;
 }
 
@@ -215,7 +219,7 @@ ul {
     border: 2px solid var(--lighterMidColor);
 }
 
-#sectLogin form button {
+.btnSubmit {
     background-color: var(--darkerLightColor);
     width: 125px;
     margin: 5px;
@@ -223,4 +227,9 @@ ul {
 
 #sectLogin form button:hover {
     background-color: var(--lighterMidColor);
+}
+
+#sectLogin span {
+    color: var(--darkColor);
+    font-size: .8rem;
 }
