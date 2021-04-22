@@ -4,7 +4,7 @@
  * 
 ****************************************************************/
 function getRoute(param) {
-  var route = "http://localhost:8090/api" + param;
+  var route = "https://kam.azurewebsites.net/api" + param;
 
   return route;
 }

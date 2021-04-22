@@ -3,10 +3,10 @@ function sendForm()
     var from = document.getElementById('userEmail').value;
     var message = document.getElementById('userMessage').value;
     var to = "admin";
-    sendMessge(to, from, message);
+    sendMessage(to, from, message);
 }
 
-function sendMessge(to, from, contents)
+function sendMessage(to, from, contents)
 {
     const url = "https://kam.azurewebsites.net/api/messages";
     var message = 

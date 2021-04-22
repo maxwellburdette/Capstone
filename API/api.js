@@ -8,6 +8,7 @@ var RoomImage = require('./dbTableClasses/roomImage');
 var RoomSize = require('./dbTableClasses/roomSize');
 var RoomTier = require('./dbTableClasses/roomTier');
 var RoomType = require('./dbTableClasses/roomType');
+var Message = require('./dbTableClasses/message');
 const dboperations = require('./dboperations');
 
 
@@ -330,6 +331,7 @@ router.route("/roomtiers/:roomTierId/amenity/:amenityId/").delete((request, resp
 });
 
 
+<<<<<<< HEAD
 /*************************************************************
 *                      RESERVATIONS TABLE
 **************************************************************/
@@ -355,6 +357,47 @@ router.route("/reservations/user/:email").get((request, response) =>
 {
     dboperations.getUserReservations(request.params.email).then(result => {
         response.json(result);
+=======
+/**
+ * SQL commands for messages table
+ */
+//At sent message to post table
+router.route("/messages").post((request, response) =>
+{
+    let message = {...request.body}
+    dboperations.sendMessage(message).then(result => {
+        response.status(201).json(result);
+    })
+});
+//Get fromMessage from specific user
+router.route("/messages/from/:email").get((request, response) =>
+{
+    dboperations.getFromMessage(request.params.email).then(result => {
+        response.json(result[0]);
+    })
+});
+//Get toMessage from specific user
+router.route("/messages/to/:email").get((request, response) =>
+{
+    dboperations.getToMessage(request.params.email).then(result => {
+        response.json(result[0]);
+    })
+});
+//Update message
+router.route("/messages/:messageId").put((request, response) =>
+{
+    let message = {...request.body}
+    dboperations.updateMessage(message.toMessage, request.params.messageId).then(result => {
+        response.status(201).json(result);
+    })
+});
+//Delete message
+//Put to delete user from table
+router.route("/messages/:id").delete((request, response) =>
+{
+    dboperations.deleteMessage(request.params.id).then(result => {
+        response.status(200).json(result);
+>>>>>>> main
     })
 });
 

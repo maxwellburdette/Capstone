@@ -55,7 +55,11 @@ function displayMessages()
     var container = document.getElementById('box');
     //container.style.height = "125px"
     clearList();
-    Url = 'http://localhost:8090/api/reviews/'
+<<<<<<< HEAD
+    Url = 'https://kam.azurewebsites.net/api/reviews/'
+=======
+    Url = 'https://kam.azurewebsites.net/api/reviews/'
+>>>>>>> main
     var result = null;
      
      $.ajax({

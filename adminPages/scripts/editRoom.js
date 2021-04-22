@@ -10,7 +10,11 @@ TO-DO: consider storing variables that are used in multiple functions in a names
 ****************************************************************/
 // get the route
 function getRoute(param) {
-  return "http://localhost:8090/api" + param;
+<<<<<<< HEAD
+  return "https://kam.azurewebsites.net/api" + param;
+=======
+  return "https://kam.azurewebsites.net/api" + param;
+>>>>>>> main
 }
 
 // get a json file based on the url

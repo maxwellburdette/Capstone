@@ -1,6 +1,6 @@
 function getJSON()
 {
-    Url = "http://localhost:8090/api/reviews"
+    Url = "https://kam.azurewebsites.net/api/reviews"
     var result = null;
      
      $.ajax({
@@ -21,7 +21,11 @@ function getUser()
     {
         return null;
     }
-    Url = 'http://localhost:8090/api/users/' + localStorage.getItem("userLogin");
+<<<<<<< HEAD
+    Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
+=======
+    Url = 'https://kam.azurewebsites.net/api/users/' + localStorage.getItem("userLogin");
+>>>>>>> main
     var result = null;
      
      $.ajax({
@@ -43,7 +47,11 @@ function addRating()
     var email = getUser();
     var description = document.getElementById('comment_text').value;
     var starValue = 0;
-    const url = 'http://localhost:8090/api/reviews';
+<<<<<<< HEAD
+    const url = 'https://kam.azurewebsites.net/api/reviews';
+=======
+    const url = 'https://kam.azurewebsites.net/api/reviews';
+>>>>>>> main
 
 
     var fiveStar = document.getElementById('star5');
