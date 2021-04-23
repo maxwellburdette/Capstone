@@ -1,3 +1,7 @@
+fieldset
+{
+    border: none;
+}
 form {
     width: 600px;
     padding: 20px 80px;
