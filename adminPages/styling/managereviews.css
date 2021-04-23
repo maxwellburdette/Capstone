@@ -1,275 +1,242 @@
 body {
-    font-family: "lato", sans-serif;
-  }
-  
-  
- 
-  .container {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    height: 600px;
-    background-color: #5d4954;
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    z-index: -1;
-    overflow: auto;
-    
-  }
-  
+	font-family: "lato", sans-serif;
+}
+
+.container {
+	max-width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	height: 600px;
+	background-color: #5d4954;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	z-index: -1;
+	overflow: auto;
 }
 
 h2 {
-  font-size: 26px;
-  margin: 20px 0;
-  text-align: center;
+	font-size: 26px;
+	margin: 20px 0;
+	text-align: center;
 }
 h2 small {
-  font-size: 0.5em;
+	font-size: 0.5em;
 }
-h3{
-  text-align: left;
+h3 {
+	text-align: left;
 }
-.ratingDisplay
-{
-  text-align: right;
+.ratingDisplay {
+	text-align: right;
 }
 
 .responsive-table li {
-  border-radius: 3px;
-  padding: 25px 30px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  z-index: -1;
+	border-radius: 3px;
+	padding: 25px 30px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 25px;
+	z-index: -1;
 }
 .responsive-table .table-header {
-  background-color: #021618;
-  color: #ffffff;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  z-index: -1;
+	background-color: #021618;
+	color: #ffffff;
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	z-index: -1;
 }
 .responsive-table .table-row {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
-  z-index: -1;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+	z-index: -1;
 }
 .responsive-table .table-row {
-  border: 1px solid transparent;
+	border: 1px solid transparent;
 }
 .responsive-table .table-row:hover {
-  cursor:pointer;
-  color:red;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
+	cursor: pointer;
+	color: red;
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
 }
 
 .responsive-table .col-1 {
-  flex-basis: 30%;
+	flex-basis: 30%;
 }
 .responsive-table .col-2 {
-  flex-basis: 60%;
+	flex-basis: 60%;
 }
 .responsive-table .col-3 {
-  flex-basis: 10%;
+	flex-basis: 10%;
 }
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: none;
+input[type="text"],
+select,
+textarea {
+	width: 100%; /* Full width */
+	padding: 12px; /* Some padding */
+	border: 1px solid #ccc; /* Gray border */
+	border-radius: 4px; /* Rounded borders */
+	box-sizing: border-box; /* Make sure that padding and width stays in place */
+	margin-top: 6px; /* Add a top margin */
+	margin-bottom: 16px; /* Bottom margin */
+	resize: none;
 }
 
-::-webkit-scrollbar
-{
-  width: 0;
-  background: transparent;
+::-webkit-scrollbar {
+	width: 0;
+	background: transparent;
 }
 
 .buttonContainer {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 260px;
-  height: 80px;
-  text-align: center;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 260px;
+	height: 80px;
+	text-align: center;
 }
 
 button {
-  outline: none;
-  height: 80px;
-  text-align: center;
-  width: 260px;
-  border-radius: 40px;
-  background: #fff;
-  border: 2px solid #1ECD97;
-  color: #1ECD97;
-  letter-spacing: 1px;
-  text-shadow: 0;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.25s ease;
+	outline: none;
+	height: 80px;
+	text-align: center;
+	width: 260px;
+	border-radius: 40px;
+	background: #fff;
+	border: 2px solid #1ecd97;
+	color: #1ecd97;
+	letter-spacing: 1px;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.25s ease;
 }
 button:hover {
-  color: white;
-  background: #1ECD97;
+	color: white;
+	background: #1ecd97;
 }
 button:active {
-  letter-spacing: 2px;
+	letter-spacing: 2px;
 }
 button:after {
-  content: "Refresh";
+	content: "Refresh";
 }
 
 .onclic {
-  width: 80px;
-  border-color: #bbbbbb;
-  border-width: 3px;
-  font-size: 0;
-  border-left-color: #1ECD97;
-  -webkit-animation: rotating 2s 0.25s linear infinite;
-          animation: rotating 2s 0.25s linear infinite;
+	width: 80px;
+	border-color: #bbbbbb;
+	border-width: 3px;
+	font-size: 0;
+	border-left-color: #1ecd97;
+	-webkit-animation: rotating 2s 0.25s linear infinite;
+	animation: rotating 2s 0.25s linear infinite;
 }
 .onclic:after {
-  content: "";
+	content: "";
 }
 .onclic:hover {
-  color: #1ECD97;
-  background: white;
+	color: #1ecd97;
+	background: white;
 }
 
 .validate {
-  font-size: 13px;
-  color: white;
-  background: #1ECD97;
+	font-size: 13px;
+	color: white;
+	background: #1ecd97;
 }
 .validate:after {
-  font-family: "FontAwesome";
-  content: "";
+	font-family: "FontAwesome";
+	content: "";
 }
 
 @-webkit-keyframes rotating {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @keyframes rotating {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 @media all and (max-width: 767px) {
-  .responsive-table .table-header {
-    display: none;
-  }
-  .responsive-table li {
-    display: block;
-  }
-  .responsive-table .col {
-    flex-basis: 100%;
-  }
-  .responsive-table .col {
-    display: flex;
-    padding: 10px 0;
-  }
-  .responsive-table .col:before {
-    color: #6c7a89;
-    padding-right: 10px;
-    content: attr(data-label);
-    flex-basis: 50%;
-    text-align: left;
-  }
-  .container
-  {
-      height: 645px;
-  }
-  .buttonContainer {
-    bottom: 20px;
-    right: 20px;
-    width: 130px;
-    height: 60px;
-  }
-  
-  button {
-    outline: none;
-    height: 80px;
-    text-align: center;
-    width: 260px;
-    border-radius: 40px;
-    background: #fff;
-    border: 2px solid #1ECD97;
-    color: #1ECD97;
-    letter-spacing: 1px;
-    
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  button:hover {
-    color: white;
-    background: #1ECD97;
-  }
-  .onclic {
-    width: 60px;
-  }
-}
-@media all and (max-width: 446px) 
-{
-  h2
-  {
-    font-size: large;
-  }
+	.responsive-table .table-header {
+		display: none;
+	}
+	.responsive-table li {
+		display: block;
+	}
+	.responsive-table .col {
+		flex-basis: 100%;
+	}
+	.responsive-table .col {
+		display: flex;
+		padding: 10px 0;
+	}
+	.responsive-table .col:before {
+		color: #6c7a89;
+		padding-right: 10px;
+		content: attr(data-label);
+		flex-basis: 50%;
+		text-align: left;
+	}
+	.container {
+		height: 645px;
+	}
+	.buttonContainer {
+		bottom: 20px;
+		right: 20px;
+		width: 130px;
+		height: 60px;
+	}
 
-  @media all and (max-height: 812px) 
-  {
-    .buttonContainer {
-      bottom: 40px;
-      right: 20px;
-    }
-    .container
-    {
-      height: 80%;
-    }
-  }
-  @media all and (max-height: 736px)
-  {
-    .buttonContainer {
-      bottom: 30px;
-      right: 10px;
-    }
-    
-  }
-
+	button {
+		height: 60px;
+		width: 130px;
+	}
+	.onclic {
+		width: 60px;
+	}
 }
-@media all and (max-width: 320px) 
-{
-  h2
-  {
-    font-size: medium;
-  }
-  h3
-  {
-    font-size: large;
-  }
+@media all and (max-width: 446px) {
+	h2 {
+		font-size: large;
+	}
+
+	@media all and (max-height: 812px) {
+		.buttonContainer {
+			bottom: 40px;
+			right: 20px;
+		}
+		.container {
+			height: 80%;
+		}
+	}
+	@media all and (max-height: 736px) {
+		.buttonContainer {
+			bottom: 30px;
+			right: 10px;
+		}
+	}
+}
+@media all and (max-width: 320px) {
+	h2 {
+		font-size: medium;
+	}
+	h3 {
+		font-size: large;
+	}
 }
