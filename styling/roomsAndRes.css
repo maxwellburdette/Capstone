@@ -1,3 +1,12 @@
+ :root {
+    --lightColor: #edeaee;
+    --darkerLightColor: #DFDDE0;
+    --lighterMidColor: #C2BBBF;
+    --midColor: #888888;
+    --darkColor: #5d4954;
+    --darkColorTranslucent: rgba(93, 73, 84, 0.9);
+}
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /*:root {

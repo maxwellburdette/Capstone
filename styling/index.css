@@ -11,7 +11,7 @@ body {
     margin-top: 5%;
     margin-bottom: 5%;
     height: 425px;
-    background-color: var(--darkColor);
+    background-color: #5d4954;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 10px;
@@ -32,7 +32,7 @@ body {
     margin-top: 5%;
     height: 100px;
     width: 200px;
-    background-color: var(--darkColor);
+    background-color: #5d4954;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -100,6 +100,7 @@ body {
     letter-spacing: 3px;
     background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
