@@ -21,7 +21,7 @@
             <li><a href="../index.html">Home</a></li>
             <li><a id="userName" class="id" href="#">Sign in</a></li>
             <li><a href="contactus.html">Contact Us</a></li>
-            <li><a id="makeReservation" href="reservations.html">Make Reservation</a></li>
+            <li><a id="makeReservation" href="reservations.html"></a></li>
             <li><a id ="account" href="account.html"></a></li>
             <li><a id="userMessages" href="usermessages.html"></a></li>
             <li><a id="leaveReview" href="rating.html"></a></li>
@@ -44,15 +44,15 @@
 
 <form action="account.html" onsubmit="return validateForm()">
     <h2>Contact</h2>
-    <div id="sectContact">
+    <section id="sectContact">
         <label for="email">Email Address: </label>
         <input type="text" id="email" readonly required>
-    </div>
+    </section>
 
     <div class="clear"></div>
 
     <h2>Billing</h2>
-    <div id="sectBilling">
+    <section id="sectBilling">
         <label for="address">Street Address: </label>
         <input type="text" id="address" required><br>
         <div class="col">
@@ -121,12 +121,12 @@
             <input type="number" id="zipcode" required>
         </div>
         <div class="clear"></div>
-    </div>
+    </section>
 
     <div class="clear"></div>
 
     <h2>Payment</h2>
-    <div id="sectPayment">
+    <section id="sectPayment">
         <label for="cardNumber">Card Number: </label>
         <input type="number" id="cardNumber" placeholder="XXXXXXXXXXXXXXXX" required> <br>
         <div class="col">
@@ -138,7 +138,7 @@
             <input type="number" id="cardCVV" placeholder="XXX" required>
         </div>
         <div class="clear"></div>
-    </div>
+    </section>
     
     <input type="submit" id="btnBookRoom" value="Book Room">
 </form>
