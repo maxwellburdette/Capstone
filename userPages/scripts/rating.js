@@ -125,7 +125,7 @@ function getReviews()
         allRatings += json[i].rating;
     }
     var rating = round(allRatings/json.length);
-    var star = document.getElementById('rating');
+    var star = document.querySelector('.rating');
     var ratingInput = '--rating: ' + rating;
     star.setAttribute('style', ratingInput); 
 }
