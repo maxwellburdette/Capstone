@@ -1,24 +1,27 @@
 body {
-	font-family: "lato", sans-serif;
-}
-
-.container {
-	max-width: 1000px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 5%;
-	margin-bottom: 5%;
-	height: 600px;
-	background-color: #5d4954;
-	border-top-right-radius: 25px;
-	border-top-left-radius: 25px;
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	z-index: -1;
-	overflow: auto;
-}
+    font-family: "lato", sans-serif;
+  }
+  
+  
+ 
+  .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 600px;
+    background-color: #5d4954;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: -1;
+    overflow: auto;
+    
+  }
 
 h2 {
 	font-size: 26px;
