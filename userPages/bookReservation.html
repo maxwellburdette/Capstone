@@ -21,6 +21,7 @@
             <li><a href="../index.html">Home</a></li>
             <li><a id="userName" class="id" href="#">Sign in</a></li>
             <li><a href="contactus.html">Contact Us</a></li>
+            <li><a id="makeReservation" href="reservations.html"></a></li>
             <li><a id ="account" href="account.html"></a></li>
             <li><a id="userMessages" href="usermessages.html"></a></li>
             <li><a id="leaveReview" href="rating.html"></a></li>
@@ -61,7 +62,7 @@
         <div class="col">
             <label for="state">State:</label>
             <select id="state" required>
-                <option></option>
+                <option value="">---</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -117,7 +118,7 @@
         </div>
         <div class="col">
             <label for="zipcode">Zipcode:</label>
-            <input type="number" id="zipcode" minlength="5" maxlength="5" required>
+            <input type="number" id="zipcode" required>
         </div>
         <div class="clear"></div>
     </section>
@@ -127,14 +128,14 @@
     <h2>Payment</h2>
     <section id="sectPayment">
         <label for="cardNumber">Card Number: </label>
-        <input type="number" id="cardNumber" minlength="13" maxlength="16" placeholder="XXXXXXXXXXXXXXXX" required> <br>
+        <input type="number" id="cardNumber" placeholder="XXXXXXXXXXXXXXXX" required> <br>
         <div class="col">
             <label for="cardExpDate">Expiration Date: </label>
-            <input type="text" minlength="5" maxlength="5" id="cardExpDate" placeholder="mm/yy" required>
+            <input type="text" id="cardExpDate" placeholder="mm/yy" required>
         </div>
         <div class="col">
             <label for="cardCVV">CVV:</label>
-            <input type="number" minlength="3" maxlength="3" placeholder="XXX" required>
+            <input type="number" id="cardCVV" placeholder="XXX" required>
         </div>
         <div class="clear"></div>
     </section>
@@ -144,6 +145,7 @@
 
 <div id="load" class="preloader">
     <div class="loader"></div>
+</div>
 </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

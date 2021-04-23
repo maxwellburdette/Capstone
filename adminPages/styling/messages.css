@@ -9,8 +9,8 @@ body {
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: 10px;
   margin-top: 5%;
-  margin-bottom: 5%;
   height: 400px;
   background-color: #5d4954;
   border-top-right-radius: 10px;
@@ -81,6 +81,47 @@ h3
   pointer-events: none;
 }
 
+@media all and (max-width: 767px) {
+  .responsive-table .table-header {
+    display: none;
+  }
+  .responsive-table li {
+    display: block;
+  }
+  .responsive-table .col {
+    flex-basis: 100%;
+  }
+  .responsive-table .col {
+    display: flex;
+    padding: 10px 0;
+  }
+  .responsive-table .col:before {
+    color: #6c7a89;
+    padding-right: 10px;
+    content: attr(data-label);
+    flex-basis: 50%;
+    text-align: left;
+  }
+  .container
+  {
+      height: 675px;
+  }
+}
+
+@media all and (max-width: 400px) 
+{
+  h2
+  {
+    font-size: larger;
+  }
+}
+@media all and (max-width: 320px) 
+{
+  h2
+  {
+    font-size: large;
+  }
+}
 input[type=text], select, textarea {
   width: 100%; /* Full width */
   padding: 12px; /* Some padding */ 
@@ -208,9 +249,13 @@ input[type=text], select, textarea {
 }
 
 .buttonContainer {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  bottom: 5px;
+  margin-left: -130px;
+  margin-top: -40px;
   width: 260px;
   height: 80px;
   text-align: center;
@@ -284,79 +329,5 @@ button:after {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-@media all and (max-width: 767px) {
-  .responsive-table .table-header {
-    display: none;
-  }
-  .responsive-table li {
-    display: block;
-  }
-  .responsive-table .col {
-    flex-basis: 100%;
-  }
-  .responsive-table .col {
-    display: flex;
-    padding: 10px 0;
-  }
-  .responsive-table .col:before {
-    color: #6c7a89;
-    padding-right: 10px;
-    content: attr(data-label);
-    flex-basis: 50%;
-    text-align: left;
-  }
-  .container
-  {
-      height: 675px;
-  }
-  .buttonContainer {
-    bottom: 20px;
-    right: 20px;
-    width: 130px;
-    height: 60px;
-  }
-  
-  button {
-    height: 60px;
-    width: 130px;
-  }
-  .onclic {
-    width: 60px;
-  }
-}
-
-@media all and (max-width: 400px) 
-{
-  h2
-  {
-    font-size: larger;
-  }
-  @media all and (max-height: 812px) 
-  {
-    .buttonContainer {
-      bottom: 40px;
-      right: 20px;
-    }
-    .container
-    {
-      height: 80%;
-    }
-  }
-  @media all and (max-height: 736px)
-  {
-    .buttonContainer {
-      bottom: 30px;
-      right: 10px;
-    }
-    
-  }
-}
-@media all and (max-width: 320px) 
-{
-  h2
-  {
-    font-size: large;
   }
 }
