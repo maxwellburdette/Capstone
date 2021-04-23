@@ -78,7 +78,7 @@ button:hover, input[type="submit"]:hover {
 
 #pageContainer {
     background-color: var(--darkColor);
-    width: 90%vw;
+    width: 90%;
     max-width: 800px;
     height: auto;
     text-align: center;
