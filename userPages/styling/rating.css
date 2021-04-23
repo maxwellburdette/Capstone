@@ -151,7 +151,7 @@
   }
   form
 {
-    background-color: #5d4954;
+    background-color: var(--darkColor);
     opacity: .9;
     width: 600px;
     height: 300px;

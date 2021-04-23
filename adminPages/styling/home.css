@@ -11,7 +11,7 @@ body {
     margin-top: 5%;
     margin-bottom: 5%;
     height: 425px;
-    background-color: #5d4954;
+    background-color: var(--darkColor);
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 10px;
